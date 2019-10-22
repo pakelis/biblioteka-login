@@ -1,12 +1,12 @@
 import React, {useCallback} from 'react'
 import {withRouter} from 'react-router'
-import {app} from '../firebase'
-import {directive} from '@babel/types'
+import app from '../firebase'
 
 const SignUp = ({history}) => {
   const handleSignUp = useCallback(
     async event => {
       event.preventDefault()
+      //we get email and password with e.target.elements
       const {email, password} = event.target.elements
       try {
         await app
@@ -14,6 +14,7 @@ const SignUp = ({history}) => {
           .createUserWithEmailAndPassword(email.value, password.value)
         history.push('/')
       } catch (error) {
+        //More complicated in future
         alert(error)
       }
     },

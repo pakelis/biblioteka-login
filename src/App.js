@@ -1,16 +1,19 @@
 import React from 'react'
-import {Login} from './components/Login'
+import Login from './components/Login'
 import Signup from './components/Signup'
-import {Home} from './components/Home'
-import {BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom'
+import Home from './components/Home'
+import {BrowserRouter as Router, Route} from 'react-router-dom'
 import {AuthProvider} from './Auth'
+import PrivateRoute from './Routes/PrivateRoute'
 
 function App() {
   return (
+    //AuthProvider everything below it, will have acess to currentUser through the context API
+    //In our case if we logged in we will have user Object with all the description, and if we log out we have null or undefined
     <AuthProvider>
       <Router>
         <div>
-          <Route exact path="/" component={Home} />
+          <PrivateRoute exact path="/" component={Home} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/signup" component={Signup} />
         </div>
