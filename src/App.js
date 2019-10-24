@@ -7,15 +7,14 @@ import {BrowserRouter as Router, Route} from 'react-router-dom'
 import PrivateRoute from './Routes/PrivateRoute'
 
 //MATERIAL IMPORTS
-import {MuiThemeProvider, createMuiTheme} from '@material-ui/core'
-
-const theme = createMuiTheme({})
+import {MuiThemeProvider} from '@material-ui/core'
+import MyTheme from './MyTheme' // importing my theme palette
 
 function App() {
   return (
     //AuthProvider everything below it, will have acess to currentUser through the context API
     //In our case if we logged in we will have user Object with all the description, and if we log out we have null or undefined
-    <MuiThemeProvider theme={theme}>
+    <MuiThemeProvider theme={MyTheme}>
       <AuthProvider>
         <Router>
           <div>

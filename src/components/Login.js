@@ -2,12 +2,16 @@ import React, {useCallback, useContext} from 'react'
 import {withRouter, Redirect} from 'react-router'
 import app from '../firebase'
 import {AuthContext} from '../Auth'
+import {shadows} from '@material-ui/system'
+import Box from '@material-ui/core/Box'
+//TODO i need to make all buttons , textfields same css to look sharp and clean so i dont have to repeat
+
 import {
   Button,
   makeStyles,
   TextField,
   Typography,
-  Link,
+  // Link,
   Container,
   CssBaseline,
   FormControlLabel,
@@ -17,7 +21,7 @@ import {
 const useStyles = makeStyles(theme => ({
   '@global': {
     body: {
-      backgroundColor: theme.palette.common.white,
+      backgroundColor: theme.palette.lightShade.main,
     },
   },
   paper: {
@@ -25,6 +29,12 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
+    backgroundColor: '#fff',
+    padding: '50px',
+  },
+  paperContent: {
+    textAlign: 'center',
+    padding: '20px',
   },
   avatar: {
     margin: theme.spacing(1),
@@ -66,48 +76,52 @@ const Login = ({history}) => {
   return (
     <Container maxWidth="sm">
       <CssBaseline />
-      <div className={classes.paper}>
-        <Typography component="h1" variant="h3">
-          Log in
-        </Typography>
-        <form onSubmit={handleLogin} className={classes.form}>
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
-            autoFocus
-          />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-          />
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-          />
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-          >
-            Sign In
-          </Button>
-        </form>
-      </div>
+      <Box boxShadow="3">
+        <div className={classes.paper}>
+          <div className={classes.paperContent}>
+            <Typography component="h1" variant="h3">
+              Log in
+            </Typography>
+            <form onSubmit={handleLogin} className={classes.form}>
+              <TextField
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                id="email"
+                label="Email Address"
+                name="email"
+                autoComplete="email"
+                autoFocus
+              />
+              <TextField
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                name="password"
+                label="Password"
+                type="password"
+                id="password"
+                autoComplete="current-password"
+              />
+              <FormControlLabel
+                control={<Checkbox value="remember" color="primary" />}
+                label="Remember me"
+              />
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="primary"
+                className={classes.submit}
+              >
+                Sign In
+              </Button>
+            </form>
+          </div>
+        </div>
+      </Box>
     </Container>
   )
 }

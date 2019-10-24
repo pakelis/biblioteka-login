@@ -2,6 +2,27 @@ import React, {useCallback} from 'react'
 import {withRouter} from 'react-router'
 import app from '../firebase'
 
+//Material
+import {
+  Button,
+  makeStyles,
+  TextField,
+  Typography,
+  // Link,
+  Container,
+  CssBaseline,
+  FormControlLabel,
+  Checkbox,
+} from '@material-ui/core'
+
+const useStyles = makeStyles(theme => ({
+  '@global': {
+    body: {
+      backgroundColor: theme.palette.lightShade.main,
+    },
+  },
+}))
+
 const SignUp = ({history}) => {
   const handleSignUp = useCallback(
     async event => {
@@ -20,6 +41,8 @@ const SignUp = ({history}) => {
     },
     [history],
   )
+
+  const classes = useStyles()
 
   return (
     <div>
