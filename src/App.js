@@ -1,6 +1,7 @@
 import React from 'react'
-import Login from './components/Login'
-import Signup from './components/Signup'
+import Login from './components/LoginSignup/Login'
+import Signup from './components/LoginSignup/Signup'
+import LoginSignup from './components/LoginSignup/index'
 import Home from './components/Home'
 import {AuthProvider} from './Auth'
 import {BrowserRouter as Router, Route} from 'react-router-dom'
@@ -19,7 +20,7 @@ function App() {
         <Router>
           <div>
             <PrivateRoute exact path="/" component={Home} />
-            <Route exact path="/login" component={Login} />
+            <Route exact path="/login" component={LoginSignup} />
             <Route exact path="/signup" component={Signup} />
           </div>
         </Router>
