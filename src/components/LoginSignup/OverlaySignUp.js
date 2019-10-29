@@ -32,7 +32,7 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-function OverlayLogin() {
+function OverlaySignUp() {
   const classes = useStyles()
 
   return (
@@ -41,13 +41,13 @@ function OverlayLogin() {
         <CssBaseline />
         <Typography variant="h4">Sveiki sugryžę!</Typography>
         <Typography variant="span">
-          Jei norite palaikyti ryšį su mumis, prisijunkite ir pateikite savo
-          asmeninę informaciją
+          Įveskite savo asmeninius duomenis ir pradėkite naudotis mūsų
+          aplikaciją.
         </Typography>
-        <Button>Prisijungti</Button>
+        <Button>Prisiregistruoti</Button>
       </Container>
     </div>
   )
 }
 
-export default OverlayLogin
+export default OverlaySignUp

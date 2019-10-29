@@ -28,6 +28,14 @@ const useStyles = makeStyles(theme => ({
       backgroundColor: theme.palette.lightShade.main,
     },
   },
+  box: {
+    backgroundColor: '#fff',
+    marginTop: theme.spacing(8),
+  },
+  container: {
+    display: 'flex',
+    backgroundColor: '#fff',
+  },
   paper: {
     marginTop: theme.spacing(8),
     display: 'flex',
@@ -57,6 +65,9 @@ const useStyles = makeStyles(theme => ({
   icon: {
     color: theme.palette.darkShade.main,
   },
+  smallText: {
+    color: theme.palette.darkShade.main,
+  },
 }))
 
 const SignUp = ({history}) => {
@@ -81,9 +92,9 @@ const SignUp = ({history}) => {
   const classes = useStyles()
 
   return (
-    <Container maxWidth="sm">
-      <CssBaseline />
-      <Box boxShadow="3">
+    <Box boxShadow="3" className={classes.box}>
+      <Container maxWidth="sm" className={classes.container}>
+        <CssBaseline />
         <div className={classes.paper}>
           <AccountCircleIcon className={classes.avatar} />
           <div className={classes.paperContent}>
@@ -174,8 +185,8 @@ const SignUp = ({history}) => {
             </form>
           </div>
         </div>
-      </Box>
-    </Container>
+      </Container>
+    </Box>
   )
 }
 

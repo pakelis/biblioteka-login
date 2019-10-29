@@ -33,6 +33,14 @@ const useStyles = makeStyles(theme => ({
       backgroundColor: theme.palette.lightShade.main,
     },
   },
+  box: {
+    backgroundColor: '#fff',
+    marginTop: theme.spacing(8),
+  },
+  container: {
+    display: 'flex',
+    backgroundColor: '#fff',
+  },
   paper: {
     marginTop: theme.spacing(8),
     display: 'flex',
@@ -98,9 +106,9 @@ const Login = ({history}) => {
   }
 
   return (
-    <Container maxWidth="sm">
-      <CssBaseline />
-      <Box boxShadow="3">
+    <Box boxShadow="3" className={classes.box}>
+      <Container maxWidth="sm" className={classes.container}>
+        <CssBaseline />
         <div className={classes.paper}>
           <AccountCircleIcon className={classes.avatar} />
           <div className={classes.paperContent}>
@@ -177,8 +185,8 @@ const Login = ({history}) => {
             </form>
           </div>
         </div>
-      </Box>
-    </Container>
+      </Container>
+    </Box>
   )
 }
 
