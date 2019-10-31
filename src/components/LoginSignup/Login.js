@@ -28,35 +28,27 @@ import {
 } from '@material-ui/core'
 
 const useStyles = makeStyles(theme => ({
-  '@global': {
-    body: {
-      backgroundColor: theme.palette.lightShade.main,
-    },
-  },
-  box: {
-    backgroundColor: '#fff',
-    marginTop: theme.spacing(8),
-  },
-  container: {
+  mainContainer: {
     display: 'flex',
-    backgroundColor: '#fff',
-  },
-  paper: {
-    marginTop: theme.spacing(8),
-    display: 'flex',
+    justifyContent: 'center',
     flexDirection: 'column',
     alignItems: 'center',
     backgroundColor: '#fff',
-    padding: '50px',
+    height: '100%',
+  },
+  paper: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
   },
   paperContent: {
     padding: '20px',
   },
   mainText: {
     textAlign: 'center',
+    marginBottom: theme.spacing(2),
   },
   avatar: {
-    margin: theme.spacing(0),
     color: theme.palette.primary.main,
     fontSize: '8em',
   },
@@ -65,7 +57,7 @@ const useStyles = makeStyles(theme => ({
     marginTop: theme.spacing(1),
   },
   submit: {
-    margin: theme.spacing(3, 0, 2),
+    margin: theme.spacing(3, 0, 3),
   },
   icon: {
     color: theme.palette.darkShade.main,
@@ -106,8 +98,8 @@ const Login = ({history}) => {
   }
 
   return (
-    <Box boxShadow="3" className={classes.box}>
-      <Container maxWidth="sm" className={classes.container}>
+    <div className={classes.mainContainer}>
+      <Container component="div" maxWidth="sm" className={classes.container}>
         <CssBaseline />
         <div className={classes.paper}>
           <AccountCircleIcon className={classes.avatar} />
@@ -186,7 +178,7 @@ const Login = ({history}) => {
           </div>
         </div>
       </Container>
-    </Box>
+    </div>
   )
 }
 
