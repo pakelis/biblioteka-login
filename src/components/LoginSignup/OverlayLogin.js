@@ -14,11 +14,8 @@ import {isAbsolute} from 'path'
 import {classes} from 'istanbul-lib-coverage'
 
 const useStyles = makeStyles(theme => ({
-  '@global': {
-    boxSizing: 'border-box',
-  },
   overlayPanelLeft: {
-    backgroundColor: 'grey',
+    backgroundColor: theme.palette.darkAccent.main,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -26,9 +23,12 @@ const useStyles = makeStyles(theme => ({
     padding: '0px 40px',
     textAlign: 'center',
     height: '100%',
+    color: '#fff',
+    fontSize: '18px',
   },
-  div: {
-    marginTop: theme.spacing(8),
+  button: {},
+  typography: {
+    padding: '20px 0',
   },
 }))
 
@@ -36,17 +36,22 @@ function OverlayLogin() {
   const classes = useStyles()
 
   return (
-    <div className={classes.div}>
-      <Container className={classes.overlayPanelLeft} maxWidth="sm">
-        <CssBaseline />
-        <Typography variant="h4">Sveiki sugryžę!</Typography>
-        <Typography variant="span">
-          Jei norite palaikyti ryšį su mumis, prisijunkite ir pateikite savo
-          asmeninę informaciją
-        </Typography>
-        <Button>Prisijungti</Button>
-      </Container>
-    </div>
+    <Container className={classes.overlayPanelLeft} maxWidth="sm">
+      <CssBaseline />
+      <Typography variant="h4">Sveiki sugryžę!</Typography>
+      <Typography className={classes.typography} variant="span">
+        Jei norite palaikyti ryšį su mumis, prisijunkite ir pateikite savo
+        asmeninę informaciją
+      </Typography>
+      <Button
+        color="inherit"
+        variant="outlined"
+        size="large"
+        className={classes.button}
+      >
+        Prisijungti
+      </Button>
+    </Container>
   )
 }
 

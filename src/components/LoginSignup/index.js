@@ -114,7 +114,9 @@ export default function LoginSignup() {
         <div className={classes.overlay}>
           <div
             className={classNames(classes.overlayPanel, classes.overlayLeft)}
-          ></div>
+          >
+            <OverlayLogin />
+          </div>
           <div
             className={classNames(classes.overlayPanel, classes.overlayRight)}
           >
