@@ -7,11 +7,7 @@ import {
   Typography,
   Container,
   CssBaseline,
-  Box,
-  Sizing,
 } from '@material-ui/core'
-import {isAbsolute} from 'path'
-import {classes} from 'istanbul-lib-coverage'
 
 const useStyles = makeStyles(theme => ({
   overlayPanelLeft: {
@@ -35,7 +31,7 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-function OverlaySignUp() {
+export const OverlaySignUp = ({toggleClick}) => {
   const classes = useStyles()
 
   return (
@@ -46,6 +42,7 @@ function OverlaySignUp() {
         Įveskite savo asmeninius duomenis ir pradėkite naudotis mūsų aplikaciją.
       </Typography>
       <Button
+        onClick={toggleClick}
         size="large"
         variant="outlined"
         color="inherit"

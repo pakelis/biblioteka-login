@@ -32,7 +32,7 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-function OverlayLogin() {
+export const OverlayLogin = ({toggleClick}) => {
   const classes = useStyles()
 
   return (
@@ -44,6 +44,7 @@ function OverlayLogin() {
         asmeninę informaciją
       </Typography>
       <Button
+        onClick={toggleClick}
         color="inherit"
         variant="outlined"
         size="large"
