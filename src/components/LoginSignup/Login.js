@@ -1,11 +1,7 @@
 import React, {useCallback, useContext} from 'react'
 import {withRouter, Redirect} from 'react-router'
-import {NavLink} from 'react-router-dom'
 import app from '../../firebase'
 import {AuthContext} from '../../Auth'
-import {shadows} from '@material-ui/system'
-import Box from '@material-ui/core/Box'
-import {MemoryRouter as Router} from 'react-router'
 import {Link as RouterLink} from 'react-router-dom'
 //TODO i need to make all buttons , textfields same css to look sharp and clean so i dont have to repeat
 
