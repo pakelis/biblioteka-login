@@ -5,6 +5,7 @@ import classNames from 'classnames'
 import {useState} from 'react'
 //Spring
 import {useSpring, animated} from 'react-spring'
+import {config} from 'react-spring'
 
 //Material
 import {Box} from '@material-ui/core'
@@ -27,17 +28,18 @@ const useStyles = makeStyles(theme => ({
   container: {
     margin: '50px auto',
     // border: '3px solid black',
-    height: '70vh',
-    width: '50%',
+    height: '85vh',
+    width: '60%',
     maxWidth: '100%',
     position: 'relative',
     overflow: 'hidden',
     minWidth: '520px',
+    backgroundColor: '#fff',
 
     display: 'flex',
   },
   formContainer: {
-    backgroundColor: '#aaa',
+    // backgroundColor: '#fff',
     position: 'absolute',
     top: '0',
     height: '100%',
@@ -45,7 +47,7 @@ const useStyles = makeStyles(theme => ({
     overflow: 'hidden',
   },
   overlayContainer: {
-    backgroundColor: '#ddd',
+    // backgroundColor: '#fff',
     position: 'absolute',
     top: '0',
     left: '50%',
@@ -53,7 +55,6 @@ const useStyles = makeStyles(theme => ({
     width: '50%',
   },
   overlay: {
-    backgroundColor: 'yellow',
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover',
     bakcgroundPosition: '0 0',
@@ -84,7 +85,7 @@ const useStyles = makeStyles(theme => ({
     // transform: 'translateX(0)'
   },
   signUpContainer: {
-    // backgroundColor: 'yellow',
+    // backgroundColor: '#fff',
     left: '0',
     width: '50%',
     opacity: '0',
@@ -114,29 +115,39 @@ export default function LoginSignup() {
     transform: toggle ? 'translate(-100%)' : 'translate(0%)',
     // zIndex: toggle ? 5 : 1,
     opacity: toggle ? 0 : 1,
+    config: config.slow,
   })
   const signInOverlay = useSpring({
-    transform: toggle ? `translate(+100%)` : `translate(0%)`,
-    zIndex: toggle ? 2 : 0,
+    // transform: toggle ? `translate(+100%)` : `translate(0%)`,
+    // zIndex: toggle ? 2 : 0,
+    opacity: toggle ? 1 : 0,
   })
   const signIn = useSpring({
     opacity: toggle ? 0 : 1,
-    zIndex: toggle ? 0 : 2,
+    transform: toggle ? `translate(+100%)` : `translate(0%)`,
+    config: config.slow,
+  })
+  const signUp = useSpring({
+    transform: toggle ? `translate(+100%)` : `translate(0%)`,
+    opacity: toggle ? 1 : 0,
+    config: config.slow,
   })
 
   return (
     <Box component="div" boxShadow="3" className={classes.container}>
       <div>
-        <div
+        <animated.div
           className={classNames(classes.formContainer, classes.signUpContainer)}
+          style={signUp}
         >
           <Signup />
-        </div>
-        <div
+        </animated.div>
+        <animated.div
           className={classNames(classes.formContainer, classes.signInContainer)}
+          style={signIn}
         >
-          <Login style={signIn} />
-        </div>
+          <Login />
+        </animated.div>
         <div className={classNames(classes.overlayContainer)}>
           <div className={classes.overlay}>
             <animated.div
