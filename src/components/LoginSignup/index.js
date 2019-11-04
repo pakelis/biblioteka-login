@@ -6,6 +6,7 @@ import {useState} from 'react'
 //Spring
 import {useSpring, animated} from 'react-spring'
 import {config} from 'react-spring'
+import {Keyframes} from 'react-spring/renderprops'
 
 //Material
 import {Box} from '@material-ui/core'
@@ -45,6 +46,7 @@ const useStyles = makeStyles(theme => ({
     height: '100%',
     width: '50%',
     overflow: 'hidden',
+    transition: `all 0.6s ease-in-out`,
   },
   overlayContainer: {
     // backgroundColor: '#fff',
@@ -53,6 +55,8 @@ const useStyles = makeStyles(theme => ({
     left: '50%',
     height: '100%',
     width: '50%',
+    transition: 'transform 0.6s ease-in-out',
+    zIndex: '100',
   },
   overlay: {
     backgroundRepeat: 'no-repeat',
@@ -63,8 +67,8 @@ const useStyles = makeStyles(theme => ({
     left: '-100%',
     height: '100%',
     width: '200%',
-    // transform: 'translateX(0)'
-    // transition: 'transform 0.6s ease-in-out'
+    transform: 'translateX(0)',
+    transition: 'transform 0.6s ease-in-out',
   },
   overlayPanel: {
     position: 'absolute',
@@ -75,13 +79,15 @@ const useStyles = makeStyles(theme => ({
     top: '0',
     height: '100%',
     width: '50%',
-    // transition: 'transform 0.6s ease-in-out',
+    transform: `translateX(0)`,
+    transition: `transform 0.6s ease-in-out`,
   },
   overlayLeft: {
-    // transform: translateX(-20%)
+    // transform: `translateX(-20%)`,
   },
   overlayRight: {
     right: '0',
+    zIndex: 5,
     // transform: 'translateX(0)'
   },
   signUpContainer: {
@@ -112,25 +118,21 @@ export default function LoginSignup() {
   }
 
   const signUpOverlay = useSpring({
-    transform: toggle ? 'translate(-100%)' : 'translate(0%)',
-    // zIndex: toggle ? 5 : 1,
-    opacity: toggle ? 0 : 1,
-    config: config.slow,
+    // transform: toggle ? `translateX(-100%)` : `translateX(0%)`,
+    config: {duration: 500},
   })
   const signInOverlay = useSpring({
-    // transform: toggle ? `translate(+100%)` : `translate(0%)`,
-    // zIndex: toggle ? 2 : 0,
-    opacity: toggle ? 1 : 0,
+    config: {duration: 500},
   })
   const signIn = useSpring({
-    opacity: toggle ? 0 : 1,
-    transform: toggle ? `translate(+100%)` : `translate(0%)`,
-    config: config.slow,
+    config: {duration: 500},
   })
   const signUp = useSpring({
-    transform: toggle ? `translate(+100%)` : `translate(0%)`,
-    opacity: toggle ? 1 : 0,
-    config: config.slow,
+    from: {opacity: '0', zIndex: '1'},
+    to: async next => {
+      while (true)
+        await next({opacity: '1', zIndex: '5', transform: 'translateX(100%)'})
+    },
   })
 
   return (
