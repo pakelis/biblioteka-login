@@ -97,13 +97,6 @@ const useStyles = makeStyles(theme => ({
     width: '50%',
     zIndex: '2',
   },
-  containerRightPanelActiveContainer: {
-    zIndex: '200',
-    backgroundColor: 'red',
-  },
-  containerRightPanelActiveSignInContainer: {
-    transform: 'translateX(+100%)',
-  },
 }))
 
 export default function LoginSignup() {
