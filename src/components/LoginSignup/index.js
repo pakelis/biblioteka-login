@@ -130,14 +130,14 @@ const useStyles = makeStyles(theme => ({
 }))
 
 export default function LoginSignup() {
-  const [toggle, setToggle] = useState(false)
+  const [toggle, setToggle] = useState(true)
   const classes = useStyles()
 
   const toggleHandler = () => {
     if (toggle) {
-      setToggle(false)
-    } else {
       setToggle(true)
+    } else {
+      setToggle(false)
     }
   }
 
@@ -183,7 +183,7 @@ export default function LoginSignup() {
           <div
             className={
               toggle
-                ? classes.overlay
+                ? classNames(classes.overlay)
                 : classNames(
                     classes.overlay,
                     classes.containerRightPanelActiveOverlay,
