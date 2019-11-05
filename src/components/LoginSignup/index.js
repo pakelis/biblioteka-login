@@ -106,7 +106,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 export default function LoginSignup() {
-  const [toggle, setToggle] = useState(true)
+  const [toggle, setToggle] = useState(false)
   const classes = useStyles()
 
   const toggleHandler = () => {
@@ -117,8 +117,6 @@ export default function LoginSignup() {
     }
   }
 
-<<<<<<< HEAD
-=======
   const signUpOverlay = useSpring({
     // transform: toggle ? `translateX(-100%)` : `translateX(0%)`,
     config: {duration: 500},
@@ -130,55 +128,38 @@ export default function LoginSignup() {
     config: {duration: 500},
   })
   const signUp = useSpring({
-    from: {opacity: '0', zIndex: '1'},
-    to: async next => {
-      while (true)
-        await next({opacity: '1', zIndex: '5', transform: 'translateX(100%)'})
-    },
+    config: {duration: 500},
   })
 
->>>>>>> c622aec7b3e842790440440addbb7a4c09c390bf
   return (
     <Box component="div" boxShadow="3" className={classes.container}>
       <div>
-        <div
-          className={
-            toggle
-              ? classNames(classes.formContainer, classes.signUpContainer)
-              : classNames(
-                  classes.formContainer,
-                  classes.signUpContainer,
-                  classes.containerRightPanelActiveContainer,
-                )
-          }
+        <animated.div
+          className={classNames(classes.formContainer, classes.signUpContainer)}
+          style={signUp}
         >
           <Signup />
-        </div>
-        <div
-          className={
-            toggle
-              ? classNames(classes.formContainer, classes.signInContainer)
-              : classNames(
-                  classes.formContainer,
-                  classes.signInContainer,
-                  classes.containerRightPanelActiveSignInContainer,
-                )
-          }
+        </animated.div>
+        <animated.div
+          className={classNames(classes.formContainer, classes.signInContainer)}
+          style={signIn}
         >
           <Login />
-        </div>
+        </animated.div>
         <div className={classNames(classes.overlayContainer)}>
           <div className={classes.overlay}>
-            <div
+            <animated.div
+              style={signInOverlay}
               className={classNames(classes.overlayPanel, classes.overlayLeft)}
             >
               <OverlayLogin toggleClick={toggleHandler} />
-            </div>
-            <div
+            </animated.div>
+            <animated.div
+              style={signUpOverlay}
               className={classNames(classes.overlayPanel, classes.overlayRight)}
             >
               <OverlaySignUp toggleClick={toggleHandler} />
-            </div>
+            </animated.div>
           </div>
         </div>
       </div>
