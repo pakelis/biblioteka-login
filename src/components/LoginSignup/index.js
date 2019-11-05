@@ -6,6 +6,7 @@ import {useState} from 'react'
 //Spring
 import {useSpring, animated} from 'react-spring'
 import {config} from 'react-spring'
+import {Keyframes} from 'react-spring/renderprops'
 
 //Material
 import {Box} from '@material-ui/core'
@@ -45,6 +46,7 @@ const useStyles = makeStyles(theme => ({
     height: '100%',
     width: '50%',
     overflow: 'hidden',
+    transition: `all 0.6s ease-in-out`,
   },
   overlayContainer: {
     // backgroundColor: '#fff',
@@ -53,6 +55,8 @@ const useStyles = makeStyles(theme => ({
     left: '50%',
     height: '100%',
     width: '50%',
+    transition: 'transform 0.6s ease-in-out',
+    zIndex: '100',
   },
   overlay: {
     backgroundRepeat: 'no-repeat',
@@ -63,8 +67,8 @@ const useStyles = makeStyles(theme => ({
     left: '-100%',
     height: '100%',
     width: '200%',
-    // transform: 'translateX(0)'
-    // transition: 'transform 0.6s ease-in-out'
+    transform: 'translateX(0)',
+    transition: 'transform 0.6s ease-in-out',
   },
   overlayPanel: {
     position: 'absolute',
@@ -75,13 +79,15 @@ const useStyles = makeStyles(theme => ({
     top: '0',
     height: '100%',
     width: '50%',
-    // transition: 'transform 0.6s ease-in-out',
+    transform: `translateX(0)`,
+    transition: `transform 0.6s ease-in-out`,
   },
   overlayLeft: {
-    // transform: translateX(-20%)
+    // transform: `translateX(-20%)`,
   },
   overlayRight: {
     right: '0',
+    zIndex: 5,
     // transform: 'translateX(0)'
   },
   signUpContainer: {
@@ -111,6 +117,27 @@ export default function LoginSignup() {
     }
   }
 
+<<<<<<< HEAD
+=======
+  const signUpOverlay = useSpring({
+    // transform: toggle ? `translateX(-100%)` : `translateX(0%)`,
+    config: {duration: 500},
+  })
+  const signInOverlay = useSpring({
+    config: {duration: 500},
+  })
+  const signIn = useSpring({
+    config: {duration: 500},
+  })
+  const signUp = useSpring({
+    from: {opacity: '0', zIndex: '1'},
+    to: async next => {
+      while (true)
+        await next({opacity: '1', zIndex: '5', transform: 'translateX(100%)'})
+    },
+  })
+
+>>>>>>> c622aec7b3e842790440440addbb7a4c09c390bf
   return (
     <Box component="div" boxShadow="3" className={classes.container}>
       <div>
