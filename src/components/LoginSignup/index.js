@@ -128,6 +128,7 @@ export default function LoginSignup() {
     config: config.slow,
   })
   const signUp = useSpring({
+    zIndex: toggle ? 5 : 1,
     transform: toggle ? `translate(+100%)` : `translate(0%)`,
     opacity: toggle ? 1 : 0,
     config: config.slow,
