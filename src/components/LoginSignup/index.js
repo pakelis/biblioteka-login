@@ -106,7 +106,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 export default function LoginSignup() {
-  const [toggle, setToggle] = useState(false)
+  const [toggle, setToggle] = useState(true)
   const classes = useStyles()
 
   const toggleHandler = () => {
@@ -118,17 +118,25 @@ export default function LoginSignup() {
   }
 
   const signUpOverlay = useSpring({
-    // transform: toggle ? `translateX(-100%)` : `translateX(0%)`,
-    config: {duration: 500},
+    transform: toggle ? 'translate(-100%)' : 'translate(0%)',
+    // zIndex: toggle ? 5 : 1,
+    opacity: toggle ? 0 : 1,
+    config: config.slow,
   })
   const signInOverlay = useSpring({
-    config: {duration: 500},
+    // transform: toggle ? `translate(+100%)` : `translate(0%)`,
+    // zIndex: toggle ? 2 : 0,
+    opacity: toggle ? 1 : 0,
   })
   const signIn = useSpring({
-    config: {duration: 500},
+    opacity: toggle ? 0 : 1,
+    transform: toggle ? `translate(+100%)` : `translate(0%)`,
+    config: config.slow,
   })
   const signUp = useSpring({
-    config: {duration: 500},
+    transform: toggle ? `translate(+100%)` : `translate(0%)`,
+    opacity: toggle ? 1 : 0,
+    config: config.slow,
   })
 
   return (
