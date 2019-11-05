@@ -39,8 +39,6 @@ const useStyles = makeStyles(theme => ({
     position: 'absolute',
     top: '0',
     height: '100%',
-    width: '50%',
-    overflow: 'hidden',
     transition: 'all 0.6s ease-in-out',
   },
   overlayContainer: {
@@ -109,16 +107,15 @@ const useStyles = makeStyles(theme => ({
     opacity: '1',
     zIndex: '5',
     animation: 'show 0.6s',
-
-    '@keyframes show': {
-      '0%, 49.99%': {
-        opacity: '0',
-        zIndex: '1',
-      },
-      '50%,100%': {
-        opacity: '1',
-        zIndex: '5',
-      },
+  },
+  '@keyframes show': {
+    '0%, 49.99%': {
+      opacity: '0',
+      zIndex: '1',
+    },
+    '50%,100%': {
+      opacity: '1',
+      zIndex: '5',
     },
   },
   containerRightPanelActiveOverlayContainer: {
@@ -130,7 +127,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 export default function LoginSignup() {
-  const [toggle, setToggle] = useState(true)
+  const [toggle, setToggle] = useState(false)
   const classes = useStyles()
 
   const toggleHandler = () => {
