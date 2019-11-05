@@ -4,8 +4,6 @@ import Signup from './Signup'
 import classNames from 'classnames'
 import {useState} from 'react'
 //Spring
-import {useSpring, animated} from 'react-spring'
-import {config} from 'react-spring'
 
 //Material
 import {Box} from '@material-ui/core'
@@ -27,7 +25,6 @@ const useStyles = makeStyles(theme => ({
   },
   container: {
     margin: '50px auto',
-    // border: '3px solid black',
     height: '85vh',
     width: '60%',
     maxWidth: '100%',
@@ -39,20 +36,22 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
   },
   formContainer: {
-    // backgroundColor: '#fff',
     position: 'absolute',
     top: '0',
     height: '100%',
     width: '50%',
     overflow: 'hidden',
+    transition: 'all 0.6s ease-in-out',
   },
   overlayContainer: {
-    // backgroundColor: '#fff',
     position: 'absolute',
     top: '0',
     left: '50%',
     height: '100%',
     width: '50%',
+    overflow: 'hidden',
+    transition: 'transform 0.6s ease-in-out',
+    zIndex: '100',
   },
   overlay: {
     backgroundRepeat: 'no-repeat',
@@ -63,8 +62,8 @@ const useStyles = makeStyles(theme => ({
     left: '-100%',
     height: '100%',
     width: '200%',
-    // transform: 'translateX(0)'
-    // transition: 'transform 0.6s ease-in-out'
+    transform: 'translateX(0)',
+    transition: 'transform 0.6s ease-in-out',
   },
   overlayPanel: {
     position: 'absolute',
@@ -75,27 +74,58 @@ const useStyles = makeStyles(theme => ({
     top: '0',
     height: '100%',
     width: '50%',
-    // transition: 'transform 0.6s ease-in-out',
+    transform: 'translateX(0)',
+    transition: 'transform 0.6s ease-in-out',
   },
   overlayLeft: {
-    // transform: translateX(-20%)
+    transform: 'translateX(-20%)',
+  },
+  containerRightPanelActiveOverlayLeft: {
+    transform: 'translateX(0)',
   },
   overlayRight: {
     right: '0',
-    // transform: 'translateX(0)'
+    transform: 'translateX(0)',
+  },
+  containerRightPanelActiveOverlayRight: {
+    transform: 'translateX(20%)',
   },
   signUpContainer: {
-    // backgroundColor: '#fff',
     left: '0',
     width: '50%',
     opacity: '0',
     zIndex: '1',
   },
   signInContainer: {
-    // backgroundColor: 'orange',
     left: '0',
     width: '50%',
     zIndex: '2',
+  },
+  containerRightPanelActiveSignIn: {
+    transform: 'translateX(100%)',
+  },
+  containerRightPanelActiveSignUp: {
+    transform: 'translateX(100%)',
+    opacity: '1',
+    zIndex: '5',
+    animation: 'show 0.6s',
+
+    '@keyframes show': {
+      '0%, 49.99%': {
+        opacity: '0',
+        zIndex: '1',
+      },
+      '50%,100%': {
+        opacity: '1',
+        zIndex: '5',
+      },
+    },
+  },
+  containerRightPanelActiveOverlayContainer: {
+    transform: 'translateX(-100%)',
+  },
+  containerRightPanelActiveOverlay: {
+    transform: 'translateX(50%)',
   },
 }))
 
@@ -111,57 +141,81 @@ export default function LoginSignup() {
     }
   }
 
-  const signUpOverlay = useSpring({
-    transform: toggle ? 'translate(-100%)' : 'translate(0%)',
-    // zIndex: toggle ? 5 : 1,
-    opacity: toggle ? 0 : 1,
-    config: config.slow,
-  })
-  const signInOverlay = useSpring({
-    // transform: toggle ? `translate(+100%)` : `translate(0%)`,
-    // zIndex: toggle ? 2 : 0,
-    opacity: toggle ? 1 : 0,
-  })
-  const signIn = useSpring({
-    opacity: toggle ? 0 : 1,
-    transform: toggle ? `translate(+100%)` : `translate(0%)`,
-    config: config.slow,
-  })
-  const signUp = useSpring({
-    transform: toggle ? `translate(+100%)` : `translate(0%)`,
-    opacity: toggle ? 1 : 0,
-    config: config.slow,
-  })
-
   return (
     <Box component="div" boxShadow="3" className={classes.container}>
       <div>
-        <animated.div
-          className={classNames(classes.formContainer, classes.signUpContainer)}
-          style={signUp}
+        <div
+          className={
+            toggle
+              ? classNames(
+                  classes.formContainer,
+                  classes.signUpContainer,
+                  classes.containerRightPanelActiveSignUp,
+                )
+              : classNames(classes.formContainer, classes.signUpContainer)
+          }
         >
           <Signup />
-        </animated.div>
-        <animated.div
-          className={classNames(classes.formContainer, classes.signInContainer)}
-          style={signIn}
+        </div>
+        <div
+          className={
+            toggle
+              ? classNames(
+                  classes.formContainer,
+                  classes.signInContainer,
+                  classes.containerRightPanelActiveSignIn,
+                )
+              : classNames(classes.formContainer, classes.signInContainer)
+          }
         >
           <Login />
-        </animated.div>
-        <div className={classNames(classes.overlayContainer)}>
-          <div className={classes.overlay}>
-            <animated.div
-              style={signInOverlay}
-              className={classNames(classes.overlayPanel, classes.overlayLeft)}
+        </div>
+        <div
+          className={
+            toggle
+              ? classNames(classes.overlayContainer)
+              : classNames(
+                  classes.overlayContainer,
+                  classes.containerRightPanelActiveOverlayContainer,
+                )
+          }
+        >
+          <div
+            className={
+              toggle
+                ? classes.overlay
+                : classNames(
+                    classes.overlay,
+                    classes.containerRightPanelActiveOverlay,
+                  )
+            }
+          >
+            <div
+              className={
+                toggle
+                  ? classNames(classes.overlayPanel, classes.overlayLeft)
+                  : classNames(
+                      classes.overlayPanel,
+                      classes.overlayLeft,
+                      classes.containerRightPanelActiveOverlayLeft,
+                    )
+              }
             >
               <OverlayLogin toggleClick={toggleHandler} />
-            </animated.div>
-            <animated.div
-              style={signUpOverlay}
-              className={classNames(classes.overlayPanel, classes.overlayRight)}
+            </div>
+            <div
+              className={
+                toggle
+                  ? classNames(classes.overlayPanel, classes.overlayRight)
+                  : classNames(
+                      classes.overlayPanel,
+                      classes.overlayRight,
+                      classes.containerRightPanelActiveOverlayRight,
+                    )
+              }
             >
               <OverlaySignUp toggleClick={toggleHandler} />
-            </animated.div>
+            </div>
           </div>
         </div>
       </div>
