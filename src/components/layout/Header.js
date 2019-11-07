@@ -8,6 +8,9 @@ import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
 import IconButton from '@material-ui/core/IconButton'
 import MenuIcon from '@material-ui/icons/Menu'
+import Hidden from '@material-ui/core/Hidden'
+
+const drawerWidth = 240
 
 const useStyles = makeStyles(theme => ({
   menuButton: {
@@ -28,7 +31,7 @@ export const Header = () => {
   const classes = useStyles()
 
   return (
-    <AppBar position="static" className={classes.appBar}>
+    <AppBar position="fixed" className={classes.appBar}>
       <Toolbar>
         <IconButton
           edge="start"
@@ -39,7 +42,7 @@ export const Header = () => {
           <MenuIcon />
         </IconButton>
         <Typography variant="h6" className={classes.menuName}>
-          Namai
+          <Hidden xsDown>Namai</Hidden>
         </Typography>
         <Button
           onClick={() => app.auth().signOut()}
