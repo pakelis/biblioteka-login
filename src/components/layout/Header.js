@@ -16,13 +16,19 @@ const useStyles = makeStyles(theme => ({
   menuName: {
     flexGrow: 1, //take up all the space
   },
+  appBar: {
+    [theme.breakpoints.up('sm')]: {
+      width: '100%',
+    },
+    zIndex: theme.zIndex.drawer + 1,
+  },
 }))
 
 export const Header = () => {
   const classes = useStyles()
 
   return (
-    <AppBar position="static">
+    <AppBar position="static" className={classes.appBar}>
       <Toolbar>
         <IconButton
           edge="start"
