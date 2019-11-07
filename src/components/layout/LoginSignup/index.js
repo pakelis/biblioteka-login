@@ -9,9 +9,10 @@ import {config} from 'react-spring'
 
 //Material
 import {Box} from '@material-ui/core'
+import {makeStyles} from '@material-ui/styles'
+
 import OverlayLogin from './OverlayLogin'
 import OverlaySignUp from './OverlaySignUp'
-import {makeStyles} from '@material-ui/styles'
 
 const useStyles = makeStyles(theme => ({
   '@global': {

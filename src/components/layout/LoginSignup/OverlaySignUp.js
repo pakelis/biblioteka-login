@@ -7,11 +7,7 @@ import {
   Typography,
   Container,
   CssBaseline,
-  Box,
-  Sizing,
 } from '@material-ui/core'
-import {isAbsolute} from 'path'
-import {classes} from 'istanbul-lib-coverage'
 
 const useStyles = makeStyles(theme => ({
   overlayPanelLeft: {
@@ -23,37 +19,39 @@ const useStyles = makeStyles(theme => ({
     padding: '0px 40px',
     textAlign: 'center',
     height: '100%',
-    color: '#fff',
+    color: '#FFF',
     fontSize: '18px',
   },
-  button: {},
+  button: {
+    // color: '#fff',
+    // borderColor: '#fff !important',
+  },
   typography: {
     padding: '20px 0',
   },
 }))
 
-export const OverlayLogin = ({toggleClick}) => {
+export const OverlaySignUp = ({toggleClick}) => {
   const classes = useStyles()
 
   return (
     <Container className={classes.overlayPanelLeft} maxWidth="sm">
       <CssBaseline />
-      <Typography variant="h4">Sveiki sugryžę!</Typography>
-      <Typography className={classes.typography} variant="span">
-        Jei norite palaikyti ryšį su mumis, prisijunkite ir pateikite savo
-        asmeninę informaciją
+      <Typography variant="h3">Sveiki!</Typography>
+      <Typography className={classes.typography}>
+        Įveskite savo asmeninius duomenis ir pradėkite naudotis mūsų aplikaciją.
       </Typography>
       <Button
         onClick={toggleClick}
-        color="inherit"
-        variant="outlined"
         size="large"
+        variant="outlined"
+        color="inherit"
         className={classes.button}
       >
-        Prisijungti
+        Registracija
       </Button>
     </Container>
   )
 }
 
-export default OverlayLogin
+export default OverlaySignUp

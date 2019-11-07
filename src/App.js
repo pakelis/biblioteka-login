@@ -1,8 +1,8 @@
 import React from 'react'
-import Login from './components/LoginSignup/Login'
-import Signup from './components/LoginSignup/Signup'
-import LoginSignup from './components/LoginSignup/index'
-import Home from './components/Home'
+import Login from './components/layout/LoginSignup/Login'
+import Signup from './components/layout/LoginSignup/Signup'
+import LoginSignup from './components/layout/LoginSignup/index'
+import Content from './components/layout/Content'
 import {AuthProvider} from './Auth'
 import {BrowserRouter as Router, Route} from 'react-router-dom'
 import PrivateRoute from './Routes/PrivateRoute'
@@ -19,7 +19,7 @@ function App() {
       <AuthProvider>
         <Router>
           <div>
-            <PrivateRoute exact path="/" component={Home} />
+            <PrivateRoute exact path="/" component={Content} />
             <Route exact path="/login" component={LoginSignup} />
             <Route exact path="/signup" component={Signup} />
           </div>

@@ -1,13 +1,15 @@
-import React, {useCallback} from 'react'
-import {withRouter} from 'react-router'
-import app from '../../firebase'
+import React, {useCallback, useContext, useState} from 'react'
+import {withRouter, Redirect} from 'react-router'
+import app from '../../../firebase'
+import {AuthContext} from '../../../Auth'
+import {Link as RouterLink} from 'react-router-dom'
+//TODO i need to make all buttons , textfields same css to look sharp and clean so i dont have to repeat
 
-//Material
+//MATERIAL
 import InputAdornment from '@material-ui/core/InputAdornment'
 import LockIcon from '@material-ui/icons/Lock'
 import EmailIcon from '@material-ui/icons/Email'
 import AccountCircleIcon from '@material-ui/icons/AccountCircle'
-import FaceIcon from '@material-ui/icons/Face'
 import {
   Button,
   makeStyles,
@@ -15,6 +17,10 @@ import {
   Typography,
   Container,
   CssBaseline,
+  FormControlLabel,
+  Checkbox,
+  Grid,
+  Link,
 } from '@material-ui/core'
 
 const useStyles = makeStyles(theme => ({
@@ -43,7 +49,7 @@ const useStyles = makeStyles(theme => ({
     fontSize: '8em',
   },
   form: {
-    width: '100%',
+    width: '100%', // Fix IE 11 issue.
     marginTop: theme.spacing(1),
   },
   submit: {
@@ -57,64 +63,62 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-const SignUp = ({history}) => {
-  const handleSignUp = useCallback(
+const Link1 = React.forwardRef((props, ref) => (
+  <RouterLink innerRef={ref} to="/signup" {...props} />
+))
+
+const Login = ({history}) => {
+  const [checkBox, setCheckBox] = useState(false)
+
+  const toggleRememberMe = () => {
+    setCheckBox(!checkBox)
+  }
+  //history prop we get using withRouter
+  const handleLogin = useCallback(
     async event => {
       event.preventDefault()
-      //we get email and password with e.target.elements
-      const {name, email, password, password2} = event.target.elements
+      const {email, password} = event.target.elements
       try {
-        await app
-          .auth()
-          .createUserWithEmailAndPassword(email.value, password.value)
+        await app.auth().signInWithEmailAndPassword(email.value, password.value)
+        //we get history from props so we can redirect to different route
         history.push('/')
       } catch (error) {
-        //More complicated in future
         alert(error)
       }
     },
     [history],
   )
 
+  //Using styles hook from material
   const classes = useStyles()
+  //Using currentUser from context hook
+  const {currentUser} = useContext(AuthContext)
+
+  if (currentUser) {
+    return <Redirect to="/" />
+  }
 
   return (
     <div className={classes.mainContainer}>
-      <Container maxWidth="sm" className={classes.container}>
+      <Container component="div" maxWidth="sm" className={classes.container}>
         <CssBaseline />
         <div className={classes.paper}>
           <AccountCircleIcon className={classes.avatar} />
           <div className={classes.paperContent}>
             <Typography variant="h4" className={classes.mainText}>
-              Sign up
+              Sign in
             </Typography>
-            <form onSubmit={handleSignUp}>
+            <form onSubmit={handleLogin} className={classes.form}>
               <TextField
                 variant="outlined"
                 margin="normal"
                 required
                 fullWidth
-                id="name"
-                label="Name"
-                name="name"
-                autoFocus
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <FaceIcon className={classes.icon} />
-                    </InputAdornment>
-                  ),
-                }}
-              />
-              <TextField
-                variant="outlined"
-                margin="normal"
-                required
-                fullWidth
-                id="signup-email"
+                id="login-email"
                 label="Email Address"
                 name="email"
                 autoComplete="email"
+                autoFocus
                 InputProps={{
                   endAdornment: (
                     <InputAdornment position="end">
@@ -126,12 +130,12 @@ const SignUp = ({history}) => {
               <TextField
                 variant="outlined"
                 margin="normal"
-                type="password"
                 required
                 fullWidth
-                id="signup-password"
-                label="Password"
                 name="password"
+                label="Password"
+                type="password"
+                id="login-password"
                 autoComplete="current-password"
                 InputProps={{
                   endAdornment: (
@@ -141,23 +145,15 @@ const SignUp = ({history}) => {
                   ),
                 }}
               />
-              <TextField
-                variant="outlined"
-                margin="normal"
-                required
-                fullWidth
-                type="password"
-                id="signup-password2"
-                label="Repeat Password"
-                name="password2"
-                autoComplete="current-password"
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <LockIcon className={classes.icon} />
-                    </InputAdornment>
-                  ),
-                }}
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    onChange={toggleRememberMe}
+                    value="remember"
+                    color="primary"
+                  />
+                }
+                label="Remember me"
               />
               <Button
                 type="submit"
@@ -167,8 +163,24 @@ const SignUp = ({history}) => {
                 className={classes.submit}
                 size="large"
               >
-                Sign up
+                Sign In
               </Button>
+              <Grid container>
+                <Grid item xs>
+                  <Link href="#" variant="body2" className={classes.smallText}>
+                    Forgot password?
+                  </Link>
+                </Grid>
+                <Grid item>
+                  <Link
+                    variant="body2"
+                    component={Link1}
+                    className={classes.smallText}
+                  >
+                    {"Don't have an account? Sign Up"}
+                  </Link>
+                </Grid>
+              </Grid>
             </form>
           </div>
         </div>
@@ -177,4 +189,4 @@ const SignUp = ({history}) => {
   )
 }
 
-export default withRouter(SignUp)
+export default withRouter(Login)
