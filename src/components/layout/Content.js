@@ -61,8 +61,9 @@ const useStyles = makeStyles(theme => ({
   }),
 }))
 
-const Content = () => {
+const Content = props => {
   const classes = useStyles()
+  // const {cildren} = this.props
 
   return (
     <div className={classes.root}>
