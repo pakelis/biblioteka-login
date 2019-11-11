@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import app from '../../firebase'
 import {Header} from './Header'
 import ClassNames from 'classnames'
@@ -62,7 +62,12 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const Content = () => {
+  const [open, setOpen] = useState(true)
   const classes = useStyles()
+
+  const handleDrawer = () => {
+    setOpen(!open)
+  }
 
   return (
     <div className={classes.root}>
@@ -73,6 +78,7 @@ const Content = () => {
             className={classes.menuButton}
             color="inherit"
             aria-label="menu"
+            onClick={handleDrawer}
           >
             <MenuIcon />
           </IconButton>
@@ -89,7 +95,12 @@ const Content = () => {
           </Button>
         </Toolbar>
       </AppBar>
-      <Drawer variant="permanent" className={classes.drawerPaper}>
+      <Drawer
+        variant="persistent"
+        anchor="left"
+        open={open}
+        className={classes.drawerPaper}
+      >
         <NavItems />
       </Drawer>
     </div>
