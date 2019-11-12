@@ -1,78 +1,74 @@
-import React, {useState} from 'react'
-import app from '../../firebase'
-import {Header} from './Header'
-import ClassNames from 'classnames'
+import React, { useState } from "react";
+import app from "../../firebase";
+import { Header } from "./Header";
+import ClassNames from "classnames";
 //Material
-import {makeStyles} from '@material-ui/core/styles'
-import {Menu} from './Menu'
-import MenuIcon from '@material-ui/icons/Menu'
+import { makeStyles } from "@material-ui/core/styles";
+import { Menu } from "./Menu";
+import MenuIcon from "@material-ui/icons/Menu";
 import {
   IconButton,
   Button,
   AppBar,
   Toolbar,
   Typography,
-  Drawer,
-} from '@material-ui/core'
-import {NavItems} from './NavItems'
+  Drawer
+} from "@material-ui/core";
+import { NavItems } from "./NavItems";
 
 const useStyles = makeStyles(theme => ({
-  '@global': {
+  "@global": {
     body: {
-      backgroundColor: theme.palette.lightShade.main,
-    },
+      backgroundColor: theme.palette.lightShade.main
+    }
   },
   // The main flex container for the app's layout. Its min-height
   // is set to `100vh` so it always fill the height of the screen.
   root: {
-    display: 'flex',
-    minHeight: '100vh',
+    display: "flex",
+    minHeight: "100vh",
     zIndex: 1,
-    position: 'relative',
-    overflow: 'hidden',
-    backgroundColor: theme.palette.lightShade.main,
+    position: "relative",
+    overflow: "hidden",
+    backgroundColor: theme.palette.lightShade.main
   },
   menuButton: {
-    marginRight: theme.spacing(2),
+    marginRight: theme.spacing(2)
   },
   menuName: {
-    flexGrow: 1, //take up all the space
+    flexGrow: 1 //take up all the space
   },
   appBar: {
-    zIndex: theme.zIndex.drawer + 1,
+    zIndex: theme.zIndex.drawer + 1
   },
   toolbarActions: {
-    marginLeft: 'auto',
+    marginLeft: "auto"
   },
   drawerPaper: {
     paddingTop: 64, // equal to AppBar height
-    width: '80%',
+    width: "80%"
   },
   appContent: theme.mixins.gutters({
-    flex: '1 1 100%',
-    maxWidth: '100%',
+    flex: "1 1 100%",
+    maxWidth: "100%",
     paddingTop: 80, // equal to AppBar height + 16px
-    margin: '0 auto',
+    margin: "0 auto",
     // Set the max content width for each breakpoint
     // Content will be centered in the space to the right/left of drawer
-    [theme.breakpoints.up('lg')]: {
-      maxWidth: theme.breakpoints.values.lg,
-    },
-  }),
-}))
+    [theme.breakpoints.up("lg")]: {
+      maxWidth: theme.breakpoints.values.lg
+    }
+  })
+}));
 
-<<<<<<< HEAD
-const Content = props => {
-=======
 const Content = () => {
-  const [open, setOpen] = useState(true)
->>>>>>> 6a41724f48ce12ef847b0761c57d886b83379683
-  const classes = useStyles()
+  const [open, setOpen] = useState(true);
+  const classes = useStyles();
   // const {cildren} = this.props
 
   const handleDrawer = () => {
-    setOpen(!open)
-  }
+    setOpen(!open);
+  };
 
   return (
     <div className={classes.root}>
@@ -109,7 +105,7 @@ const Content = () => {
         <NavItems />
       </Drawer>
     </div>
-  )
-}
+  );
+};
 
-export default Content
+export default Content;
