@@ -14,20 +14,24 @@ import { Records } from "./components/Records";
 import { Home } from "./components/layout/Home";
 
 function App() {
+  const withLayout = (LayoutComp, ComponentComp) => (
+    <LayoutComp>
+      <ComponentComp />
+    </LayoutComp>
+  );
+
   return (
     //AuthProvider everything below it, will have acess to currentUser through the context API
     //In our case if we logged in we will have user Object with all the description, and if we log out we have null or undefined
     <MuiThemeProvider theme={MyTheme}>
       <AuthProvider>
         <Router>
-          <Switch>
+          <div>
+            <PrivateRoute path="/" component={Content} />
+            <PrivateRoute path="/records" component={Records} />
             <Route exact path="/login" component={LoginSignup} />
             <Route exact path="/signup" component={Signup} />
-            <Content>
-              <PrivateRoute exact path="/" component={Home} />
-              <PrivateRoute exact path="/records" component={Records} />
-            </Content>
-          </Switch>
+          </div>
         </Router>
       </AuthProvider>
     </MuiThemeProvider>
