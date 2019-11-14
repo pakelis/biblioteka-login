@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import app from "../../firebase";
 import { Header } from "./Header";
 import ClassNames from "classnames";
+import { Switch, BrowserRouter, Route } from "react-router-dom";
 //Material
 import { makeStyles } from "@material-ui/core/styles";
 import { Menu } from "./Menu";
@@ -12,12 +13,14 @@ import {
   AppBar,
   Toolbar,
   Typography,
-  Drawer
+  Drawer,
+  Container
 } from "@material-ui/core";
 import { NavItems } from "./NavItems";
 import { Home } from "./Home";
 //hooks
 import { useWindowDimensions } from "../../hooks";
+import { Records } from "../Records";
 
 const useStyles = makeStyles(theme => ({
   "@global": {
@@ -106,17 +109,22 @@ const Content = props => {
           </Button>
         </Toolbar>
       </AppBar>
-      <Drawer
-        variant="persistent"
-        anchor="left"
-        open={open}
-        className={classes.drawerPaper}
-      >
-        <NavItems />
-      </Drawer>
-      <main className={classes.appContent}>
-        <Home />
-      </main>
+      <BrowserRouter>
+        <Drawer
+          variant="persistent"
+          anchor="left"
+          open={open}
+          className={classes.drawerPaper}
+        >
+          <NavItems />
+        </Drawer>
+        <main className={classes.appContent}>
+          <Switch>
+            <Route path="/home" component={Home} />
+            <Route path="/records" component={Records} />
+          </Switch>
+        </main>
+      </BrowserRouter>
     </div>
   );
 };

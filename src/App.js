@@ -26,12 +26,9 @@ function App() {
     <MuiThemeProvider theme={MyTheme}>
       <AuthProvider>
         <Router>
-          <div>
-            <PrivateRoute path="/" component={Content} />
-            <PrivateRoute path="/records" component={Records} />
-            <Route exact path="/login" component={LoginSignup} />
-            <Route exact path="/signup" component={Signup} />
-          </div>
+          <PrivateRoute path="/" component={Content} />
+          <Route exact path="/login" component={LoginSignup} />
+          <Route exact path="/signup" component={Signup} />
         </Router>
       </AuthProvider>
     </MuiThemeProvider>

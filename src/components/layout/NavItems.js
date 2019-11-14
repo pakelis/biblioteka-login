@@ -29,7 +29,7 @@ export const NavItems = () => {
   return (
     <div className={classes.root}>
       <MenuList>
-        <MenuItem button component={Link} to="/">
+        <MenuItem button component={Link} to="/home">
           <ListItemIcon>
             <HomeIcon />
           </ListItemIcon>
