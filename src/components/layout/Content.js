@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import app from "../../firebase";
+import { firebase } from "../../firebase";
 import { Header } from "./Header";
 import ClassNames from "classnames";
 import { Switch, BrowserRouter, Route } from "react-router-dom";
@@ -21,6 +21,7 @@ import { Home } from "./Home";
 //hooks
 import { useWindowDimensions } from "../../hooks";
 import { Records } from "../Records";
+import { Tasks } from "../Tasks";
 
 const useStyles = makeStyles(theme => ({
   "@global": {
@@ -100,7 +101,7 @@ const Content = props => {
             Namai
           </Typography>
           <Button
-            onClick={() => app.auth().signOut()}
+            onClick={() => firebase.auth().signOut()}
             //button has onClick handler that will sign us out using firebase API
             color="inherit"
             className={classes.logout}
@@ -122,6 +123,7 @@ const Content = props => {
           <Switch>
             <Route path="/home" component={Home} />
             <Route path="/records" component={Records} />
+            <Route path="/tasks" component={Tasks} />
           </Switch>
         </main>
       </BrowserRouter>

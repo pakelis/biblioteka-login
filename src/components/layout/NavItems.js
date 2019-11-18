@@ -41,11 +41,11 @@ export const NavItems = () => {
           </ListItemIcon>
           <ListItemText primary={"Irasai"} />
         </MenuItem>
-        <MenuItem button>
+        <MenuItem button component={Link} to="/tasks">
           <ListItemIcon>
             <SaveIcon />
           </ListItemIcon>
-          <ListItemText primary={"Issaugoti"} />
+          <ListItemText primary={"Uzduotys"} />
         </MenuItem>
         <MenuItem button>
           <ListItemIcon>

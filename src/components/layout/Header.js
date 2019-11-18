@@ -1,5 +1,5 @@
 import React from "react";
-import app from "../../firebase";
+import { firebase } from "../../firebase";
 //Material
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
@@ -45,7 +45,7 @@ export const Header = () => {
           <Hidden xsDown>Namai</Hidden>
         </Typography>
         <Button
-          onClick={() => app.auth().signOut()}
+          onClick={() => firebase.auth().signOut()}
           //button has onClick handler that will sign us out using firebase API
           color="inherit"
           className={classes.logout}

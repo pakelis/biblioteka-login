@@ -1,82 +1,82 @@
-import React, {useCallback} from 'react'
-import {withRouter} from 'react-router'
-import app from '../../../firebase'
+import React, { useCallback } from "react";
+import { withRouter } from "react-router";
+import { firebase } from "../../../firebase";
 
 //Material
-import InputAdornment from '@material-ui/core/InputAdornment'
-import LockIcon from '@material-ui/icons/Lock'
-import EmailIcon from '@material-ui/icons/Email'
-import AccountCircleIcon from '@material-ui/icons/AccountCircle'
-import FaceIcon from '@material-ui/icons/Face'
+import InputAdornment from "@material-ui/core/InputAdornment";
+import LockIcon from "@material-ui/icons/Lock";
+import EmailIcon from "@material-ui/icons/Email";
+import AccountCircleIcon from "@material-ui/icons/AccountCircle";
+import FaceIcon from "@material-ui/icons/Face";
 import {
   Button,
   makeStyles,
   TextField,
   Typography,
   Container,
-  CssBaseline,
-} from '@material-ui/core'
+  CssBaseline
+} from "@material-ui/core";
 
 const useStyles = makeStyles(theme => ({
   mainContainer: {
-    display: 'flex',
-    justifyContent: 'center',
-    flexDirection: 'column',
-    alignItems: 'center',
-    backgroundColor: '#fff',
-    height: '100%',
+    display: "flex",
+    justifyContent: "center",
+    flexDirection: "column",
+    alignItems: "center",
+    backgroundColor: "#fff",
+    height: "100%"
   },
   paper: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center"
   },
   paperContent: {
-    padding: '20px',
+    padding: "20px"
   },
   mainText: {
-    textAlign: 'center',
-    marginBottom: theme.spacing(2),
+    textAlign: "center",
+    marginBottom: theme.spacing(2)
   },
   avatar: {
     color: theme.palette.primary.main,
-    fontSize: '8em',
+    fontSize: "8em"
   },
   form: {
-    width: '100%',
-    marginTop: theme.spacing(1),
+    width: "100%",
+    marginTop: theme.spacing(1)
   },
   submit: {
-    margin: theme.spacing(3, 0, 3),
+    margin: theme.spacing(3, 0, 3)
   },
   icon: {
-    color: theme.palette.darkShade.main,
+    color: theme.palette.darkShade.main
   },
   smallText: {
-    color: theme.palette.darkShade.main,
-  },
-}))
+    color: theme.palette.darkShade.main
+  }
+}));
 
-const SignUp = ({history}) => {
+const SignUp = ({ history }) => {
   const handleSignUp = useCallback(
     async event => {
-      event.preventDefault()
+      event.preventDefault();
       //we get email and password with e.target.elements
-      const {name, email, password, password2} = event.target.elements
+      const { name, email, password, password2 } = event.target.elements;
       try {
-        await app
+        await firebase
           .auth()
-          .createUserWithEmailAndPassword(email.value, password.value)
-        history.push('/')
+          .createUserWithEmailAndPassword(email.value, password.value);
+        history.push("/");
       } catch (error) {
         //More complicated in future
-        alert(error)
+        alert(error);
       }
     },
-    [history],
-  )
+    [history]
+  );
 
-  const classes = useStyles()
+  const classes = useStyles();
 
   return (
     <div className={classes.mainContainer}>
@@ -103,7 +103,7 @@ const SignUp = ({history}) => {
                     <InputAdornment position="end">
                       <FaceIcon className={classes.icon} />
                     </InputAdornment>
-                  ),
+                  )
                 }}
               />
               <TextField
@@ -120,7 +120,7 @@ const SignUp = ({history}) => {
                     <InputAdornment position="end">
                       <EmailIcon className={classes.icon} />
                     </InputAdornment>
-                  ),
+                  )
                 }}
               />
               <TextField
@@ -138,7 +138,7 @@ const SignUp = ({history}) => {
                     <InputAdornment position="end">
                       <LockIcon className={classes.icon} />
                     </InputAdornment>
-                  ),
+                  )
                 }}
               />
               <TextField
@@ -156,7 +156,7 @@ const SignUp = ({history}) => {
                     <InputAdornment position="end">
                       <LockIcon className={classes.icon} />
                     </InputAdornment>
-                  ),
+                  )
                 }}
               />
               <Button
@@ -174,7 +174,7 @@ const SignUp = ({history}) => {
         </div>
       </Container>
     </div>
-  )
-}
+  );
+};
 
-export default withRouter(SignUp)
+export default withRouter(SignUp);
