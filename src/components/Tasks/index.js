@@ -8,7 +8,7 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import ListItemText from "@material-ui/core/ListItemText";
-import Checkbox from "@material-ui/core/Checkbox";
+// import Checkbox from "@material-ui/core/Checkbox";
 import IconButton from "@material-ui/core/IconButton";
 import CommentIcon from "@material-ui/icons/Comment";
 
@@ -26,18 +26,5 @@ export const Tasks = () => {
 
   console.log(tasks);
 
-  return (
-    <div>
-      <Typography variant="h3">Tasks</Typography>
-      <ul className="tasks__list">
-        {tasks.map(task => (
-          <li key={`${tasks.id}`}>
-            <Checkbox id={task.id}>
-              <span>{task.task}</span>
-            </Checkbox>
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
+  return <List className={classes.root}>{tasks.tasks}</List>;
 };
