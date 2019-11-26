@@ -1,7 +1,8 @@
-import React, {useState} from 'react'
-import app from '../../firebase'
+import React, {useState, useEffect} from 'react'
+import {firebase} from '../../firebase'
 import {Header} from './Header'
 import ClassNames from 'classnames'
+import {Switch, BrowserRouter, Route} from 'react-router-dom'
 //Material
 import {makeStyles} from '@material-ui/core/styles'
 import {Menu} from './Menu'
@@ -13,8 +14,14 @@ import {
   Toolbar,
   Typography,
   Drawer,
+  Container,
 } from '@material-ui/core'
 import {NavItems} from './NavItems'
+import {Home} from '../Home'
+//hooks
+import {useWindowDimensions} from '../../hooks'
+import {Records} from '../Records'
+import {Tasks} from '../Tasks'
 
 const useStyles = makeStyles(theme => ({
   '@global': {
@@ -46,13 +53,14 @@ const useStyles = makeStyles(theme => ({
   },
   drawerPaper: {
     paddingTop: 64, // equal to AppBar height
-    width: '80%',
+    width: '20%',
   },
   appContent: theme.mixins.gutters({
     flex: '1 1 100%',
     maxWidth: '100%',
     paddingTop: 80, // equal to AppBar height + 16px
     margin: '0 auto',
+    alignItems: 'center',
     // Set the max content width for each breakpoint
     // Content will be centered in the space to the right/left of drawer
     [theme.breakpoints.up('lg')]: {
@@ -61,13 +69,20 @@ const useStyles = makeStyles(theme => ({
   }),
 }))
 
-const Content = () => {
+const Content = props => {
   const [open, setOpen] = useState(true)
   const classes = useStyles()
+  const {width, height} = useWindowDimensions()
 
   const handleDrawer = () => {
     setOpen(!open)
   }
+
+  //if screen get to certain width it closes and vice versa
+  useEffect(() => {
+    width < 860 && open && setOpen(false)
+    width > 860 && !open && setOpen(true)
+  }, [width])
 
   return (
     <div className={classes.root}>
@@ -86,7 +101,7 @@ const Content = () => {
             Namai
           </Typography>
           <Button
-            onClick={() => app.auth().signOut()}
+            onClick={() => firebase.auth().signOut()}
             //button has onClick handler that will sign us out using firebase API
             color="inherit"
             className={classes.logout}
@@ -95,14 +110,23 @@ const Content = () => {
           </Button>
         </Toolbar>
       </AppBar>
-      <Drawer
-        variant="persistent"
-        anchor="left"
-        open={open}
-        className={classes.drawerPaper}
-      >
-        <NavItems />
-      </Drawer>
+      <BrowserRouter>
+        <Drawer
+          variant="persistent"
+          anchor="left"
+          open={open}
+          className={classes.drawerPaper}
+        >
+          <NavItems />
+        </Drawer>
+        <main className={classes.appContent}>
+          <Switch>
+            <Route path="/home" component={Home} />
+            <Route path="/records" component={Records} />
+            <Route path="/tasks" component={Tasks} />
+          </Switch>
+        </main>
+      </BrowserRouter>
     </div>
   )
 }

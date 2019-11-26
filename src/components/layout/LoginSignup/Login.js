@@ -1,6 +1,6 @@
 import React, {useCallback, useContext, useState} from 'react'
 import {withRouter, Redirect} from 'react-router'
-import app from '../../../firebase'
+import {firebase} from '../../../firebase'
 import {AuthContext} from '../../../Auth'
 import {Link as RouterLink} from 'react-router-dom'
 //TODO i need to make all buttons , textfields same css to look sharp and clean so i dont have to repeat
@@ -79,7 +79,9 @@ const Login = ({history}) => {
       event.preventDefault()
       const {email, password} = event.target.elements
       try {
-        await app.auth().signInWithEmailAndPassword(email.value, password.value)
+        await firebase
+          .auth()
+          .signInWithEmailAndPassword(email.value, password.value)
         //we get history from props so we can redirect to different route
         history.push('/')
       } catch (error) {
