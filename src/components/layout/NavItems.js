@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { withStyles, makeStyles } from "@material-ui/core/styles";
 import MenuList from "@material-ui/core/List";
@@ -6,6 +6,16 @@ import MenuItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import Divider from "@material-ui/core/Divider";
+import ListSubheader from "@material-ui/core/ListSubheader";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import Collapse from "@material-ui/core/Collapse";
+import InboxIcon from "@material-ui/icons/MoveToInbox";
+import DraftsIcon from "@material-ui/icons/Drafts";
+import SendIcon from "@material-ui/icons/Send";
+import ExpandLess from "@material-ui/icons/ExpandLess";
+import ExpandMore from "@material-ui/icons/ExpandMore";
+import StarBorder from "@material-ui/icons/StarBorder";
 //Icons
 import HomeIcon from "@material-ui/icons/Home";
 import DescriptionIcon from "@material-ui/icons/Description";
@@ -13,10 +23,14 @@ import SaveIcon from "@material-ui/icons/Save";
 import BookmarksIcon from "@material-ui/icons/Bookmarks";
 import DeleteIcon from "@material-ui/icons/Delete";
 import NotesIcon from "@material-ui/icons/Notes";
+import { useSelectedProjectValue } from "../../context";
+import { width } from "@material-ui/system";
 
 const useStyles = makeStyles(theme => ({
   root: {
     marginTop: theme.spacing(8)
+    // width: "100%",
+    // maxWidth: 360
   },
   listItemText: {
     fontSize: "64px"
@@ -25,36 +39,46 @@ const useStyles = makeStyles(theme => ({
 
 export const NavItems = () => {
   const classes = useStyles();
+  const [open, setOpen] = useState(true);
+  const { setSelectedProject } = useSelectedProjectValue;
+  const [active, setActive] = useState("inbox");
+  const [showProjects, setShowProjects] = useState(true);
+
+  const handleClick = () => {
+    setOpen(!open);
+  };
 
   return (
     <div className={classes.root}>
       <MenuList>
-        <MenuItem button component={Link} to="/home">
+        {/* if we want to make as a Link , we add - component={Link} to="/home" */}
+        <MenuItem button>
           <ListItemIcon>
             <HomeIcon />
           </ListItemIcon>
-          <ListItemText primary={"Namai"} />
-        </MenuItem>
-        <MenuItem button component={Link} to="/records">
-          <ListItemIcon>
-            <DescriptionIcon />
-          </ListItemIcon>
-          <ListItemText primary={"Irasai"} />
-        </MenuItem>
-        <MenuItem button component={Link} to="/tasks">
-          <ListItemIcon>
-            <SaveIcon />
-          </ListItemIcon>
-          <ListItemText primary={"Uzduotys"} />
+          <ListItemText primary={"Inbox"} />
         </MenuItem>
         <MenuItem button>
           <ListItemIcon>
+            <DescriptionIcon />
+          </ListItemIcon>
+          <ListItemText primary={"Today"} />
+        </MenuItem>
+        <MenuItem button>
+          <ListItemIcon>
+            <SaveIcon />
+          </ListItemIcon>
+          <ListItemText primary={"Next 7 days"} />
+        </MenuItem>
+        <MenuItem button onClick={handleClick}>
+          <ListItemIcon>
             <BookmarksIcon />
           </ListItemIcon>
-          <ListItemText primary={"Ruosiniai"} />
+          <ListItemText primary={"Records"} />
+          {open ? <ExpandLess /> : <ExpandMore />}
         </MenuItem>
       </MenuList>
-      <Divider />
+      {/* <Divider /> // we dont need that many RN 
       <MenuList>
         <MenuItem button>
           <ListItemIcon>
@@ -68,7 +92,7 @@ export const NavItems = () => {
           </ListItemIcon>
           <ListItemText primary={"Istrinti irasai"} />
         </MenuItem>
-      </MenuList>
+      </MenuList> */}
     </div>
   );
 };

@@ -16,3 +16,4 @@ export const useProjectsValue = () => useContext(ProjectsContext);
 
 // const {projects} = useProjectsValue()
 // this is how it would work, we get the {projects} from hook, and we use it with useProjectsValue
+//timestamp 1:46
