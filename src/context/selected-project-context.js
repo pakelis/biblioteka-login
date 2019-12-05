@@ -4,7 +4,7 @@ import { useProjects } from "../hooks";
 export const SelectedProjectContext = createContext();
 
 export const SelectedProjectProvider = ({ children }) => {
-  const { selectedProject, setSelectedProject } = useState("INBOX"); // if we dont have project set, it will go straight to the INBOX
+  const [selectedProject, setSelectedProject] = useState("INBOX"); // if we dont have project set, it will go straight to the INBOX
 
   return (
     <SelectedProjectContext.Provider

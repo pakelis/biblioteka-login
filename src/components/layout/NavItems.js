@@ -32,7 +32,7 @@ const useStyles = makeStyles(theme => ({
     marginTop: theme.spacing(8)
   },
   listItem: {
-    paddingRight: theme.spacing(6)
+    paddingRight: theme.spacing(8)
   }
 }));
 

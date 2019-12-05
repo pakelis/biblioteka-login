@@ -6,15 +6,15 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import StarBorder from "@material-ui/icons/StarBorder";
 import { MenuItem } from "@material-ui/core";
+import { IndividualProject } from "./IndividualProject";
 
 const useStyles = makeStyles(theme => ({
-  menuItemRoot: {
+  root: {
     paddingLeft: theme.spacing(4),
-    "&$menuItemSelected, &$menuItemSelected:focus, &$menuItemSelected:hover": {
-      backgroundColor: "blue"
+    "&:hover": {
+      // backgroundColor: 'blue'
     }
-  },
-  menuItemSelected: {}
+  }
 }));
 
 export const Records = ({ activeValue = null }) => {
@@ -32,11 +32,6 @@ export const Records = ({ activeValue = null }) => {
         button
         key={project.recordId}
         data-doc-id={project.docId}
-        className={
-          active === project.recordId
-            ? "active sidebar__project"
-            : "sidebar__project"
-        }
         className={classes.root}
         onClick={() => {
           setActive(project.recordId);
@@ -47,7 +42,9 @@ export const Records = ({ activeValue = null }) => {
         <ListItemIcon>
           <StarBorder />
         </ListItemIcon>
-        <ListItemText primary={project.name} />
+        {/* we can also pass it as a child like this -
+          <IndividualProject> {project} <IndividualProject/> */}
+        <IndividualProject project={project} />
       </MenuItem>
     ))
   );
