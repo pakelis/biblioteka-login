@@ -2,28 +2,19 @@ import React, { useState } from "react";
 import { useSelectedProjectValue, useProjectsValue } from "../../context";
 //Material
 import { makeStyles } from "@material-ui/core/styles";
-import ListSubheader from "@material-ui/core/ListSubheader";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import Collapse from "@material-ui/core/Collapse";
-import InboxIcon from "@material-ui/icons/MoveToInbox";
-import DraftsIcon from "@material-ui/icons/Drafts";
-import SendIcon from "@material-ui/icons/Send";
-import ExpandLess from "@material-ui/icons/ExpandLess";
-import ExpandMore from "@material-ui/icons/ExpandMore";
 import StarBorder from "@material-ui/icons/StarBorder";
+import { MenuItem } from "@material-ui/core";
 
 const useStyles = makeStyles(theme => ({
-  root: {
-    width: "100%",
-    maxWidth: 360,
-    backgroundColor: theme.palette.background.paper
+  menuItemRoot: {
+    paddingLeft: theme.spacing(4),
+    "&$menuItemSelected, &$menuItemSelected:focus, &$menuItemSelected:hover": {
+      backgroundColor: "blue"
+    }
   },
-  nested: {
-    paddingLeft: theme.spacing(4)
-  }
+  menuItemSelected: {}
 }));
 
 export const Records = ({ activeValue = null }) => {
@@ -37,7 +28,8 @@ export const Records = ({ activeValue = null }) => {
   return (
     projects &&
     projects.map(project => (
-      <li
+      <MenuItem
+        button
         key={project.recordId}
         data-doc-id={project.docId}
         className={
@@ -45,13 +37,18 @@ export const Records = ({ activeValue = null }) => {
             ? "active sidebar__project"
             : "sidebar__project"
         }
+        className={classes.root}
         onClick={() => {
           setActive(project.recordId);
           setSelectedProject(project.recordId);
         }}
+        selected={active}
       >
-        {JSON.stringify(project)}
-      </li>
+        <ListItemIcon>
+          <StarBorder />
+        </ListItemIcon>
+        <ListItemText primary={project.name} />
+      </MenuItem>
     ))
   );
 };

@@ -25,21 +25,20 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import NotesIcon from "@material-ui/icons/Notes";
 import { useSelectedProjectValue } from "../../context";
 import { width } from "@material-ui/system";
+import { Records } from "../layout/Records";
 
 const useStyles = makeStyles(theme => ({
   root: {
     marginTop: theme.spacing(8)
-    // width: "100%",
-    // maxWidth: 360
   },
-  listItemText: {
-    fontSize: "64px"
+  listItem: {
+    paddingRight: theme.spacing(6)
   }
 }));
 
 export const NavItems = () => {
   const classes = useStyles();
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const { setSelectedProject } = useSelectedProjectValue;
   const [active, setActive] = useState("inbox");
   const [showProjects, setShowProjects] = useState(true);
@@ -52,31 +51,36 @@ export const NavItems = () => {
     <div className={classes.root}>
       <MenuList>
         {/* if we want to make as a Link , we add - component={Link} to="/home" */}
-        <MenuItem button>
+        <MenuItem button className={classes.listItem}>
           <ListItemIcon>
             <HomeIcon />
           </ListItemIcon>
           <ListItemText primary={"Inbox"} />
         </MenuItem>
-        <MenuItem button>
+        <MenuItem button className={classes.listItem}>
           <ListItemIcon>
             <DescriptionIcon />
           </ListItemIcon>
           <ListItemText primary={"Today"} />
         </MenuItem>
-        <MenuItem button>
+        <MenuItem button className={classes.listItem}>
           <ListItemIcon>
             <SaveIcon />
           </ListItemIcon>
           <ListItemText primary={"Next 7 days"} />
         </MenuItem>
-        <MenuItem button onClick={handleClick}>
+        <MenuItem button onClick={handleClick} className={classes.listItem}>
           <ListItemIcon>
             <BookmarksIcon />
           </ListItemIcon>
           <ListItemText primary={"Records"} />
           {open ? <ExpandLess /> : <ExpandMore />}
         </MenuItem>
+        <Collapse in={open} timeout="auto" unmountOnExit>
+          <MenuList component="div" disablePadding>
+            <Records />
+          </MenuList>
+        </Collapse>
       </MenuList>
       {/* <Divider /> // we dont need that many RN 
       <MenuList>

@@ -12,7 +12,7 @@ import { ProjectsProvider, SelectedProjectProvider } from "./context";
 //MATERIAL IMPORTS
 import { MuiThemeProvider } from "@material-ui/core";
 import MyTheme from "./MyTheme"; // importing my theme palette
-import { Records } from "./components/Records";
+import { Records } from "./components/layout/Records";
 import { Home } from "./components/Home";
 
 function App() {

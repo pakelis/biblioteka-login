@@ -20,8 +20,8 @@ import { NavItems } from "./NavItems";
 import { Home } from "../Home";
 //hooks
 import { useWindowDimensions } from "../../hooks";
-import { Records } from "../Records";
-import { Tasks } from "../Tasks";
+import { Records } from "../layout/Records";
+import { Tasks } from "../layout/Tasks";
 
 const useStyles = makeStyles(theme => ({
   "@global": {
@@ -50,10 +50,6 @@ const useStyles = makeStyles(theme => ({
   },
   toolbarActions: {
     marginLeft: "auto"
-  },
-  drawerPaper: {
-    paddingTop: 64, // equal to AppBar height
-    width: "20%"
   },
   appContent: theme.mixins.gutters({
     flex: "1 1 100%",
@@ -111,12 +107,7 @@ const Content = props => {
         </Toolbar>
       </AppBar>
       <BrowserRouter>
-        <Drawer
-          variant="persistent"
-          anchor="left"
-          open={open}
-          className={classes.drawerPaper}
-        >
+        <Drawer variant="persistent" anchor="left" open={open}>
           <NavItems />
         </Drawer>
         <main className={classes.appContent}>
