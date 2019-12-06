@@ -57,6 +57,7 @@ const useStyles = makeStyles(theme => ({
     paddingTop: 80, // equal to AppBar height + 16px
     margin: "0 auto",
     alignItems: "center",
+    marginLeft: "270px",
     // Set the max content width for each breakpoint
     // Content will be centered in the space to the right/left of drawer
     [theme.breakpoints.up("lg")]: {
@@ -116,6 +117,7 @@ const Content = props => {
             <Route path="/records" component={Records} />
             <Route path="/tasks" component={Tasks} />
           </Switch>
+          <Tasks />
         </main>
       </BrowserRouter>
     </div>

@@ -29,7 +29,7 @@ export function useWindowDimensions() {
   return windowDimension;
 }
 
-export const useTasks = selectedRecord => {
+export const useTasks = selectedProject => {
   const [tasks, setTasks] = useState([]);
   const [archivedTasks, setArchivedTasks] = useState([]);
 
@@ -40,15 +40,15 @@ export const useTasks = selectedRecord => {
       .where("userId", "==", "abc001"); //Go get our tasks where userId is this
 
     unsubscribe = //this one means give me the tasks for selected project, it can be 1 or TODAY or INBOX etc....
-      selectedRecord && !collatedTasksExist(selectedRecord)
-        ? (unsubscribe = unsubscribe.where("recordId", "==", selectedRecord))
-        : selectedRecord === "TODAY"
+      selectedProject && !collatedTasksExist(selectedProject)
+        ? (unsubscribe = unsubscribe.where("projectId", "==", selectedProject))
+        : selectedProject === "TODAY"
         ? (unsubscribe = unsubscribe.where(
             "date",
             "==",
             moment().format("DD/MM/YYYY")
           ))
-        : selectedRecord === "INBOX" || selectedRecord === 0
+        : selectedProject === "INBOX" || selectedProject === 0
         ? (unsubscribe = unsubscribe.where("date", "==", ""))
         : unsubscribe; //47:56 timestamp of video.....
 
@@ -59,7 +59,7 @@ export const useTasks = selectedRecord => {
       }));
 
       setTasks(
-        selectedRecord === "NEXT_7"
+        selectedProject === "NEXT_7"
           ? newTasks.filter(
               task =>
                 moment(task.date, "DD-MM-YYYY").diff(moment(), "days") <= 7 &&
@@ -72,14 +72,14 @@ export const useTasks = selectedRecord => {
     });
 
     return () => unsubscribe(); // clean up function ? when unmounts?
-  }, [selectedRecord]); //run this once (empty array) , run when selectedRecord is changed
+  }, [selectedProject]); //run this once (empty array) , run when selectedProject is changed
 
   return { tasks, archivedTasks };
 };
 
-// const selectedRecord = 1
-// const { tasks, archivedTasks } = useTasks(selectedRecord)
-// this is how useTasks hook gonna work ^ (we get all the tasks that got recordId 1 etc.)
+// const selectedProject = 1
+// const { tasks, archivedTasks } = useTasks(selectedProject)
+// this is how useTasks hook gonna work ^ (we get all the tasks that got projectId 1 etc.)
 
 export const useProjects = () => {
   const [projects, setProjects] = useState([]);
@@ -87,9 +87,9 @@ export const useProjects = () => {
   useEffect(() => {
     firebase
       .firestore()
-      .collection("records")
+      .collection("projects")
       .where("userId", "==", "abc001")
-      .orderBy("recordId")
+      .orderBy("projectId")
       .get()
       .then(snapshot => {
         const allProjects = snapshot.docs.map(project => ({

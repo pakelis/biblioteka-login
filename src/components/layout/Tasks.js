@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Typography, Checkbox } from "@material-ui/core";
 import { useTasks } from "../../hooks";
+import { collatedTasks } from "../../constants";
+import { getTitle, getCollatedTitle, collatedTasksExist } from "../../helpers";
+import { useSelectedProjectValue, useProjectsValue } from "../../context";
 //Material
 import { makeStyles } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
@@ -22,15 +25,34 @@ const useStyles = makeStyles(theme => ({
 
 export const Tasks = () => {
   const classes = useStyles();
-  const { tasks } = useTasks("1"); // gets all the tasks from our useTasks hook in /hooks
+  const { selectedProject } = useSelectedProjectValue();
+  const { projects } = useProjectsValue();
+  const { tasks } = useTasks(selectedProject); // gets all the tasks from our useTasks hook in /hooks
   const [checked, setChecked] = useState([0]);
 
   const handleToggle = value => () => {
     // const currentIndex = checked.indexOf(value)
   };
 
+  let projectName = "";
+
+  if (projects && selectedProject && !collatedTasksExist(selectedProject)) {
+    projectName = getTitle(projects, selectedProject);
+    console.log("projectName1: ", projectName);
+  }
+
+  if (collatedTasksExist(selectedProject) && selectedProject) {
+    projectName = getCollatedTitle(collatedTasks, selectedProject);
+    console.log("projectName2: ", projectName);
+  }
+
+  useEffect(() => {
+    document.title = `${projectName}: Todoist`;
+  });
+
   return (
     <List className={classes.root}>
+      <h2>{projectName}</h2>
       {tasks.map(task => (
         <ListItem key={task.id} dense button>
           <ListItemIcon>

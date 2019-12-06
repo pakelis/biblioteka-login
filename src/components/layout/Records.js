@@ -23,21 +23,18 @@ export const Records = ({ activeValue = null }) => {
   const { setSelectedProject } = useSelectedProjectValue();
   const { projects } = useProjectsValue();
 
-  console.log("projects", projects);
-
   return (
     projects &&
     projects.map(project => (
       <MenuItem
         button
-        key={project.recordId}
+        key={project.projectId}
         data-doc-id={project.docId}
         className={classes.root}
         onClick={() => {
-          setActive(project.recordId);
-          setSelectedProject(project.recordId);
+          setActive(project.projectId);
+          setSelectedProject(project.projectId);
         }}
-        selected={active}
       >
         <ListItemIcon>
           <StarBorder />

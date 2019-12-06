@@ -8,7 +8,7 @@ import { makeStyles } from "@material-ui/core";
 import Popover from "@material-ui/core/Popover";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
-import { typography } from "@material-ui/system";
+import { typography, display } from "@material-ui/system";
 
 const useStyles = makeStyles(theme => ({
   deleteIcon: {
@@ -19,10 +19,7 @@ const useStyles = makeStyles(theme => ({
       color: theme.palette.primary.main
     }
   },
-  popover: {
-    alignContent: "center",
-    alignItems: "center"
-  },
+  popover: {},
   typography: {
     padding: theme.spacing(2)
   },
@@ -46,7 +43,7 @@ export const IndividualProject = ({ project }) => {
   const deleteProject = docId => {
     firebase
       .firestore()
-      .collection("records")
+      .collection("projects")
       .doc(docId)
       .delete()
       .then(() => {
@@ -60,7 +57,7 @@ export const IndividualProject = ({ project }) => {
       <Typography>{project.name}</Typography>
       <Typography onClick={() => setShowConfirm(!showConfirm)}>
         <DeleteIcon
-          fontSize="medium"
+          fontSize="default"
           color="primary"
           className={classes.deleteIcon}
           onClick={handleClick}
@@ -73,6 +70,7 @@ export const IndividualProject = ({ project }) => {
               vertical: "bottom",
               horizontal: "left"
             }}
+            className={classes.popover}
           >
             <Typography className={classes.typography}>
               Are you sure you want to delete this record?
