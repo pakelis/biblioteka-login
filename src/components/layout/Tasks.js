@@ -35,15 +35,18 @@ export const Tasks = () => {
   };
 
   let projectName = "";
+  console.log(`selected project - ${selectedProject}`);
 
   if (projects && selectedProject && !collatedTasksExist(selectedProject)) {
+    // console.log(projects);
+    // console.log(selectedProject);
     projectName = getTitle(projects, selectedProject);
-    console.log("projectName1: ", projectName);
+    console.log("projectName 1: ", projectName);
   }
 
   if (collatedTasksExist(selectedProject) && selectedProject) {
     projectName = getCollatedTitle(collatedTasks, selectedProject);
-    console.log("projectName2: ", projectName);
+    console.log("projectName 2: ", projectName);
   }
 
   useEffect(() => {
@@ -52,7 +55,7 @@ export const Tasks = () => {
 
   return (
     <List className={classes.root}>
-      <h2>{projectName}</h2>
+      <h2>{projectName} - Project name</h2>
       {tasks.map(task => (
         <ListItem key={task.id} dense button>
           <ListItemIcon>
