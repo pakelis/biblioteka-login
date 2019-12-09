@@ -9,7 +9,7 @@ import { Typography, Button, Box, TextField } from "@material-ui/core";
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 
 const useStyles = makeStyles(theme => ({
-  addProject: {
+  addProjectButton: {
     display: "flex",
     margin: "auto",
     color: theme.palette.primary.main,
@@ -17,6 +17,25 @@ const useStyles = makeStyles(theme => ({
   },
   icon: {
     marginRight: "10px"
+  },
+  textField: {
+    padding: "20px",
+    width: "100%"
+  },
+  popover: {
+    display: "flex",
+    flexWrap: "wrap",
+    width: "250px",
+    justifyContent: "center"
+  },
+  buttonParent: {
+    display: "flex",
+    justifyContent: "space-evenly"
+  },
+  buttonSuccess: {
+    "&:hover": {
+      color: "green"
+    }
   }
 }));
 
@@ -54,7 +73,11 @@ export const AddProject = ({ shouldShow = false }) => {
 
   return (
     <div>
-      <Button fullWidth className={classes.addProject} onClick={handleClick}>
+      <Button
+        fullWidth
+        className={classes.addProjectButton}
+        onClick={handleClick}
+      >
         <AddCircleOutlineIcon className={classes.icon} />
         Add Project
       </Button>
@@ -69,13 +92,21 @@ export const AddProject = ({ shouldShow = false }) => {
           className={classes.popover}
         >
           <TextField
+            className={classes.textField}
             value={projectName}
             onChange={e => setProjectName(e.target.value)}
             type="text"
             placeholder="Name your project"
           />
-          <Button onClick={() => addProject()}>Add Project</Button>
-          <Button onClick={() => setShow(false)}>Cancel</Button>
+          <div className={classes.buttonParent}>
+            <Button
+              onClick={() => addProject()}
+              className={classes.buttonSuccess}
+            >
+              Add Project
+            </Button>
+            <Button onClick={() => setShow(false)}>Cancel</Button>
+          </div>
         </Popover>
       )}
     </div>
