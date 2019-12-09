@@ -1,60 +1,83 @@
-import React, { useState } from "react";
-import { firebase } from "../firebase";
-import { generatePushId } from "../helpers";
-import { useProjectsValue } from "../context";
+import React, {useState} from 'react'
+import {firebase} from '../firebase'
+import {generatePushId} from '../helpers'
+import {useProjectsValue} from '../context'
 //Material
-import { makeStyles } from "@material-ui/core/styles";
-import Popover from "@material-ui/core/Popover";
-import { Typography, Button, Box, TextField } from "@material-ui/core";
-import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
+import {makeStyles} from '@material-ui/core/styles'
+import Popover from '@material-ui/core/Popover'
+import {Typography, Button, Box, TextField} from '@material-ui/core'
+import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline'
 
 const useStyles = makeStyles(theme => ({
-  addProject: {
-    display: "flex",
-    margin: "auto",
+  addProjectButton: {
+    display: 'flex',
+    margin: 'auto',
     color: theme.palette.primary.main,
-    backgroundColor: "#fff"
+    backgroundColor: '#fff',
   },
   icon: {
-    marginRight: "10px"
-  }
-}));
+    marginRight: '10px',
+  },
+  textField: {
+    padding: '20px',
+    width: '100%',
+  },
+  popover: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    width: '250px',
+    justifyContent: 'center',
+  },
+  buttonParent: {
+    display: 'flex',
+    justifyContent: 'space-evenly',
+  },
+  buttonSuccess: {
+    '&:hover': {
+      color: 'green',
+    },
+  },
+}))
 
-export const AddProject = ({ shouldShow = false }) => {
-  const classes = useStyles();
-  const [anchorEl, setAnchorEl] = useState(null);
-  const [show, setShow] = useState(shouldShow);
-  const [projectName, setProjectName] = useState("");
+export const AddProject = ({shouldShow = false}) => {
+  const classes = useStyles()
+  const [anchorEl, setAnchorEl] = useState(null)
+  const [show, setShow] = useState(shouldShow)
+  const [projectName, setProjectName] = useState('')
 
-  const projectId = generatePushId();
-  const { setProjects } = useProjectsValue();
+  const projectId = generatePushId()
+  const {setProjects} = useProjectsValue()
 
   const handleClick = event => {
     // setting anchor element position for popover to pop
-    setAnchorEl(event.currentTarget);
-    setShow(!show);
-  };
+    setAnchorEl(event.currentTarget)
+    setShow(!show)
+  }
 
   const addProject = () => {
     projectName &&
       firebase
         .firestore()
-        .collection("projects")
+        .collection('projects')
         .add({
           projectId,
           name: projectName,
-          userId: "abc001"
+          userId: 'abc001',
         })
         .then(() => {
-          setProjects([]);
-          setProjectName("");
-          setShow(false);
-        });
-  };
+          setProjects([])
+          setProjectName('')
+          setShow(false)
+        })
+  }
 
   return (
-    <div>
-      <Button fullWidth className={classes.addProject} onClick={handleClick}>
+    <Box>
+      <Button
+        fullWidth
+        className={classes.addProjectButton}
+        onClick={handleClick}
+      >
         <AddCircleOutlineIcon className={classes.icon} />
         Add Project
       </Button>
@@ -63,21 +86,29 @@ export const AddProject = ({ shouldShow = false }) => {
           open={show}
           anchorEl={anchorEl}
           anchorOrigin={{
-            vertical: "bottom",
-            horizontal: "left"
+            vertical: 'bottom',
+            horizontal: 'left',
           }}
           className={classes.popover}
         >
           <TextField
+            className={classes.textField}
             value={projectName}
             onChange={e => setProjectName(e.target.value)}
             type="text"
             placeholder="Name your project"
           />
-          <Button onClick={() => addProject()}>Add Project</Button>
-          <Button onClick={() => setShow(false)}>Cancel</Button>
+          <div className={classes.buttonParent}>
+            <Button
+              onClick={() => addProject()}
+              className={classes.buttonSuccess}
+            >
+              Add Project
+            </Button>
+            <Button onClick={() => setShow(false)}>Cancel</Button>
+          </div>
         </Popover>
       )}
-    </div>
-  );
-};
+    </Box>
+  )
+}

@@ -4,7 +4,7 @@ import {useProjectsValue, useSelectedProjectValue} from '../context'
 import {firebase} from '../firebase'
 import {classes} from 'istanbul-lib-coverage'
 //Material
-import {makeStyles} from '@material-ui/core'
+import {makeStyles, Box} from '@material-ui/core'
 import Popover from '@material-ui/core/Popover'
 import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
@@ -23,8 +23,12 @@ const useStyles = makeStyles(theme => ({
   typography: {
     padding: theme.spacing(2),
   },
+  buttonParent: {
+    display: 'flex',
+    justifyContent: 'space-evenly',
+  },
   deleteButton: {
-    color: theme.palette.danger.main,
+    '&:hover': {color: theme.palette.danger.main},
   },
 }))
 
@@ -75,20 +79,22 @@ export const IndividualProject = ({project}) => {
             <Typography className={classes.typography}>
               Are you sure you want to delete this record?
             </Typography>
-            <Button
-              type="button"
-              onClick={() => deleteProject(project.docId)}
-              className={classes.deleteButton}
-            >
-              Delete
-            </Button>
-            <Button
-              type="button"
-              onClick={() => setShowConfirm(!showConfirm)}
-              className={classes.cancelButton}
-            >
-              Cancel
-            </Button>
+            <div className={classes.buttonParent}>
+              <Button
+                type="button"
+                onClick={() => deleteProject(project.docId)}
+                className={classes.deleteButton}
+              >
+                Delete
+              </Button>
+              <Button
+                type="button"
+                onClick={() => setShowConfirm(!showConfirm)}
+                className={classes.cancelButton}
+              >
+                Cancel
+              </Button>
+            </div>
           </Popover>
         )}
       </Typography>
