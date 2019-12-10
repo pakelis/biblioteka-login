@@ -4,7 +4,34 @@ import moment from "moment";
 import { firebase } from "../firebase";
 import { useSelectedProjectValue } from "../context";
 import { Typography, TextField, Button } from "@material-ui/core";
-import { classes } from "istanbul-lib-coverage";
+//Material
+import { makeStyles } from "@material-ui/core";
+import AddIcon from "@material-ui/icons/Add";
+import { Box } from "@material-ui/core";
+import { fontWeight } from "@material-ui/system";
+
+const useStyles = makeStyles(theme => ({
+  root: {},
+  textField: {
+    width: "100%"
+  },
+  addIcon: {
+    marginRight: "5px"
+  },
+  addTask: {
+    color: theme.palette.darkGrey.main,
+    display: "flex",
+    alignItems: "center",
+    fontWeight: 500,
+    "&:hover": {
+      color: theme.palette.lightAccent.main,
+      cursor: "pointer"
+    }
+  },
+  addTaskButton: {
+    color: theme.palette.success.main
+  }
+}));
 
 export const AddTask = ({
   showAddTaskMain = true,
@@ -20,6 +47,8 @@ export const AddTask = ({
   const [showTaskDate, setShowTaskDate] = useState(false);
 
   const { selectedProject } = useSelectedProjectValue();
+
+  const classes = useStyles();
 
   const addTask = () => {
     const projectId = project || selectedProject;
@@ -56,20 +85,23 @@ export const AddTask = ({
   };
 
   return (
-    <div>
+    <Box style={{ marginTop: "15px" }}>
       {showAddTaskMain && (
-        <div onClick={() => setShowMain(!showMain)}>
-          <Typography> + Add Task</Typography>
-        </div>
+        <Box onClick={() => setShowMain(!showMain)}>
+          <Typography className={classes.addTask}>
+            <AddIcon className={classes.addIcon} /> Add Task
+          </Typography>
+        </Box>
       )}
 
       {(showMain || showQuickAddTask) && (
-        <div>
+        <div style={{ marginTop: "15px" }}>
           {showQuickAddTask && (
             <>
               <div>
-                <h2>Quick add task</h2>
-                <span
+                <Typography variant="h2">Quick add task</Typography>
+                <Typography
+                  variant="body1"
                   onClick={() => {
                     setShowMain(false);
                     setShowProjectOverlay(false);
@@ -77,32 +109,50 @@ export const AddTask = ({
                   }}
                 >
                   X
-                </span>
+                </Typography>
               </div>
             </>
           )}
-          <p>Project overlay here</p>
-          <p>Task Date here</p>
-          <TextField value={task} onChange={e => setTask(e.target.value)} />
-          <Button onClick={() => addTask()}>Add Task</Button>
+          <Typography paragraph={true}>Project overlay here</Typography>
+          <Typography paragraph={true}>Task Date here</Typography>
+          <TextField
+            className={classes.textField}
+            variant="outlined"
+            value={task}
+            onChange={e => setTask(e.target.value)}
+          />
+          <Button
+            className={classes.addTaskButton}
+            variant="contained"
+            onClick={() => addTask()}
+          >
+            Add Task
+          </Button>
           {!showQuickAddTask && (
-            <span
+            <Typography
+              variant="body1"
               onClick={() => {
                 setShowMain(false);
                 setShowProjectOverlay(false);
               }}
             >
               Cancel
-            </span>
+            </Typography>
           )}
-          <span onClick={() => setShowProjectOverlay(!showProjectOverlay)}>
+          <Typography
+            variant="body1"
+            onClick={() => setShowProjectOverlay(!showProjectOverlay)}
+          >
             <FaRegListAlt />
-          </span>
-          <span onClick={() => setShowTaskDate(!showTaskDate)}>
+          </Typography>
+          <Typography
+            variant="body1"
+            onClick={() => setShowTaskDate(!showTaskDate)}
+          >
             <FaRegCalendarAlt />
-          </span>
+          </Typography>
         </div>
       )}
-    </div>
+    </Box>
   );
 };

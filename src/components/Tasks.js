@@ -17,8 +17,8 @@ import { AddTask } from "./AddTask";
 
 const useStyles = makeStyles(theme => ({
   root: {
-    wdith: "100%",
-    maxWidth: 360
+    width: "100%",
+    maxWidth: 460
   },
   title: {
     padding: "15px"
