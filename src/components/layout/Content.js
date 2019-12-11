@@ -17,7 +17,7 @@ import {
   Container
 } from "@material-ui/core";
 import { NavItems } from "./NavItems";
-import { Home } from "../Home";
+// import { Home } from "../Home";
 //hooks
 import { useWindowDimensions } from "../../hooks";
 import { Records } from "../Records";
@@ -115,7 +115,7 @@ const Content = props => {
         </Drawer>
         <main className={classes.appContent}>
           <Switch>
-            <Route path="/home" component={Home} />
+            {/* <Route path="/home" component={Home} /> */}
             <Route path="/records" component={Records} />
             <Route path="/tasks" component={Tasks} />
           </Switch>

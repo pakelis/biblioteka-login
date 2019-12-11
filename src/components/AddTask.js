@@ -1,14 +1,18 @@
 import React, { useState } from "react";
-import { FaRegListAlt, FaRegCalendarAlt } from "react-icons/fa";
 import moment from "moment";
 import { firebase } from "../firebase";
 import { useSelectedProjectValue } from "../context";
-import { Typography, TextField, Button } from "@material-ui/core";
+import { Typography, TextField, Button, IconButton } from "@material-ui/core";
+import { MySuccessButton } from "./customComponents/MySuccessButton";
 //Material
 import { makeStyles } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import { Box } from "@material-ui/core";
-import { fontWeight } from "@material-ui/system";
+import DateRangeIcon from "@material-ui/icons/DateRange";
+import EventNoteIcon from "@material-ui/icons/EventNote";
+import { ProjectOverlay } from "./ProjectOverlay";
+
+//TODO make textfield outline focused color different, more like lightAccent
 
 const useStyles = makeStyles(theme => ({
   root: {},
@@ -28,8 +32,23 @@ const useStyles = makeStyles(theme => ({
       cursor: "pointer"
     }
   },
-  addTaskButton: {
-    color: theme.palette.success.main
+  addTaskContainer: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "flex-start",
+    marginTop: "10px"
+  },
+  iconsContainer: {
+    marginLeft: "auto",
+    display: "flex"
+  },
+  cancel: {
+    marginLeft: "15px",
+    fontWeight: "500",
+    "&:hover": {
+      textDecoration: "underline",
+      cursor: "pointer"
+    }
   }
 }));
 
@@ -113,44 +132,52 @@ export const AddTask = ({
               </div>
             </>
           )}
-          <Typography paragraph={true}>Project overlay here</Typography>
           <Typography paragraph={true}>Task Date here</Typography>
           <TextField
+            placeholder="Enter task name"
             className={classes.textField}
             variant="outlined"
             value={task}
             onChange={e => setTask(e.target.value)}
           />
-          <Button
-            className={classes.addTaskButton}
-            variant="contained"
-            onClick={() => addTask()}
-          >
-            Add Task
-          </Button>
-          {!showQuickAddTask && (
-            <Typography
-              variant="body1"
-              onClick={() => {
-                setShowMain(false);
-                setShowProjectOverlay(false);
-              }}
-            >
-              Cancel
-            </Typography>
-          )}
-          <Typography
-            variant="body1"
-            onClick={() => setShowProjectOverlay(!showProjectOverlay)}
-          >
-            <FaRegListAlt />
-          </Typography>
-          <Typography
-            variant="body1"
-            onClick={() => setShowTaskDate(!showTaskDate)}
-          >
-            <FaRegCalendarAlt />
-          </Typography>
+          <div className={classes.addTaskContainer}>
+            <Button onClick={() => addTask()}>Add Task</Button>
+            {!showQuickAddTask && (
+              <Typography
+                className={classes.cancel}
+                variant="body1"
+                onClick={() => {
+                  setShowMain(false);
+                  setShowProjectOverlay(false);
+                }}
+              >
+                Cancel
+              </Typography>
+            )}
+            <div className={classes.iconsContainer}>
+              <Typography
+                variant="body1"
+                onClick={() => setShowProjectOverlay(!showProjectOverlay)}
+              >
+                <IconButton>
+                  <EventNoteIcon color="action" />
+                </IconButton>
+              </Typography>
+              <Typography
+                variant="body1"
+                onClick={() => setShowTaskDate(!showTaskDate)}
+              >
+                <IconButton>
+                  <DateRangeIcon color="action" />
+                </IconButton>
+              </Typography>
+            </div>
+          </div>
+          <ProjectOverlay
+            setProject={setProject}
+            showProjectOverlay={showProjectOverlay}
+            setShowProjectOverlay={setShowProjectOverlay}
+          />
         </div>
       )}
     </Box>

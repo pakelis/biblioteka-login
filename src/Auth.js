@@ -18,7 +18,7 @@ export const AuthProvider = ({ children }) => {
   return (
     <AuthContext.Provider value={{ currentUser }}>
       {children}
-      {console.log(`children - ${children}`)}
+      {/* {console.log(`children - ${children}`)} */}
     </AuthContext.Provider>
   );
 };

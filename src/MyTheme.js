@@ -26,7 +26,7 @@ export default createMuiTheme({
       main: "#222c22"
     },
     success: {
-      main: "579a52"
+      main: "#579a52"
     },
     warning: {
       main: "#d48a1a"
