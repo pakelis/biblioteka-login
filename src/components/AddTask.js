@@ -1,84 +1,96 @@
-import React, { useState } from "react";
-import moment from "moment";
-import { firebase } from "../firebase";
-import { useSelectedProjectValue } from "../context";
-import { Typography, TextField, Button, IconButton } from "@material-ui/core";
-import { MySuccessButton } from "./customComponents/MySuccessButton";
+import React, {useState} from 'react'
+import moment from 'moment'
+import {firebase} from '../firebase'
+import {useSelectedProjectValue} from '../context'
+import {Typography, TextField, Button, IconButton} from '@material-ui/core'
+import {MySuccessButton} from './customComponents/MySuccessButton'
 //Material
-import { makeStyles } from "@material-ui/core";
-import AddIcon from "@material-ui/icons/Add";
-import { Box } from "@material-ui/core";
-import DateRangeIcon from "@material-ui/icons/DateRange";
-import EventNoteIcon from "@material-ui/icons/EventNote";
-import { ProjectOverlay } from "./ProjectOverlay";
+import {makeStyles} from '@material-ui/core'
+import AddIcon from '@material-ui/icons/Add'
+import {Box} from '@material-ui/core'
+import DateRangeIcon from '@material-ui/icons/DateRange'
+import EventNoteIcon from '@material-ui/icons/EventNote'
+import {ProjectOverlay} from './ProjectOverlay'
 
 //TODO make textfield outline focused color different, more like lightAccent
 
 const useStyles = makeStyles(theme => ({
   root: {},
   textField: {
-    width: "100%"
+    width: '100%',
   },
   addIcon: {
-    marginRight: "5px"
+    marginRight: '5px',
   },
   addTask: {
     color: theme.palette.darkGrey.main,
-    display: "flex",
-    alignItems: "center",
+    display: 'flex',
+    alignItems: 'center',
     fontWeight: 500,
-    "&:hover": {
+    '&:hover': {
       color: theme.palette.lightAccent.main,
-      cursor: "pointer"
-    }
+      cursor: 'pointer',
+    },
   },
   addTaskContainer: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "flex-start",
-    marginTop: "10px"
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    marginTop: '10px',
   },
   iconsContainer: {
-    marginLeft: "auto",
-    display: "flex"
+    marginLeft: 'auto',
+    display: 'flex',
   },
   cancel: {
-    marginLeft: "15px",
-    fontWeight: "500",
-    "&:hover": {
-      textDecoration: "underline",
-      cursor: "pointer"
-    }
-  }
-}));
+    marginLeft: '15px',
+    fontWeight: '500',
+    '&:hover': {
+      textDecoration: 'underline',
+      cursor: 'pointer',
+    },
+  },
+  addTaskButton: {
+    color: 'white',
+    backgroundColor: theme.palette.lightAccent.main,
+    '&:hover': {
+      backgroundColor: theme.palette.darkAccent.main,
+    },
+  },
+}))
 
 export const AddTask = ({
   showAddTaskMain = true,
   shouldShowMain = false,
   showQuickAddTask,
-  setShowQuickAddTask
+  setShowQuickAddTask,
 }) => {
-  const [task, setTask] = useState("");
-  const [taskDate, setTaskDate] = useState("");
-  const [project, setProject] = useState("");
-  const [showMain, setShowMain] = useState(shouldShowMain);
-  const [showProjectOverlay, setShowProjectOverlay] = useState(false);
-  const [showTaskDate, setShowTaskDate] = useState(false);
+  const [task, setTask] = useState('')
+  const [taskDate, setTaskDate] = useState('')
+  const [project, setProject] = useState('')
+  const [showMain, setShowMain] = useState(shouldShowMain)
+  const [showProjectOverlay, setShowProjectOverlay] = useState(false)
+  const [showTaskDate, setShowTaskDate] = useState(false)
+  const [anchorEl, setAnchorEl] = useState()
 
-  const { selectedProject } = useSelectedProjectValue();
+  const {selectedProject} = useSelectedProjectValue()
 
-  const classes = useStyles();
+  const classes = useStyles()
+
+  const handleClick = event => {
+    setAnchorEl(event.currentTarget)
+  }
 
   const addTask = () => {
-    const projectId = project || selectedProject;
-    let collatedDate = "";
+    const projectId = project || selectedProject
+    let collatedDate = ''
 
-    if (projectId === "TODAY") {
-      collatedDate = moment().format("DD/MM/YYYY");
-    } else if (projectId === "NEXT_7") {
+    if (projectId === 'TODAY') {
+      collatedDate = moment().format('DD/MM/YYYY')
+    } else if (projectId === 'NEXT_7') {
       collatedDate = moment()
-        .add(7, "days")
-        .format("DD/MM/YYYY");
+        .add(7, 'days')
+        .format('DD/MM/YYYY')
     }
 
     return (
@@ -86,25 +98,25 @@ export const AddTask = ({
       projectId &&
       firebase
         .firestore()
-        .collection("tasks")
+        .collection('tasks')
         .add({
-          archived: "false",
+          archived: 'false',
           projectId,
           task,
           date: collatedDate || taskDate,
-          userId: "abc001"
+          userId: 'abc001',
         })
         .then(() => {
-          setTask("");
-          setProject("");
-          setShowMain("");
-          setShowProjectOverlay(false);
+          setTask('')
+          setProject('')
+          setShowMain('')
+          setShowProjectOverlay(false)
         })
-    );
-  };
+    )
+  }
 
   return (
-    <Box style={{ marginTop: "15px" }}>
+    <Box style={{marginTop: '15px'}}>
       {showAddTaskMain && (
         <Box onClick={() => setShowMain(!showMain)}>
           <Typography className={classes.addTask}>
@@ -114,7 +126,7 @@ export const AddTask = ({
       )}
 
       {(showMain || showQuickAddTask) && (
-        <div style={{ marginTop: "15px" }}>
+        <div style={{marginTop: '15px'}}>
           {showQuickAddTask && (
             <>
               <div>
@@ -122,9 +134,9 @@ export const AddTask = ({
                 <Typography
                   variant="body1"
                   onClick={() => {
-                    setShowMain(false);
-                    setShowProjectOverlay(false);
-                    setShowQuickAddTask(false);
+                    setShowMain(false)
+                    setShowProjectOverlay(false)
+                    setShowQuickAddTask(false)
                   }}
                 >
                   X
@@ -141,14 +153,16 @@ export const AddTask = ({
             onChange={e => setTask(e.target.value)}
           />
           <div className={classes.addTaskContainer}>
-            <Button onClick={() => addTask()}>Add Task</Button>
+            <Button className={classes.addTaskButton} onClick={() => addTask()}>
+              Add Task
+            </Button>
             {!showQuickAddTask && (
               <Typography
                 className={classes.cancel}
                 variant="body1"
                 onClick={() => {
-                  setShowMain(false);
-                  setShowProjectOverlay(false);
+                  setShowMain(false)
+                  setShowProjectOverlay(false)
                 }}
               >
                 Cancel
@@ -159,7 +173,7 @@ export const AddTask = ({
                 variant="body1"
                 onClick={() => setShowProjectOverlay(!showProjectOverlay)}
               >
-                <IconButton>
+                <IconButton onClick={handleClick}>
                   <EventNoteIcon color="action" />
                 </IconButton>
               </Typography>
@@ -177,9 +191,10 @@ export const AddTask = ({
             setProject={setProject}
             showProjectOverlay={showProjectOverlay}
             setShowProjectOverlay={setShowProjectOverlay}
+            anchorEl={anchorEl}
           />
         </div>
       )}
     </Box>
-  );
-};
+  )
+}
