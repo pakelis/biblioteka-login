@@ -126,7 +126,7 @@ export const AddTask = ({
           </Typography>
         </Box>
       )}
-
+      {/* Timestamp 3.35, can't understand why this opens AddTask component, need to make modal */}
       {(showMain || showQuickAddTask) && (
         <div style={{ marginTop: "15px" }}>
           {showQuickAddTask && (
