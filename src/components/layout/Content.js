@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { firebase } from "../../firebase";
-import { Header } from "./Header";
 import ClassNames from "classnames";
 import { sizing } from "@material-ui/system";
 import { Switch, BrowserRouter, Route } from "react-router-dom";
 //Material
+import AddOutlinedIcon from "@material-ui/icons/AddOutlined";
 import { makeStyles } from "@material-ui/core/styles";
 import MenuIcon from "@material-ui/icons/Menu";
 import {
@@ -23,6 +23,8 @@ import { useWindowDimensions } from "../../hooks";
 import { Records } from "../Records";
 import { Tasks } from "../Tasks";
 import { AddProject } from "../AddProject";
+import { useSelectedProjectValue } from "../../context";
+import { AddTask } from "../AddTask";
 
 const useStyles = makeStyles(theme => ({
   "@global": {
@@ -44,7 +46,7 @@ const useStyles = makeStyles(theme => ({
     marginRight: theme.spacing(2)
   },
   menuName: {
-    flexGrow: 1 //take up all the space
+    // flexGrow: 1 //take up all the space
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1
@@ -64,13 +66,19 @@ const useStyles = makeStyles(theme => ({
     [theme.breakpoints.up("sm")]: {
       maxWidth: theme.breakpoints.values.sm
     }
-  })
+  }),
+  addIcon: {
+    color: "white"
+  }
 }));
 
 const Content = props => {
   const [open, setOpen] = useState(true);
   const classes = useStyles();
   const { width, height } = useWindowDimensions();
+  const { selectedProject } = useSelectedProjectValue();
+  const [shouldShowMain, setShouldShowMain] = useState(false);
+  const [showQuickAddTask, setShowQuickAddTask] = useState(false);
 
   const handleDrawer = () => {
     setOpen(!open);
@@ -96,9 +104,24 @@ const Content = props => {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" className={classes.menuName}>
-            Namai
+            {selectedProject === "TODAY"
+              ? "Today"
+              : selectedProject === "INBOX"
+              ? "Inbox"
+              : selectedProject === "NEXT_7"
+              ? "Next 7 days"
+              : "Records"}
           </Typography>
+          <IconButton
+            onClick={() => {
+              setShowQuickAddTask(true);
+              setShouldShowMain(true);
+            }}
+          >
+            <AddOutlinedIcon className={classes.addIcon} />
+          </IconButton>
           <Button
+            style={{ marginLeft: "auto" }}
             onClick={() => firebase.auth().signOut()}
             //button has onClick handler that will sign us out using firebase API
             color="inherit"
@@ -108,6 +131,12 @@ const Content = props => {
           </Button>
         </Toolbar>
       </AppBar>
+      <AddTask
+        showAddTaskMain={false}
+        shouldShowMain={shouldShowMain}
+        showQuickAddTask={showQuickAddTask}
+        showAddTaskMain={setShowQuickAddTask}
+      />
       <BrowserRouter>
         <Drawer variant="persistent" anchor="left" open={open}>
           <NavItems />

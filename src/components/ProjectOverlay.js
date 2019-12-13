@@ -1,48 +1,45 @@
-import React, {useState} from 'react'
-import {useProjectsValue} from '../context'
-import Button from '@material-ui/core/Button'
-import Menu from '@material-ui/core/Menu'
-import MenuItem from '@material-ui/core/MenuItem'
-import {List, ListItem} from '@material-ui/core'
+import React, { useState } from "react";
+import { useProjectsValue } from "../context";
+import MenuItem from "@material-ui/core/MenuItem";
+import { MenuList, Popover } from "@material-ui/core";
 
 export const ProjectOverlay = ({
   setProject,
   showProjectOverlay,
   setShowProjectOverlay,
-  anchorEl,
+  anchorEl
 }) => {
-  const {projects} = useProjectsValue()
+  const { projects } = useProjectsValue();
 
   return (
     projects &&
     showProjectOverlay && (
-      <div>
-        <Menu
-          open={Boolean(anchorEl)}
-          anchorEl={anchorEl}
-          // elevation={0}
-          transformOrigin={{
-            vertical: 'top',
-            horizontal: 'center',
-          }}
-          anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'center',
-          }}
-        >
+      <Popover
+        open={Boolean(anchorEl)}
+        anchorEl={anchorEl}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "center"
+        }}
+        transformOrigin={{
+          vertical: "top",
+          horizontal: "center"
+        }}
+      >
+        <MenuList>
           {projects.map(project => (
             <MenuItem
               key={project.projectId}
               onClick={() => {
-                setProject(project.projectId)
-                setShowProjectOverlay(false)
+                setProject(project.projectId);
+                setShowProjectOverlay(false);
               }}
             >
               {project.name}
             </MenuItem>
           ))}
-        </Menu>
-      </div>
+        </MenuList>
+      </Popover>
     )
-  )
-}
+  );
+};
