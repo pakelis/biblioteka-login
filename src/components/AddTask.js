@@ -1,77 +1,81 @@
-import React, {useState} from 'react'
-import moment from 'moment'
-import {firebase} from '../firebase'
-import {useSelectedProjectValue} from '../context'
-import {Typography, TextField, Button, IconButton} from '@material-ui/core'
+import React, { useState } from "react";
+import moment from "moment";
+import { firebase } from "../firebase";
+import { useSelectedProjectValue } from "../context";
+import { Typography, TextField, Button, IconButton } from "@material-ui/core";
 //Material
-import {makeStyles} from '@material-ui/core'
-import AddIcon from '@material-ui/icons/Add'
-import {Box} from '@material-ui/core'
-import DateRangeIcon from '@material-ui/icons/DateRange'
-import EventNoteIcon from '@material-ui/icons/EventNote'
-import {ProjectOverlay} from './ProjectOverlay'
-import {TaskDate} from './TaskDate'
-import Modal from '@material-ui/core/Modal'
-import Backdrop from '@material-ui/core/Backdrop'
-import Fade from '@material-ui/core/Fade'
+import { makeStyles } from "@material-ui/core";
+import AddIcon from "@material-ui/icons/Add";
+import { Box } from "@material-ui/core";
+import DateRangeIcon from "@material-ui/icons/DateRange";
+import EventNoteIcon from "@material-ui/icons/EventNote";
+import { ProjectOverlay } from "./ProjectOverlay";
+import { TaskDate } from "./TaskDate";
+import Modal from "@material-ui/core/Modal";
+import Backdrop from "@material-ui/core/Backdrop";
+import Fade from "@material-ui/core/Fade";
 
 //TODO make textfield outline focused color different, more like lightAccent
 
 const useStyles = makeStyles(theme => ({
   root: {},
+  quickAddTask: {
+    paddingBottom: theme.spacing(2),
+    textAlign: "center"
+  },
   modal: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center"
   },
   paper: {
     backgroundColor: theme.palette.lightShade.main,
     boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
-    width: '27%',
+    padding: theme.spacing(2, 3, 4),
+    width: "27%"
   },
   textField: {
-    width: '100%',
+    width: "100%"
   },
   addIcon: {
-    marginRight: '5px',
+    marginRight: "5px"
   },
   addTask: {
     color: theme.palette.darkGrey.main,
-    display: 'flex',
-    alignItems: 'center',
+    display: "flex",
+    alignItems: "center",
     fontWeight: 500,
-    '&:hover': {
+    "&:hover": {
       color: theme.palette.lightAccent.main,
-      cursor: 'pointer',
-    },
+      cursor: "pointer"
+    }
   },
   addTaskContainer: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-    marginTop: '10px',
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "flex-start",
+    marginTop: "10px"
   },
   iconsContainer: {
-    marginLeft: 'auto',
-    display: 'flex',
+    marginLeft: "auto",
+    display: "flex"
   },
   cancel: {
-    marginLeft: '15px',
-    fontWeight: '500',
-    '&:hover': {
-      textDecoration: 'underline',
-      cursor: 'pointer',
-    },
+    marginLeft: "15px",
+    fontWeight: "500",
+    "&:hover": {
+      textDecoration: "underline",
+      cursor: "pointer"
+    }
   },
   addTaskButton: {
-    color: 'white',
+    color: "white",
     backgroundColor: theme.palette.lightAccent.main,
-    '&:hover': {
-      backgroundColor: theme.palette.darkAccent.main,
-    },
-  },
-}))
+    "&:hover": {
+      backgroundColor: theme.palette.darkAccent.main
+    }
+  }
+}));
 
 export const AddTask = ({
   showAddTaskMain = true,
@@ -79,51 +83,43 @@ export const AddTask = ({
   showQuickAddTask,
   setShowQuickAddTask,
   showText = true,
-  showModal = false,
+  showModal = false
 }) => {
-  const [task, setTask] = useState('')
-  const [taskDate, setTaskDate] = useState('')
-  const [project, setProject] = useState('')
-  const [showMain, setShowMain] = useState(shouldShowMain)
-  const [showProjectOverlay, setShowProjectOverlay] = useState(false)
-  const [showTaskDate, setShowTaskDate] = useState(false)
-  const [anchorEl, setAnchorEl] = useState()
-  const [openModal, setOpenModal] = useState(showModal)
+  const [task, setTask] = useState("");
+  const [taskDate, setTaskDate] = useState("");
+  const [project, setProject] = useState("");
+  const [showMain, setShowMain] = useState(shouldShowMain);
+  const [showProjectOverlay, setShowProjectOverlay] = useState(false);
+  const [showTaskDate, setShowTaskDate] = useState(false);
+  const [anchorEl, setAnchorEl] = useState();
+  const [openModal, setOpenModal] = useState(showModal);
 
-  const {selectedProject} = useSelectedProjectValue()
+  const { selectedProject } = useSelectedProjectValue();
 
-  const classes = useStyles()
+  const classes = useStyles();
 
   const handleClick = event => {
-    setAnchorEl(event.currentTarget)
-  }
-
-  const handleModalOpen = () => {
-    setOpenModal(true)
-  }
+    setAnchorEl(event.currentTarget);
+  };
 
   const handleModalClose = () => {
-    setOpenModal(false)
-    setTimeout(() => {
-      setShowMain(false)
-      setShowProjectOverlay(false)
-      setShowQuickAddTask(false)
-      console.log('timeoutfunction')
-    }, 500)
-  }
+    setShowMain(false);
+    setShowProjectOverlay(false);
+    setShowQuickAddTask(false);
+  };
 
-  console.log(`Selected Project - ${selectedProject}`)
+  console.log(`Selected Project - ${selectedProject}`);
 
   const addTask = () => {
-    const projectId = project || selectedProject
-    let collatedDate = ''
+    const projectId = project || selectedProject;
+    let collatedDate = "";
 
-    if (projectId === 'TODAY') {
-      collatedDate = moment().format('DD/MM/YYYY')
-    } else if (projectId === 'NEXT_7') {
+    if (projectId === "TODAY") {
+      collatedDate = moment().format("DD/MM/YYYY");
+    } else if (projectId === "NEXT_7") {
       collatedDate = moment()
-        .add(7, 'days')
-        .format('DD/MM/YYYY')
+        .add(7, "days")
+        .format("DD/MM/YYYY");
     }
 
     return (
@@ -131,25 +127,25 @@ export const AddTask = ({
       projectId &&
       firebase
         .firestore()
-        .collection('tasks')
+        .collection("tasks")
         .add({
-          archived: 'false',
+          archived: "false",
           projectId,
           task,
           date: collatedDate || taskDate,
-          userId: 'abc001',
+          userId: "abc001"
         })
         .then(() => {
-          setTask('')
-          setProject('')
-          setShowMain('')
-          setShowProjectOverlay(false)
+          setTask("");
+          setProject("");
+          setShowMain("");
+          setShowProjectOverlay(false);
         })
-    )
-  }
+    );
+  };
 
   return (
-    <Box style={{marginTop: '15px'}}>
+    <Box style={{ marginTop: "15px" }}>
       {showAddTaskMain && (
         <Box onClick={() => setShowMain(!showMain)}>
           {showText && (
@@ -161,7 +157,7 @@ export const AddTask = ({
       )}
       {/* Timestamp 3.35, can't understand why this opens AddTask component, need to make modal */}
       {showMain && (
-        <div style={{marginTop: '15px'}}>
+        <div style={{ marginTop: "15px" }}>
           <TaskDate
             setTaskDate={setTaskDate}
             showTaskDate={showTaskDate}
@@ -184,8 +180,8 @@ export const AddTask = ({
                 className={classes.cancel}
                 variant="body1"
                 onClick={() => {
-                  setShowMain(false)
-                  setShowProjectOverlay(false)
+                  setShowMain(false);
+                  setShowProjectOverlay(false);
                 }}
               >
                 Cancel
@@ -229,24 +225,14 @@ export const AddTask = ({
             closeAfterTransition
             BackdropComponent={Backdrop}
             BackdropProps={{
-              timeout: 500,
+              timeout: 500
             }}
           >
             <Fade in={openModal}>
               <div className={classes.paper}>
-                <div>
-                  <Typography variant="h6">Quick add task</Typography>
-                  <Typography
-                    variant="body1"
-                    onClick={() => {
-                      setShowMain(false)
-                      setShowProjectOverlay(false)
-                      setShowQuickAddTask(false)
-                    }}
-                  >
-                    X
-                  </Typography>
-                </div>
+                <Typography className={classes.quickAddTask} variant="h6">
+                  Quick add task
+                </Typography>
                 <TaskDate
                   setTaskDate={setTaskDate}
                   showTaskDate={showTaskDate}
@@ -257,6 +243,7 @@ export const AddTask = ({
                   placeholder="Enter task name"
                   className={classes.textField}
                   variant="outlined"
+                  autoFocus
                   value={task}
                   onChange={e => setTask(e.target.value)}
                 />
@@ -272,8 +259,8 @@ export const AddTask = ({
                       className={classes.cancel}
                       variant="body1"
                       onClick={() => {
-                        setShowMain(false)
-                        setShowProjectOverlay(false)
+                        setShowMain(false);
+                        setShowProjectOverlay(false);
                       }}
                     >
                       Cancel
@@ -310,5 +297,5 @@ export const AddTask = ({
         </div>
       )}
     </Box>
-  )
-}
+  );
+};
