@@ -9,10 +9,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import ListItemText from "@material-ui/core/ListItemText";
-import IconButton from "@material-ui/core/IconButton";
-import CommentIcon from "@material-ui/icons/Comment";
 import { AddTask } from "./AddTask";
 
 const useStyles = makeStyles(theme => ({
@@ -35,22 +32,21 @@ export const Tasks = () => {
   const [checked, setChecked] = useState([0]);
 
   const handleToggle = value => () => {
-    // const currentIndex = checked.indexOf(value)
+    const currentIndex = checked.indexOf(value);
   };
 
   let projectName = "";
-  // console.log(`selected project - ${selectedProject}`);
 
-  if (projects && selectedProject && !collatedTasksExist(selectedProject)) {
-    // console.log(projects);
-    // console.log(selectedProject);
+  if (
+    projects.length > 0 &&
+    selectedProject &&
+    !collatedTasksExist(selectedProject)
+  ) {
     projectName = getTitle(projects, selectedProject).name;
-    // console.log("projectName 1: ", projectName);
   }
 
   if (collatedTasksExist(selectedProject) && selectedProject) {
     projectName = getCollatedTitle(collatedTasks, selectedProject).name;
-    // console.log("projectName 2: ", projectName);
   }
 
   useEffect(() => {
@@ -65,7 +61,12 @@ export const Tasks = () => {
       {tasks.map(task => (
         <ListItem key={task.id} dense button>
           <ListItemIcon>
-            <Checkbox edge="start" checked disableRipple />
+            <Checkbox
+              edge="start"
+              checked={checked}
+              disableRipple
+              onChange={handleToggle(task.id)}
+            />
           </ListItemIcon>
           <ListItemText primary={task.task} />
         </ListItem>

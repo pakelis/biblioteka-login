@@ -250,7 +250,11 @@ export const AddTask = ({
                 <div className={classes.addTaskContainer}>
                   <Button
                     className={classes.addTaskButton}
-                    onClick={() => addTask()}
+                    onClick={() => {
+                      showQuickAddTask
+                        ? addTask() && setShowQuickAddTask(false)
+                        : addTask();
+                    }}
                   >
                     Add Task
                   </Button>
