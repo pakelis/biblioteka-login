@@ -4,6 +4,8 @@ import { useTasks } from "../hooks";
 import { collatedTasks } from "../constants";
 import { getTitle, getCollatedTitle, collatedTasksExist } from "../helpers";
 import { useSelectedProjectValue, useProjectsValue } from "../context";
+import { CheckBox } from "./CheckBox";
+import { firebase } from "../firebase";
 //Material
 import { makeStyles } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
@@ -24,15 +26,22 @@ const useStyles = makeStyles(theme => ({
 
 //timestamp 1:12
 
+//Timestamp 3:45
+
 export const Tasks = () => {
   const classes = useStyles();
   const { selectedProject } = useSelectedProjectValue();
   const { projects } = useProjectsValue();
   const { tasks } = useTasks(selectedProject); // gets all the tasks from our useTasks hook in /hooks
-  const [checked, setChecked] = useState([0]);
 
-  const handleToggle = value => () => {
-    const currentIndex = checked.indexOf(value);
+  const archiveTask = id => {
+    firebase
+      .firestore()
+      .collection("tasks")
+      .doc(id)
+      .update({
+        archived: true
+      });
   };
 
   let projectName = "";
@@ -63,9 +72,8 @@ export const Tasks = () => {
           <ListItemIcon>
             <Checkbox
               edge="start"
-              checked={checked}
               disableRipple
-              onChange={handleToggle(task.id)}
+              onClick={() => archiveTask(task.id)}
             />
           </ListItemIcon>
           <ListItemText primary={task.task} />
