@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { firebase } from "../firebase";
 import { generatePushId } from "../helpers";
 import { useProjectsValue } from "../context";
+import { useUserValue } from "../Auth";
 //Material
 import { makeStyles } from "@material-ui/core/styles";
 import Popover from "@material-ui/core/Popover";
@@ -47,6 +48,8 @@ export const AddProject = ({ shouldShow = false }) => {
 
   const projectId = generatePushId();
   const { projects, setProjects } = useProjectsValue();
+  const { currentUser } = useUserValue();
+  const userId = firebase.auth().currentUser.uid;
 
   const handleClick = event => {
     // setting anchor element position for popover to pop
@@ -62,7 +65,7 @@ export const AddProject = ({ shouldShow = false }) => {
         .add({
           projectId,
           name: projectName,
-          userId: "abc001"
+          userId: userId
         })
         .then(() => {
           setProjects([...projects]);

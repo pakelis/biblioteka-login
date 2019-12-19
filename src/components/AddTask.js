@@ -3,6 +3,7 @@ import moment from "moment";
 import { firebase } from "../firebase";
 import { useSelectedProjectValue } from "../context";
 import { Typography, TextField, Button, IconButton } from "@material-ui/core";
+import { useUserValue } from "../Auth";
 //Material
 import { makeStyles } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
@@ -94,6 +95,8 @@ export const AddTask = ({
   const [anchorEl, setAnchorEl] = useState();
   const [openModal, setOpenModal] = useState(showModal);
 
+  const { currentUser } = useUserValue();
+  const userId = firebase.auth().currentUser.uid;
   const { selectedProject } = useSelectedProjectValue();
 
   const classes = useStyles();
@@ -133,7 +136,7 @@ export const AddTask = ({
           projectId,
           task,
           date: collatedDate || taskDate,
-          userId: "abc001"
+          userId: userId
         })
         .then(() => {
           setTask("");
