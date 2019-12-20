@@ -34,7 +34,8 @@ export const Tasks = () => {
   const { projects } = useProjectsValue();
   const { tasks } = useTasks(selectedProject); // gets all the tasks from our useTasks hook in /hooks
 
-  //TODO whenever component mounts first time inbox content is empty, even though selectedProjects is INBOX ?
+  console.log(`selectedProject - ${selectedProject}`);
+  console.log(`tasks - ${tasks}`);
 
   const archiveTask = id => {
     firebase

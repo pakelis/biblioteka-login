@@ -111,7 +111,7 @@ export const AddTask = ({
     setShowQuickAddTask(false);
   };
 
-  console.log(`Selected Project - ${selectedProject}`);
+  // console.log(`Selected Project - ${selectedProject}`);
 
   const addTask = () => {
     const projectId = project || selectedProject;

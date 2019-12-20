@@ -38,52 +38,48 @@ export const useTasks = selectedProject => {
   useEffect(() => {
     firebase.auth().onAuthStateChanged(setCurrentUser);
 
-    if (currentUser != null) {
-      const userId = firebase.auth().currentUser.uid;
+    // if (currentUser != null) {
+    const userId = firebase.auth().currentUser.uid;
 
-      let unsubscribe = firebase
-        .firestore()
-        .collection("tasks")
-        .where("userId", "==", userId); //Go get our tasks where userId is this
+    let unsubscribe = firebase
+      .firestore()
+      .collection("tasks")
+      .where("userId", "==", userId); //Go get our tasks where userId is this
 
-      unsubscribe = //this one means give me the tasks for selected project, it can be 1 or TODAY or INBOX etc....
-        selectedProject && !collatedTasksExist(selectedProject)
-          ? (unsubscribe = unsubscribe.where(
-              "projectId",
-              "==",
-              selectedProject
-            ))
-          : selectedProject === "TODAY"
-          ? (unsubscribe = unsubscribe.where(
-              "date",
-              "==",
-              moment().format("DD/MM/YYYY")
-            ))
-          : selectedProject === "INBOX" || selectedProject === 0 //Goes to inbox when you don't select date!
-          ? (unsubscribe = unsubscribe.where("date", "==", ""))
-          : unsubscribe; //47:56 timestamp of video.....
+    unsubscribe = //this one means give me the tasks for selected project, it can be 1 or TODAY or INBOX etc....
+      selectedProject && !collatedTasksExist(selectedProject)
+        ? (unsubscribe = unsubscribe.where("projectId", "==", selectedProject))
+        : selectedProject === "TODAY"
+        ? (unsubscribe = unsubscribe.where(
+            "date",
+            "==",
+            moment().format("DD/MM/YYYY")
+          ))
+        : selectedProject === "INBOX" || selectedProject === 0 //Goes to inbox when you don't select date!
+        ? (unsubscribe = unsubscribe) // ? (unsubscribe = unsubscribe.where("date", "==", "")) , we changed that in inbox there all tasks, not only where there's no date
+        : unsubscribe; //47:56 timestamp of video.....
 
-      unsubscribe = unsubscribe.onSnapshot(snapshot => {
-        const newTasks = snapshot.docs.map(task => ({
-          id: task.id,
-          ...task.data()
-        }));
+    unsubscribe = unsubscribe.onSnapshot(snapshot => {
+      const newTasks = snapshot.docs.map(task => ({
+        id: task.id,
+        ...task.data()
+      }));
 
-        setTasks(
-          selectedProject === "NEXT_7"
-            ? newTasks.filter(
-                task =>
-                  moment(task.date, "DD-MM-YYYY").diff(moment(), "days") <= 7 &&
-                  task.archived !== true
-              )
-            : newTasks.filter(task => task.archived !== true)
-        );
+      setTasks(
+        selectedProject === "NEXT_7"
+          ? newTasks.filter(
+              task =>
+                moment(task.date, "DD-MM-YYYY").diff(moment(), "days") <= 7 &&
+                task.archived !== true
+            )
+          : newTasks.filter(task => task.archived !== true)
+      );
 
-        setArchivedTasks(newTasks.filter(task => task.archived !== false));
-      });
+      setArchivedTasks(newTasks.filter(task => task.archived !== false));
+    });
 
-      return () => unsubscribe(); // clean up function ? when unmounts?
-    }
+    return () => unsubscribe(); // clean up function ? when unmounts?
+    // }
   }, [selectedProject]); //run this once (empty array) , run when selectedProject is changed
 
   return { tasks, archivedTasks };

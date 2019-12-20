@@ -11,6 +11,7 @@ import moment from "moment";
 import NextWeekOutlinedIcon from "@material-ui/icons/NextWeekOutlined";
 import TodayOutlinedIcon from "@material-ui/icons/TodayOutlined";
 import AccessTimeOutlinedIcon from "@material-ui/icons/AccessTimeOutlined";
+import NotInterestedOutlinedIcon from "@material-ui/icons/NotInterestedOutlined";
 
 export const TaskDate = ({
   setTaskDate,
@@ -66,6 +67,15 @@ export const TaskDate = ({
         >
           <NextWeekOutlinedIcon color="action" />
           <Typography style={{ marginLeft: "10px" }}> Next week</Typography>
+        </MenuItem>
+        <MenuItem
+          onClick={() => {
+            setShowTaskDate(false);
+            setTaskDate("");
+          }}
+        >
+          <NotInterestedOutlinedIcon color="action" />
+          <Typography style={{ marginLeft: "10px" }}>No date</Typography>
         </MenuItem>
       </MenuList>
     </Popover>
