@@ -14,7 +14,8 @@ import {
   Toolbar,
   Typography,
   Drawer,
-  Container
+  Container,
+  Paper
 } from "@material-ui/core";
 import { NavItems } from "./NavItems";
 // import { Home } from "../Home";
@@ -54,21 +55,28 @@ const useStyles = makeStyles(theme => ({
   toolbarActions: {
     marginLeft: "auto"
   },
-  appContent: theme.mixins.gutters({
+  appContent: {
     flex: "1 1 100%",
-    maxWidth: "60%",
+    maxWidth: "720px",
     paddingTop: 80, // equal to AppBar height + 16px
     margin: "0 auto",
     alignItems: "center",
-    marginLeft: "270px",
-    // Set the max content width for each breakpoint
-    // Content will be centered in the space to the right/left of drawer
-    [theme.breakpoints.up("sm")]: {
-      maxWidth: theme.breakpoints.values.sm
-    }
-  }),
+    marginLeft: "auto",
+    marginTop: "-16px"
+  },
   addIcon: {
     color: "white"
+  },
+  shiftContentLeft: {
+    marginLeft: "0px"
+  },
+  shiftContentRight: {
+    marginLeft: "270px"
+  },
+  paperContent: {
+    height: "100vh",
+    display: "flex",
+    justifyContent: "center"
   }
 }));
 
@@ -137,20 +145,30 @@ const Content = props => {
           <AddProject />
         </Drawer>
         <main className={classes.appContent}>
-          <Switch>
-            {/* <Route path="/home" component={Home} /> */}
-            <Route path="/records" component={Records} />
-            <Route path="/tasks" component={Tasks} />
-          </Switch>
-          <Tasks />
-          <AddTask
-            showAddTaskMain={false}
-            shouldShowMain={shouldShowMain}
-            showQuickAddTask={showQuickAddTask}
-            setShowQuickAddTask={setShowQuickAddTask}
-            showText={false}
-            showModal={true}
-          />
+          <div
+            className={
+              open && width >= 860 && width < 1600
+                ? classes.shiftContentRight
+                : classes.shiftContentLeft
+            }
+          >
+            <Paper className={classes.paperContent}>
+              <Switch>
+                {/* <Route path="/home" component={Home} /> */}
+                <Route path="/records" component={Records} />
+                <Route path="/tasks" component={Tasks} />
+              </Switch>
+              <Tasks />
+              <AddTask
+                showAddTaskMain={false}
+                shouldShowMain={shouldShowMain}
+                showQuickAddTask={showQuickAddTask}
+                setShowQuickAddTask={setShowQuickAddTask}
+                showText={false}
+                showModal={true}
+              />
+            </Paper>
+          </div>
         </main>
       </BrowserRouter>
     </div>

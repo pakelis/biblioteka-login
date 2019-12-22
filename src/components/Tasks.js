@@ -7,6 +7,7 @@ import { useSelectedProjectValue, useProjectsValue } from "../context";
 import { CheckBox } from "./CheckBox";
 import { firebase } from "../firebase";
 //Material
+import Divider from "@material-ui/core/Divider";
 import { makeStyles } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
@@ -16,8 +17,8 @@ import { AddTask } from "./AddTask";
 
 const useStyles = makeStyles(theme => ({
   root: {
-    width: "100%",
-    maxWidth: 460
+    width: "95%",
+    maxWidth: 720
   },
   title: {
     padding: "15px"
@@ -34,8 +35,8 @@ export const Tasks = () => {
   const { projects } = useProjectsValue();
   const { tasks } = useTasks(selectedProject); // gets all the tasks from our useTasks hook in /hooks
 
-  console.log(`selectedProject - ${selectedProject}`);
-  console.log(`tasks - ${tasks}`);
+  // console.log(`selectedProject - ${selectedProject}`);
+  // console.log(`tasks - ${tasks}`);
 
   const archiveTask = id => {
     firebase
@@ -71,16 +72,19 @@ export const Tasks = () => {
         {projectName}
       </Typography>
       {tasks.map(task => (
-        <ListItem key={task.id} dense button>
-          <ListItemIcon>
-            <Checkbox
-              edge="start"
-              disableRipple
-              onClick={() => archiveTask(task.id)}
-            />
-          </ListItemIcon>
-          <ListItemText primary={task.task} />
-        </ListItem>
+        <div>
+          <ListItem key={task.id} dense button>
+            <ListItemIcon>
+              <Checkbox
+                edge="start"
+                disableRipple
+                onClick={() => archiveTask(task.id)}
+              />
+            </ListItemIcon>
+            <ListItemText primary={task.task} />
+          </ListItem>
+          <Divider />
+        </div>
       ))}
       <AddTask />
     </List>

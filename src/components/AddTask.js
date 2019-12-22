@@ -19,7 +19,11 @@ import Fade from "@material-ui/core/Fade";
 //TODO make textfield outline focused color different, more like lightAccent
 
 const useStyles = makeStyles(theme => ({
-  root: {},
+  root: {
+    marginLeft: "25px",
+    marginRight: "25px",
+    marginTop: "25px"
+  },
   quickAddTask: {
     paddingBottom: theme.spacing(2),
     textAlign: "center"
@@ -160,7 +164,7 @@ export const AddTask = ({
       )}
       {/* Timestamp 3.35, can't understand why this opens AddTask component, need to make modal */}
       {showMain && (
-        <div style={{ marginTop: "15px" }}>
+        <div className={classes.root}>
           <TaskDate
             setTaskDate={setTaskDate}
             showTaskDate={showTaskDate}
