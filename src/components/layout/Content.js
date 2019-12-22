@@ -95,13 +95,12 @@ const Content = props => {
 
   //if screen get to certain width it closes and vice versa
   useEffect(() => {
-    width < 860 && open && setOpen(false)
-    width > 860 && !open && setOpen(true)
+    width < 1360 && open && setOpen(false)
+    width > 1360 && !open && setOpen(true)
   }, [width])
 
   return (
-    // className={classes.root}
-    <Container className={classes.root}>
+    <div className={classes.root}>
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
           <IconButton
@@ -146,25 +145,26 @@ const Content = props => {
           <NavItems />
           <AddProject />
         </Drawer>
-        {/* className={classes.appContent} */}
-        <Paper>
-          <Switch>
-            {/* <Route path="/home" component={Home} /> */}
-            <Route path="/records" component={Records} />
-            <Route path="/tasks" component={Tasks} />
-          </Switch>
-          <Tasks />
-          <AddTask
-            showAddTaskMain={false}
-            shouldShowMain={shouldShowMain}
-            showQuickAddTask={showQuickAddTask}
-            setShowQuickAddTask={setShowQuickAddTask}
-            showText={false}
-            showModal={true}
-          />
-        </Paper>
+        <main className={classes.appContent}>
+          <Paper className={classes.paperContent}>
+            <Switch>
+              {/* <Route path="/home" component={Home} /> */}
+              <Route path="/records" component={Records} />
+              <Route path="/tasks" component={Tasks} />
+            </Switch>
+            <Tasks />
+            <AddTask
+              showAddTaskMain={false}
+              shouldShowMain={shouldShowMain}
+              showQuickAddTask={showQuickAddTask}
+              setShowQuickAddTask={setShowQuickAddTask}
+              showText={false}
+              showModal={true}
+            />
+          </Paper>
+        </main>
       </BrowserRouter>
-    </Container>
+    </div>
   )
 }
 

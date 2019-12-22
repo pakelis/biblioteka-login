@@ -7,12 +7,14 @@ import {useSelectedProjectValue, useProjectsValue} from '../context'
 import {CheckBox} from './CheckBox'
 import {firebase} from '../firebase'
 //Material
+import SortByAlphaOutlinedIcon from '@material-ui/icons/SortByAlphaOutlined'
 import Divider from '@material-ui/core/Divider'
 import {makeStyles} from '@material-ui/core/styles'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
+import IconButton from '@material-ui/core/IconButton'
 import {AddTask} from './AddTask'
 
 const useStyles = makeStyles(theme => ({
@@ -22,6 +24,10 @@ const useStyles = makeStyles(theme => ({
   },
   title: {
     padding: '15px',
+  },
+  tasksHeader: {
+    display: 'flex',
+    alignItems: 'center',
   },
 }))
 
@@ -37,6 +43,8 @@ export const Tasks = () => {
 
   // console.log(`selectedProject - ${selectedProject}`);
   // console.log(`tasks - ${tasks}`);
+
+  const sortByAlpha = () => {}
 
   const archiveTask = id => {
     firebase
@@ -68,11 +76,18 @@ export const Tasks = () => {
 
   return (
     <List className={classes.root}>
-      <Typography variant="h4" className={classes.title}>
-        {projectName}
-      </Typography>
+      <div className={classes.tasksHeader}>
+        <Typography variant="h4" className={classes.title}>
+          {projectName}
+        </Typography>
+        <div style={{marginLeft: 'auto'}}>
+          <IconButton>
+            <SortByAlphaOutlinedIcon />
+          </IconButton>
+        </div>
+      </div>
       {tasks.map(task => (
-        <div>
+        <div key={task.id}>
           <ListItem key={task.id} dense button>
             <ListItemIcon>
               <Checkbox
