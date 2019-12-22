@@ -56,21 +56,28 @@ const useStyles = makeStyles(theme => ({
   toolbarActions: {
     marginLeft: 'auto',
   },
-  appContent: theme.mixins.gutters({
+  appContent: {
     flex: '1 1 100%',
-    maxWidth: '60%',
+    maxWidth: '720px',
     paddingTop: 80, // equal to AppBar height + 16px
     margin: '0 auto',
     alignItems: 'center',
-    marginLeft: '270px',
-    // Set the max content width for each breakpoint
-    // Content will be centered in the space to the right/left of drawer
-    [theme.breakpoints.up('sm')]: {
-      maxWidth: theme.breakpoints.values.sm,
-    },
-  }),
+    marginLeft: 'auto',
+    marginTop: '-16px',
+  },
   addIcon: {
     color: 'white',
+  },
+  shiftContentLeft: {
+    marginLeft: '0px',
+  },
+  shiftContentRight: {
+    marginLeft: '270px',
+  },
+  paperContent: {
+    height: '100vh',
+    display: 'flex',
+    justifyContent: 'center',
   },
 }))
 

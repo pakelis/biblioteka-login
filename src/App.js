@@ -1,18 +1,18 @@
-import React from "react";
-import Login from "./components/layout/LoginSignup/Login";
-import Signup from "./components/layout/LoginSignup/Signup";
-import LoginSignup from "./components/layout/LoginSignup/index";
-import Content from "./components/layout/Content";
-import { AuthProvider } from "./Auth";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import PrivateRoute from "./Routes/PrivateRoute";
+import React from 'react'
+import Login from './components/layout/LoginSignup/Login'
+import Signup from './components/layout/LoginSignup/Signup'
+import LoginSignup from './components/layout/LoginSignup/index'
+import Content from './components/layout/Content'
+import {AuthProvider} from './Auth'
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
+import PrivateRoute from './Routes/PrivateRoute'
 //Context
-import { ProjectsProvider, SelectedProjectProvider } from "./context";
+import {ProjectsProvider, SelectedProjectProvider} from './context'
 
 //MATERIAL IMPORTS
-import { MuiThemeProvider } from "@material-ui/core";
-import MyTheme from "./MyTheme"; // importing my theme palette
-import { Records } from "./components/Records";
+import {MuiThemeProvider} from '@material-ui/core'
+import MyTheme from './MyTheme' // importing my theme palette
+import {Records} from './components/Records'
 
 function App() {
   return (
@@ -31,7 +31,7 @@ function App() {
         </MuiThemeProvider>
       </ProjectsProvider>
     </SelectedProjectProvider>
-  );
+  )
 }
 
-export default App;
+export default App
