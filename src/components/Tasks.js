@@ -43,7 +43,7 @@ export const Tasks = () => {
   const { selectedProject } = useSelectedProjectValue();
   const { projects } = useProjectsValue();
   const { tasks } = useTasks(selectedProject); // gets all the tasks from our useTasks hook in /hooks
-  const [sortedTasks, setSortedTasks] = useState([]);
+  const [sortedTasks, setSortedTasks] = useState(tasks);
 
   // console.log(`selectedProject - ${selectedProject}`);
   // console.log(`tasks - ${tasks}`);
@@ -55,10 +55,10 @@ export const Tasks = () => {
   };
 
   const sortByDate = tasks => {
-    let sorted = tasks.sort((a, b) => a.date - b.date);
+    let sorted = tasks.sort((a, b) => a.date.localeCompare(b.date));
     setSortedTasks(sorted);
     tasks = sortedTasks;
-    console.log(sorted);
+    // console.log(sorted);
   };
 
   const archiveTask = id => {
