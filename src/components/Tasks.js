@@ -4,7 +4,6 @@ import { useTasks } from "../hooks";
 import { collatedTasks } from "../constants";
 import { getTitle, getCollatedTitle, collatedTasksExist } from "../helpers";
 import { useSelectedProjectValue, useProjectsValue } from "../context";
-import { CheckBox } from "./CheckBox";
 import { firebase } from "../firebase";
 import { useUserValue } from "../Auth";
 import Moment from "moment";
@@ -19,6 +18,7 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import IconButton from "@material-ui/core/IconButton";
 import { AddTask } from "./AddTask";
+import Tooltip from "@material-ui/core/Tooltip";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -43,22 +43,43 @@ export const Tasks = () => {
   const { selectedProject } = useSelectedProjectValue();
   const { projects } = useProjectsValue();
   const { tasks } = useTasks(selectedProject); // gets all the tasks from our useTasks hook in /hooks
-  const [sortedTasks, setSortedTasks] = useState(tasks);
+  const [sortedTasks, setSortedTasks] = useState([]);
+  const [sortOrder, setSortOrder] = useState(true);
+  const [onHover, setOnHover] = useState(tasks); //We want to make array of Hover with same amount of length as tasks array
 
-  // console.log(`selectedProject - ${selectedProject}`);
-  // console.log(`tasks - ${tasks}`);
+  console.log(onHover);
+
+  const handleMouseOver = () => {
+    // setOnHover(!onHover);
+    console.log(onHover);
+  };
 
   const sortByAlpha = tasks => {
-    let sorted = tasks.sort((a, b) => a.task.localeCompare(b.task));
-    setSortedTasks(sorted);
-    tasks = sortedTasks;
+    if (sortOrder === true) {
+      let sorted = tasks.sort((a, b) => a.task.localeCompare(b.task));
+      setSortedTasks(sorted);
+      setSortOrder(!sortOrder);
+      tasks = sortedTasks;
+    } else if (sortOrder === false) {
+      let sorted = tasks.sort((a, b) => b.task.localeCompare(a.task));
+      setSortedTasks(sorted);
+      setSortOrder(!sortOrder);
+      tasks = sortedTasks;
+    }
   };
 
   const sortByDate = tasks => {
-    let sorted = tasks.sort((a, b) => a.date.localeCompare(b.date));
-    setSortedTasks(sorted);
-    tasks = sortedTasks;
-    // console.log(sorted);
+    if (sortOrder === true) {
+      let sorted = tasks.sort((a, b) => a.date.localeCompare(b.date));
+      setSortedTasks(sorted);
+      setSortOrder(!sortOrder);
+      tasks = sortedTasks;
+    } else if (sortOrder === false) {
+      let sorted = tasks.sort((a, b) => b.date.localeCompare(a.date));
+      setSortedTasks(sorted);
+      setSortOrder(!sortOrder);
+      tasks = sortedTasks;
+    }
   };
 
   const archiveTask = id => {
@@ -96,17 +117,27 @@ export const Tasks = () => {
           {projectName}
         </Typography>
         <div style={{ marginLeft: "auto" }}>
-          <IconButton onClick={() => sortByAlpha(tasks)}>
-            <SortByAlphaOutlinedIcon />
-          </IconButton>
-          <IconButton onClick={() => sortByDate(tasks)}>
-            <UpdateIcon />
-          </IconButton>
+          <Tooltip title="Sort by name">
+            <IconButton onClick={() => sortByAlpha(tasks)}>
+              <SortByAlphaOutlinedIcon />
+            </IconButton>
+          </Tooltip>
+          <Tooltip title="Sort by date">
+            <IconButton onClick={() => sortByDate(tasks)}>
+              <UpdateIcon />
+            </IconButton>
+          </Tooltip>
         </div>
       </div>
       {tasks.map(task => (
         <div key={task.id}>
-          <ListItem key={task.id} dense button>
+          <ListItem
+            key={task.id}
+            dense
+            button
+            onMouseEnter={() => handleMouseOver()}
+            onMouseLeave={() => handleMouseOver()}
+          >
             <ListItemIcon>
               <Checkbox
                 edge="start"
@@ -115,6 +146,7 @@ export const Tasks = () => {
               />
             </ListItemIcon>
             <ListItemText primary={task.task} />
+            {onHover && <Typography>Hovered text</Typography>}
           </ListItem>
           <Divider />
         </div>
