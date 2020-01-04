@@ -34,6 +34,8 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+//TODO make sidebar background grey when on mobile
+
 //timestamp 1:12
 
 //Timestamp 3:45
@@ -45,14 +47,7 @@ export const Tasks = () => {
   const { tasks } = useTasks(selectedProject); // gets all the tasks from our useTasks hook in /hooks
   const [sortedTasks, setSortedTasks] = useState([]);
   const [sortOrder, setSortOrder] = useState(true);
-  const [onHover, setOnHover] = useState(tasks); //We want to make array of Hover with same amount of length as tasks array
-
-  console.log(onHover);
-
-  const handleMouseOver = () => {
-    // setOnHover(!onHover);
-    console.log(onHover);
-  };
+  const [onHover, setOnHover] = useState(tasks); // Cant get tasks?!
 
   const sortByAlpha = tasks => {
     if (sortOrder === true) {
@@ -131,13 +126,7 @@ export const Tasks = () => {
       </div>
       {tasks.map(task => (
         <div key={task.id}>
-          <ListItem
-            key={task.id}
-            dense
-            button
-            onMouseEnter={() => handleMouseOver()}
-            onMouseLeave={() => handleMouseOver()}
-          >
+          <ListItem key={task.id} dense button>
             <ListItemIcon>
               <Checkbox
                 edge="start"
@@ -146,7 +135,7 @@ export const Tasks = () => {
               />
             </ListItemIcon>
             <ListItemText primary={task.task} />
-            {onHover && <Typography>Hovered text</Typography>}
+            {/* {onHover && <Typography>Hovered text</Typography>} */}
           </ListItem>
           <Divider />
         </div>
