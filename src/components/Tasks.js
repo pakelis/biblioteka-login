@@ -5,8 +5,6 @@ import { collatedTasks } from "../constants";
 import { getTitle, getCollatedTitle, collatedTasksExist } from "../helpers";
 import { useSelectedProjectValue, useProjectsValue } from "../context";
 import { firebase } from "../firebase";
-import { useUserValue } from "../Auth";
-import Moment from "moment";
 //Material
 import SortByAlphaOutlinedIcon from "@material-ui/icons/SortByAlphaOutlined";
 import UpdateIcon from "@material-ui/icons/Update";
@@ -34,8 +32,6 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-//TODO make sidebar background grey when on mobile
-
 //timestamp 1:12
 
 //Timestamp 3:45
@@ -47,7 +43,7 @@ export const Tasks = () => {
   const { tasks } = useTasks(selectedProject); // gets all the tasks from our useTasks hook in /hooks
   const [sortedTasks, setSortedTasks] = useState([]);
   const [sortOrder, setSortOrder] = useState(true);
-  const [onHover, setOnHover] = useState(tasks); // Cant get tasks?!
+  // const [onHover, setOnHover] = useState(tasks); // Cant get tasks?!
 
   const sortByAlpha = tasks => {
     if (sortOrder === true) {

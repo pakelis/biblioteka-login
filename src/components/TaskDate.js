@@ -1,12 +1,5 @@
 import React from "react";
-import {
-  MenuItem,
-  MenuList,
-  Typography,
-  List,
-  ListItem,
-  Popover
-} from "@material-ui/core";
+import { MenuItem, MenuList, Typography, Popover } from "@material-ui/core";
 import moment from "moment";
 import NextWeekOutlinedIcon from "@material-ui/icons/NextWeekOutlined";
 import TodayOutlinedIcon from "@material-ui/icons/TodayOutlined";

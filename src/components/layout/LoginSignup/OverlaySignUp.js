@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 
 //Material
 import {
@@ -6,40 +6,40 @@ import {
   makeStyles,
   Typography,
   Container,
-  CssBaseline,
-} from '@material-ui/core'
+  CssBaseline
+} from "@material-ui/core";
 
 const useStyles = makeStyles(theme => ({
   overlayPanelLeft: {
     backgroundColor: theme.palette.darkAccent.main,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexDirection: 'column',
-    padding: '0px 40px',
-    textAlign: 'center',
-    height: '100%',
-    color: '#FFF',
-    fontSize: '18px',
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    flexDirection: "column",
+    padding: "0px 40px",
+    textAlign: "center",
+    height: "100%",
+    color: "#FFF",
+    fontSize: "18px"
   },
   button: {
     // color: '#fff',
     // borderColor: '#fff !important',
   },
   typography: {
-    padding: '20px 0',
-  },
-}))
+    padding: "20px 0"
+  }
+}));
 
-export const OverlaySignUp = ({toggleClick}) => {
-  const classes = useStyles()
+export const OverlaySignUp = ({ toggleClick }) => {
+  const classes = useStyles();
 
   return (
     <Container className={classes.overlayPanelLeft} maxWidth="sm">
       <CssBaseline />
-      <Typography variant="h3">Sveiki!</Typography>
+      <Typography variant="h3">Hello, Friend!</Typography>
       <Typography className={classes.typography}>
-        Įveskite savo asmeninius duomenis ir pradėkite naudotis mūsų aplikaciją.
+        Enter your personal details and start journey with us
       </Typography>
       <Button
         onClick={toggleClick}
@@ -48,10 +48,10 @@ export const OverlaySignUp = ({toggleClick}) => {
         color="inherit"
         className={classes.button}
       >
-        Registracija
+        Sign Up
       </Button>
     </Container>
-  )
-}
+  );
+};
 
-export default OverlaySignUp
+export default OverlaySignUp;

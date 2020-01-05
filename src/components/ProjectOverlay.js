@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useProjectsValue } from "../context";
 import MenuItem from "@material-ui/core/MenuItem";
 import { MenuList, Popover } from "@material-ui/core";

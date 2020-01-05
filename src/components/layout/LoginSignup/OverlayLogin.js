@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 
 //Material
 import {
@@ -8,40 +8,39 @@ import {
   Container,
   CssBaseline,
   Box,
-  Sizing,
-} from '@material-ui/core'
-import {isAbsolute} from 'path'
-import {classes} from 'istanbul-lib-coverage'
+  Sizing
+} from "@material-ui/core";
+import { isAbsolute } from "path";
+import { classes } from "istanbul-lib-coverage";
 
 const useStyles = makeStyles(theme => ({
   overlayPanelLeft: {
     backgroundColor: theme.palette.darkAccent.main,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexDirection: 'column',
-    padding: '0px 40px',
-    textAlign: 'center',
-    height: '100%',
-    color: '#fff',
-    fontSize: '18px',
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    flexDirection: "column",
+    padding: "0px 40px",
+    textAlign: "center",
+    height: "100%",
+    color: "#fff",
+    fontSize: "18px"
   },
   button: {},
   typography: {
-    padding: '20px 0',
-  },
-}))
+    padding: "20px 0"
+  }
+}));
 
-export const OverlayLogin = ({toggleClick}) => {
-  const classes = useStyles()
+export const OverlayLogin = ({ toggleClick }) => {
+  const classes = useStyles();
 
   return (
     <Container className={classes.overlayPanelLeft} maxWidth="sm">
       <CssBaseline />
-      <Typography variant="h4">Sveiki sugryžę!</Typography>
+      <Typography variant="h4">Welcome Back!</Typography>
       <Typography className={classes.typography}>
-        Jei norite palaikyti ryšį su mumis, prisijunkite ir pateikite savo
-        asmeninę informaciją
+        To keep connected with us please login with your personal info
       </Typography>
       <Button
         onClick={toggleClick}
@@ -50,10 +49,10 @@ export const OverlayLogin = ({toggleClick}) => {
         size="large"
         className={classes.button}
       >
-        Prisijungti
+        Sign In
       </Button>
     </Container>
-  )
-}
+  );
+};
 
-export default OverlayLogin
+export default OverlayLogin;

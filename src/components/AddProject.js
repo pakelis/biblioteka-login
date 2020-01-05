@@ -3,10 +3,11 @@ import { firebase } from "../firebase";
 import { generatePushId } from "../helpers";
 import { useProjectsValue } from "../context";
 import { useUserValue } from "../Auth";
+import { AddProjectColorGrid } from "./AddProjectColorGrid";
 //Material
 import { makeStyles } from "@material-ui/core/styles";
 import Popover from "@material-ui/core/Popover";
-import { Typography, Button, Box, TextField } from "@material-ui/core";
+import { Button, TextField } from "@material-ui/core";
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 
 const useStyles = makeStyles(theme => ({
@@ -110,6 +111,7 @@ export const AddProject = ({ shouldShow = false }) => {
             </Button>
             <Button onClick={() => setShow(false)}>Cancel</Button>
           </div>
+          <AddProjectColorGrid />
         </Popover>
       )}
     </div>

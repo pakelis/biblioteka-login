@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { firebase } from "../../firebase";
-import ClassNames from "classnames";
-import { sizing } from "@material-ui/system";
 import { Switch, BrowserRouter, Route } from "react-router-dom";
-import Grid from "@material-ui/core/Grid";
 import AddOutlinedIcon from "@material-ui/icons/AddOutlined";
 import { makeStyles } from "@material-ui/core/styles";
 import MenuIcon from "@material-ui/icons/Menu";
@@ -15,7 +12,6 @@ import {
   Toolbar,
   Typography,
   Drawer,
-  Container,
   Paper
 } from "@material-ui/core";
 import { NavItems } from "./NavItems";
@@ -94,8 +90,6 @@ const Content = props => {
 
   //Use backdrop to make grey overlay when drawer opens on mobile !
 
-  console.log(mobileSize);
-
   const handleDrawer = () => {
     setOpen(!open);
   };
@@ -148,7 +142,7 @@ const Content = props => {
             color="inherit"
             className={classes.logout}
           >
-            Atsijungti
+            Log out
           </Button>
         </Toolbar>
       </AppBar>

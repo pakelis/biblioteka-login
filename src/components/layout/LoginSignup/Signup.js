@@ -62,7 +62,7 @@ const SignUp = ({ history }) => {
     async event => {
       event.preventDefault();
       //we get email and password with e.target.elements
-      const { name, email, password, password2 } = event.target.elements;
+      const { email, password } = event.target.elements;
       try {
         await firebase
           .auth()
