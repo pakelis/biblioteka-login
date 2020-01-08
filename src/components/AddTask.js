@@ -163,7 +163,6 @@ export const AddTask = ({
           )}
         </Box>
       )}
-      {/* Timestamp 3.35, can't understand why this opens AddTask component, need to make modal */}
       {showMain && (
         <div className={classes.root}>
           <TaskDate

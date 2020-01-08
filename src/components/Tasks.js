@@ -32,10 +32,6 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-//timestamp 1:12
-
-//Timestamp 3:45
-
 export const Tasks = () => {
   const classes = useStyles();
   const { selectedProject } = useSelectedProjectValue();

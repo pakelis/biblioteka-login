@@ -42,6 +42,7 @@ const colors = [
 
 export const AddProjectColorGrid = () => {
   const classes = useStyles();
+  const [selectedBubble, setSelectedBubble] = useState(null);
   //Making grid of bubbles
   const [grid, setGrid] = useState(() => {
     const rows = [];
@@ -56,11 +57,10 @@ export const AddProjectColorGrid = () => {
     return item;
   });
 
-  const colorPick = () => {};
-
   useEffect(() => {
-    colorIndex = 0; // whenever component mounts we change colorIndex to 0 so we get all the colors
-  }, []);
+    colorIndex = 0;
+    // ComponentDidUpdate && componentDidMount here
+  });
 
   return (
     <div
@@ -73,11 +73,44 @@ export const AddProjectColorGrid = () => {
             <div
               key={`${i}-${k}`}
               className={classes.bubble}
-              style={{ backgroundColor: colors[colorIndex++] }}
+              style={{
+                backgroundColor: colors[colorIndex++],
+                border: grid[i][k] ? "solid 2px black" : undefined // if grid[i][k] === 1 , we make it with borders
+              }}
+              onClick={() => {
+                //After click we set all grid to 0
+                grid.map((rows, i) =>
+                  rows.map((cols, k) => {
+                    return (grid[i][k] = 0);
+                  })
+                );
+                //we map through our prevGrid state, and check if it's current index if it is we change it in this grid
+                setGrid(prevGrid =>
+                  prevGrid.map((numRows, index) => {
+                    return index === i
+                      ? numRows.map((numCols, kIndex) => {
+                          return kIndex === k ? 1 : numCols;
+                          /* return kIndex === k && numCols === 0
+                            ? 1
+                            : kIndex === k && numCols === 1
+                            ? 0
+                            : numCols; */
+                        })
+                      : numRows;
+                  })
+                );
+                // We need to get current bubble div ???
+                grid.map((rows, i) =>
+                  rows.map((cols, k) => {
+                    return (grid[i][k] = 1 ? setSelectedBubble(cols) : null);
+                  })
+                );
+              }}
             ></div>
           );
         })
       )}
+      {selectedBubble} - THE ONE
     </div>
   );
 };

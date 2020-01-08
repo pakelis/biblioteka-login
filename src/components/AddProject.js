@@ -115,6 +115,5 @@ export const AddProject = ({ shouldShow = false }) => {
         </Popover>
       )}
     </div>
-    //timestamp 2.44
   );
 };

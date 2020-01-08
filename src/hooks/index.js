@@ -57,7 +57,7 @@ export const useTasks = selectedProject => {
           ))
         : selectedProject === "INBOX" || selectedProject === 0 //Goes to inbox when you don't select date!
         ? (unsubscribe = unsubscribe) // ? (unsubscribe = unsubscribe.where("date", "==", "")) , we changed that in inbox there all tasks, not only where there's no date
-        : unsubscribe; //47:56 timestamp of video.....
+        : unsubscribe;
 
     unsubscribe = unsubscribe.onSnapshot(snapshot => {
       const newTasks = snapshot.docs.map(task => ({
