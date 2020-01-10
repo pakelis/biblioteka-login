@@ -40,9 +40,8 @@ const colors = [
   "sandybrown"
 ];
 
-export const AddProjectColorGrid = () => {
+export const AddProjectColorGrid = ({ selectedColor }) => {
   const classes = useStyles();
-  const [selectedBubble, setSelectedBubble] = useState(null);
   //Making grid of bubbles
   const [grid, setGrid] = useState(() => {
     const rows = [];
@@ -52,10 +51,13 @@ export const AddProjectColorGrid = () => {
 
     return rows;
   });
-  const [selectedColor, setSelectedColor] = useState(() => {
+  const [randomColorIndex, setRandomColorIndex] = useState(() => {
     let item = grid[Math.floor(Math.random() * grid.length * 5)];
     return item;
   });
+
+  const isAllZero = grid.every(item => item === 0);
+  console.log(isAllZero);
 
   useEffect(() => {
     colorIndex = 0;
@@ -77,7 +79,7 @@ export const AddProjectColorGrid = () => {
                 backgroundColor: colors[colorIndex++],
                 border: grid[i][k] ? "solid 2px black" : undefined // if grid[i][k] === 1 , we make it with borders
               }}
-              onClick={() => {
+              onClick={event => {
                 //After click we set all grid to 0
                 grid.map((rows, i) =>
                   rows.map((cols, k) => {
@@ -89,7 +91,7 @@ export const AddProjectColorGrid = () => {
                   prevGrid.map((numRows, index) => {
                     return index === i
                       ? numRows.map((numCols, kIndex) => {
-                          return kIndex === k ? 1 : numCols;
+                          return kIndex === k ? (grid[i][k] = 1) : numCols;
                           /* return kIndex === k && numCols === 0
                             ? 1
                             : kIndex === k && numCols === 1
@@ -99,18 +101,14 @@ export const AddProjectColorGrid = () => {
                       : numRows;
                   })
                 );
-                // We need to get current bubble div ???
-                grid.map((rows, i) =>
-                  rows.map((cols, k) => {
-                    return (grid[i][k] = 1 ? setSelectedBubble(cols) : null);
-                  })
-                );
+                //We set selectedColor to our clicked div backgroundColor
+                selectedColor(event.target.style.backgroundColor);
               }}
             ></div>
           );
         })
       )}
-      {selectedBubble} - THE ONE
+      {isAllZero ? <div>Every item is zero</div> : <div>NO!</div>}
     </div>
   );
 };

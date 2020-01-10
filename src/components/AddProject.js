@@ -22,7 +22,7 @@ const useStyles = makeStyles(theme => ({
   },
   textField: {
     padding: "20px",
-    width: "100%"
+    width: "80%"
   },
   popover: {
     display: "flex",
@@ -38,6 +38,17 @@ const useStyles = makeStyles(theme => ({
     "&:hover": {
       color: "green"
     }
+  },
+  bubble: {
+    color: "red",
+    height: "15px",
+    width: "15px",
+    borderRadius: "50%"
+  },
+  bubbleContainer: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center"
   }
 }));
 
@@ -46,6 +57,7 @@ export const AddProject = ({ shouldShow = false }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [show, setShow] = useState(shouldShow);
   const [projectName, setProjectName] = useState("");
+  const [color, setColor] = useState(null);
 
   const projectId = generatePushId();
   const { projects, setProjects } = useProjectsValue();
@@ -56,6 +68,10 @@ export const AddProject = ({ shouldShow = false }) => {
     // setting anchor element position for popover to pop
     setAnchorEl(event.currentTarget);
     setShow(!show);
+  };
+
+  const selectedColor = color => {
+    setColor(color);
   };
 
   const addProject = () => {
@@ -95,13 +111,21 @@ export const AddProject = ({ shouldShow = false }) => {
           }}
           className={classes.popover}
         >
-          <TextField
-            className={classes.textField}
-            value={projectName}
-            onChange={e => setProjectName(e.target.value)}
-            type="text"
-            placeholder="Name your project"
-          />
+          <div className={classes.bubbleContainer}>
+            {color != null ? (
+              <div
+                className={classes.bubble}
+                style={{ backgroundColor: color }}
+              />
+            ) : null}
+            <TextField
+              className={classes.textField}
+              value={projectName}
+              onChange={e => setProjectName(e.target.value)}
+              type="text"
+              placeholder="Name your project"
+            />
+          </div>
           <div className={classes.buttonParent}>
             <Button
               onClick={() => addProject()}
@@ -111,7 +135,7 @@ export const AddProject = ({ shouldShow = false }) => {
             </Button>
             <Button onClick={() => setShow(false)}>Cancel</Button>
           </div>
-          <AddProjectColorGrid />
+          <AddProjectColorGrid selectedColor={selectedColor} />
         </Popover>
       )}
     </div>
