@@ -42,21 +42,27 @@ const colors = [
 
 export const AddProjectColorGrid = ({ selectedColor }) => {
   const classes = useStyles();
+  const randomColorIndex = Math.floor(Math.random() * 15); // just random number between 1 - 15
   //Making grid of bubbles
   const [grid, setGrid] = useState(() => {
+    let indx = 0;
     const rows = [];
     for (let i = 0; i < numRows; i++) {
       rows.push(Array.from(Array(numCols), () => 0));
     }
-
+    //We set random bubble to selected Bubble
+    rows.map((row, i) =>
+      row.map((col, k) => {
+        indx++;
+        return randomColorIndex === indx
+          ? (rows[i][k] = 1) && selectedColor(colors[indx - 1])
+          : 0;
+      })
+    );
     return rows;
   });
-  const [randomColorIndex, setRandomColorIndex] = useState(() => {
-    let item = grid[Math.floor(Math.random() * grid.length * 5)];
-    return item;
-  });
 
-  const isAllZero = grid.every(item => item === 0);
+  const isAllZero = grid.every(row => row.every(item => item === 0)); // check if every item is 0 in our grid
   console.log(isAllZero);
 
   useEffect(() => {
@@ -91,8 +97,10 @@ export const AddProjectColorGrid = ({ selectedColor }) => {
                   prevGrid.map((numRows, index) => {
                     return index === i
                       ? numRows.map((numCols, kIndex) => {
-                          return kIndex === k ? (grid[i][k] = 1) : numCols;
-                          /* return kIndex === k && numCols === 0
+                          return kIndex === k
+                            ? (grid[index][kIndex] = 1)
+                            : numCols;
+                          /* return kIndex === k && numCols === 0 //TOGGLE
                             ? 1
                             : kIndex === k && numCols === 1
                             ? 0
@@ -108,7 +116,6 @@ export const AddProjectColorGrid = ({ selectedColor }) => {
           );
         })
       )}
-      {isAllZero ? <div>Every item is zero</div> : <div>NO!</div>}
     </div>
   );
 };
