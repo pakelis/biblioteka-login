@@ -58,7 +58,7 @@ export const IndividualProject = ({ project }) => {
 
   return (
     <>
-      <Typography>{project.name}</Typography>
+      <Typography style={{ flexGrow: 1 }}>{project.name}</Typography>
       <Typography onClick={() => setShowConfirm(!showConfirm)}>
         <DeleteIcon
           fontSize="default"

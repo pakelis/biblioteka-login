@@ -29,12 +29,21 @@ const useStyles = makeStyles(theme => ({
   tasksHeader: {
     display: "flex",
     alignItems: "center"
+  },
+  bubble: {
+    height: "15px",
+    width: "15px",
+    borderRadius: "50%"
+  },
+  typoContainer: {
+    display: "flex",
+    alignItems: "center"
   }
 }));
 
 export const Tasks = () => {
   const classes = useStyles();
-  const { selectedProject } = useSelectedProjectValue();
+  const { selectedProject, selectedProjectColor } = useSelectedProjectValue();
   const { projects } = useProjectsValue();
   const { tasks } = useTasks(selectedProject); // gets all the tasks from our useTasks hook in /hooks
   const [sortedTasks, setSortedTasks] = useState([]);
@@ -80,6 +89,7 @@ export const Tasks = () => {
   };
 
   let projectName = "";
+  let projectColor = selectedProjectColor;
 
   if (
     projects.length > 0 &&
@@ -101,7 +111,17 @@ export const Tasks = () => {
     <List className={classes.root}>
       <div className={classes.tasksHeader}>
         <Typography variant="h4" className={classes.title}>
-          {projectName}
+          {collatedTasksExist(selectedProject) ? ( // if project doesn't exist in collatedTasks, we add color bubble near projectName
+            projectName
+          ) : (
+            <div className={classes.typoContainer}>
+              <div
+                className={classes.bubble}
+                style={{ backgroundColor: projectColor }}
+              />
+              <div style={{ marginLeft: "15px" }}>{projectName}</div>
+            </div>
+          )}
         </Typography>
         <div style={{ marginLeft: "auto" }}>
           <Tooltip title="Sort by name">

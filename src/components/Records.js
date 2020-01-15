@@ -11,13 +11,13 @@ import { IndividualProject } from "./IndividualProject";
 const useStyles = makeStyles(theme => ({
   root: {
     paddingLeft: theme.spacing(4),
-    // display: "flex",
-    // justifyContent: "space-between",
     "&:hover": {
       // backgroundColor: 'blue'
     }
   },
-  bubbleContainer: {},
+  bubbleContainer: {
+    marginRight: "15px"
+  },
   bubble: {
     height: "15px",
     width: "15px",
@@ -28,7 +28,10 @@ const useStyles = makeStyles(theme => ({
 export const Records = ({ activeValue = null }) => {
   const classes = useStyles();
   const [active, setActive] = useState(activeValue);
-  const { setSelectedProject } = useSelectedProjectValue();
+  const {
+    setSelectedProject,
+    setSelectedProjectColor
+  } = useSelectedProjectValue();
   const { projects } = useProjectsValue();
 
   return (
@@ -42,6 +45,7 @@ export const Records = ({ activeValue = null }) => {
         onClick={() => {
           setActive(project.projectId);
           setSelectedProject(project.projectId);
+          setSelectedProjectColor(project.color);
         }}
       >
         <div className={classes.bubbleContainer}>
