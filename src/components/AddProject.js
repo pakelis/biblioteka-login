@@ -82,7 +82,8 @@ export const AddProject = ({ shouldShow = false }) => {
         .add({
           projectId,
           name: projectName,
-          userId: userId
+          userId: userId,
+          color: color
         })
         .then(() => {
           setProjects([...projects]);

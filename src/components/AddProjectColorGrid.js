@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import classNames from "classnames";
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -11,10 +12,17 @@ const useStyles = makeStyles(theme => ({
     justifyContent: "center"
   },
   bubble: {
-    color: "red",
     height: "35px",
     width: "35px",
-    borderRadius: "50%"
+    borderRadius: "50%",
+    cursor: "pointer"
+  },
+  checkmark: {
+    fontFamily: "arial",
+    transform: "scaleX(-1) rotate(-35deg)",
+    fontWeight: "lighter",
+    fontSize: "26px",
+    textAlign: "center"
   }
 }));
 
@@ -55,7 +63,7 @@ export const AddProjectColorGrid = ({ selectedColor }) => {
       row.map((col, k) => {
         indx++;
         return randomColorIndex === indx
-          ? (rows[i][k] = 1) && selectedColor(colors[indx - 1])
+          ? (rows[i][k] = 1) && selectedColor(colors[indx - 1]) // we set one value to one and color to our value number
           : 0;
       })
     );
@@ -80,10 +88,11 @@ export const AddProjectColorGrid = ({ selectedColor }) => {
           return (
             <div
               key={`${i}-${k}`}
-              className={classes.bubble}
+              className={classNames(classes.bubble, classes.checkmark)}
               style={{
-                backgroundColor: colors[colorIndex++],
-                border: grid[i][k] ? "solid 2px black" : undefined // if grid[i][k] === 1 , we make it with borders
+                color: grid[i][k] ? "white" : colors[colorIndex],
+                backgroundColor: colors[colorIndex++]
+                // border: grid[i][k] ? "solid 2px black" : undefined // if grid[i][k] === 1 , we make it with borders
               }}
               onClick={event => {
                 //After click we set all grid to 0
@@ -112,7 +121,9 @@ export const AddProjectColorGrid = ({ selectedColor }) => {
                 //We set selectedColor to our clicked div backgroundColor
                 selectedColor(event.target.style.backgroundColor);
               }}
-            ></div>
+            >
+              L
+            </div>
           );
         })
       )}
