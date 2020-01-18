@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Typography, Checkbox } from "@material-ui/core";
 import { useTasks } from "../hooks";
 import { collatedTasks } from "../constants";
@@ -48,7 +48,9 @@ export const Tasks = () => {
   const { tasks } = useTasks(selectedProject); // gets all the tasks from our useTasks hook in /hooks
   const [sortedTasks, setSortedTasks] = useState([]);
   const [sortOrder, setSortOrder] = useState(true);
-  // const [onHover, setOnHover] = useState(tasks); // Cant get tasks?!
+  const itemsRef = useRef([]);
+  const [hovered, setHovered] = useState([]);
+  // you can access the elements with itemsRef.current[n]
 
   const sortByAlpha = tasks => {
     if (sortOrder === true) {
@@ -105,7 +107,10 @@ export const Tasks = () => {
 
   useEffect(() => {
     document.title = `${projectName}: Todoist`;
-  });
+
+    //making ref array for each div we render?? what next?
+    itemsRef.current = itemsRef.current.slice(0, tasks.length);
+  }, [tasks]);
 
   return (
     <List className={classes.root}>
@@ -136,8 +141,8 @@ export const Tasks = () => {
           </Tooltip>
         </div>
       </div>
-      {tasks.map(task => (
-        <div key={task.id}>
+      {tasks.map((task, i) => (
+        <div key={task.id} ref={el => (itemsRef.current[i] = el)}>
           <ListItem key={task.id} dense button>
             <ListItemIcon>
               <Checkbox
@@ -147,7 +152,6 @@ export const Tasks = () => {
               />
             </ListItemIcon>
             <ListItemText primary={task.task} />
-            {/* {onHover && <Typography>Hovered text</Typography>} */}
           </ListItem>
           <Divider />
         </div>
