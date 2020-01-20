@@ -17,6 +17,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import IconButton from "@material-ui/core/IconButton";
 import { AddTask } from "./AddTask";
 import Tooltip from "@material-ui/core/Tooltip";
+import FlagOutlinedIcon from "@material-ui/icons/FlagOutlined";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -49,7 +50,7 @@ export const Tasks = () => {
   const [sortedTasks, setSortedTasks] = useState([]);
   const [sortOrder, setSortOrder] = useState(true);
   const itemsRef = useRef([]);
-  const [hovered, setHovered] = useState([]);
+  const [hovered, setHovered] = useState({}); // we make empty hovered object, and we insert index property into object, to know which item is hovered
   // you can access the elements with itemsRef.current[n]
 
   const sortByAlpha = tasks => {
@@ -88,6 +89,18 @@ export const Tasks = () => {
       .update({
         archived: true
       });
+  };
+
+  const handleMouseEnter = index => {
+    setHovered(prevState => {
+      return { ...prevState, [index]: true };
+    });
+  };
+
+  const handleMouseLeave = index => {
+    setHovered(prevState => {
+      return { ...prevState, [index]: false };
+    });
   };
 
   let projectName = "";
@@ -142,7 +155,12 @@ export const Tasks = () => {
         </div>
       </div>
       {tasks.map((task, i) => (
-        <div key={task.id} ref={el => (itemsRef.current[i] = el)}>
+        <div
+          key={task.id}
+          ref={el => (itemsRef.current[i] = el)}
+          onMouseEnter={() => handleMouseEnter(i)}
+          onMouseLeave={() => handleMouseLeave(i)}
+        >
           <ListItem key={task.id} dense button>
             <ListItemIcon>
               <Checkbox
@@ -152,6 +170,7 @@ export const Tasks = () => {
               />
             </ListItemIcon>
             <ListItemText primary={task.task} />
+            {hovered[i] && <FlagOutlinedIcon color="action" />}
           </ListItem>
           <Divider />
         </div>

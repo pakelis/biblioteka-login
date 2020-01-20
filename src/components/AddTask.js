@@ -12,9 +12,11 @@ import DateRangeIcon from "@material-ui/icons/DateRange";
 import EventNoteIcon from "@material-ui/icons/EventNote";
 import { ProjectOverlay } from "./ProjectOverlay";
 import { TaskDate } from "./TaskDate";
+import { TaskPriority } from "./TaskPriority";
 import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
+import FlagOutlinedIcon from "@material-ui/icons/FlagOutlined";
 
 //TODO make textfield outline focused color different, more like lightAccent
 
@@ -91,12 +93,14 @@ export const AddTask = ({
   showText = true,
   showModal = false
 }) => {
+  const [showMain, setShowMain] = useState(shouldShowMain);
   const [task, setTask] = useState("");
   const [taskDate, setTaskDate] = useState("");
   const [project, setProject] = useState("");
-  const [showMain, setShowMain] = useState(shouldShowMain);
+  const [priority, setPriority] = useState(0);
   const [showProjectOverlay, setShowProjectOverlay] = useState(false);
   const [showTaskDate, setShowTaskDate] = useState(false);
+  const [showPriority, setShowPriority] = useState(false);
   const [anchorEl, setAnchorEl] = useState();
   const [openModal, setOpenModal] = useState(showModal);
 
@@ -165,12 +169,6 @@ export const AddTask = ({
       )}
       {showMain && (
         <div className={classes.root}>
-          <TaskDate
-            setTaskDate={setTaskDate}
-            showTaskDate={showTaskDate}
-            setShowTaskDate={setShowTaskDate}
-            anchorEl={anchorEl}
-          />
           <TextField
             placeholder="Enter task name"
             className={classes.textField}
@@ -211,12 +209,32 @@ export const AddTask = ({
                   <DateRangeIcon color="action" />
                 </IconButton>
               </Typography>
+              <Typography
+                variant="body1"
+                onClick={() => setShowPriority(!showPriority)}
+              >
+                <IconButton onClick={handleClick}>
+                  <FlagOutlinedIcon color="action" />
+                </IconButton>
+              </Typography>
             </div>
           </div>
+          <TaskDate
+            setTaskDate={setTaskDate}
+            showTaskDate={showTaskDate}
+            setShowTaskDate={setShowTaskDate}
+            anchorEl={anchorEl}
+          />
           <ProjectOverlay
             setProject={setProject}
             showProjectOverlay={showProjectOverlay}
             setShowProjectOverlay={setShowProjectOverlay}
+            anchorEl={anchorEl}
+          />
+          <TaskPriority
+            setPriority={setPriority}
+            showPriority={showPriority}
+            setShowPriority={setShowPriority}
             anchorEl={anchorEl}
           />
         </div>
@@ -292,6 +310,9 @@ export const AddTask = ({
                     >
                       <IconButton onClick={handleClick}>
                         <DateRangeIcon color="action" />
+                      </IconButton>
+                      <IconButton onClick={handleClick}>
+                        <FlagOutlinedIcon color="action" />
                       </IconButton>
                     </Typography>
                   </div>
