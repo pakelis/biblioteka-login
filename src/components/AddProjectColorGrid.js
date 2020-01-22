@@ -122,7 +122,7 @@ export const AddProjectColorGrid = ({ selectedColor }) => {
                 selectedColor(event.target.style.backgroundColor);
               }}
             >
-              L
+              L{/* this is our check mark L letter rotated */}
             </div>
           );
         })
