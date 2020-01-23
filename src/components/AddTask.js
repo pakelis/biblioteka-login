@@ -236,6 +236,7 @@ export const AddTask = ({
             showPriority={showPriority}
             setShowPriority={setShowPriority}
             anchorEl={anchorEl}
+            priority={priority}
           />
         </div>
       )}

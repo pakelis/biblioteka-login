@@ -42,7 +42,8 @@ export const TaskPriority = ({
   anchorEl,
   setPriority,
   showPriority,
-  setShowPriority
+  setShowPriority,
+  priority
 }) => {
   const classes = useStyles();
   const numCols = 2;
@@ -57,7 +58,7 @@ export const TaskPriority = ({
     return rows;
   });
   const colors = ["#f44336", "#d48a1a", "#579a52", "#707070"];
-  const priority = [
+  const priorityTypes = [
     "High priority",
     "Medium priority",
     "Low priority",
@@ -84,12 +85,15 @@ export const TaskPriority = ({
           {flagGrid.map((rows, i) =>
             rows.map((cols, k) => {
               return (
-                <div className={classes.priorityContainer}>
+                <div className={classes.priorityContainer} key={`${i}-${k}`}>
                   <div
                     className={classes.priorityFlagCircle}
                     style={{ backgroundColor: colors[priorityIndex] }}
-                    key={`${i}-${k}`}
-                    onClick={() => setShowPriority(false)}
+                    onClick={() => {
+                      setShowPriority(false);
+                      setPriority(priorityIndex);
+                      console.log(priority);
+                    }}
                   >
                     <FlagOutlinedIcon className={classes.flag} />
                   </div>
@@ -99,7 +103,7 @@ export const TaskPriority = ({
                       color: colors[priorityIndex]
                     }}
                   >
-                    {priority[priorityIndex++]}
+                    {priorityTypes[priorityIndex++]}
                   </Typography>
                 </div>
               );
