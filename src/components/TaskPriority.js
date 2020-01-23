@@ -66,6 +66,8 @@ export const TaskPriority = ({
   ];
   let priorityIndex = 0;
 
+  //TODO when i click flag get priorityNumber like 3 2 1 0???
+
   return (
     showPriority && (
       <Popover
@@ -90,9 +92,14 @@ export const TaskPriority = ({
                     className={classes.priorityFlagCircle}
                     style={{ backgroundColor: colors[priorityIndex] }}
                     onClick={() => {
+                      setFlagGrid(prevGrid =>
+                        prevGrid.map((rows, iIndex) =>
+                          rows.map((cols, kIndex) => {
+                            return;
+                          })
+                        )
+                      );
                       setShowPriority(false);
-                      setPriority(priorityIndex);
-                      console.log(priority);
                     }}
                   >
                     <FlagOutlinedIcon className={classes.flag} />
