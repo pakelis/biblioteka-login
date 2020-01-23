@@ -4,19 +4,28 @@ import { makeStyles } from "@material-ui/core/styles";
 import FlagOutlinedIcon from "@material-ui/icons/FlagOutlined";
 
 const useStyles = makeStyles(theme => ({
+  paper: {
+    width: "250px"
+  },
   container: {
     display: "flex",
+    minHeight: "100%",
     flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "center"
+    flexWrap: "wrap"
   },
   priorityContainer: {
-    display: "flex"
+    display: "flex",
+    flexBasis: "50%",
+    justifyContent: "center",
+    flexDirection: "column",
+    alignItems: "center"
   },
   priorityFlagCircle: {
+    "&:hover": {
+      cursor: "pointer"
+    },
     height: "50px",
-    width: "38%", //so our flexWrap wraps to another row
-    backgroundColor: "#bbb",
+    width: "42%", //so our flexWrap wraps to another row
     borderRadius: "50%",
     margin: "6px",
     display: "flex",
@@ -59,7 +68,7 @@ export const TaskPriority = ({
   return (
     showPriority && (
       <Popover
-        style={{ borderRadius: "25%" }}
+        classes={{ paper: classes.paper }} // this is how you override component!!!!
         open={Boolean(anchorEl)}
         anchorEl={anchorEl}
         anchorOrigin={{
@@ -80,11 +89,15 @@ export const TaskPriority = ({
                     className={classes.priorityFlagCircle}
                     style={{ backgroundColor: colors[priorityIndex] }}
                     key={`${i}-${k}`}
+                    onClick={() => setShowPriority(false)}
                   >
                     <FlagOutlinedIcon className={classes.flag} />
                   </div>
                   <Typography
-                    style={{ fontSize: "14px", color: colors[priorityIndex] }}
+                    style={{
+                      fontSize: "14px",
+                      color: colors[priorityIndex]
+                    }}
                   >
                     {priority[priorityIndex++]}
                   </Typography>
