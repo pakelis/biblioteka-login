@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { MenuList, Popover, Paper, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import FlagOutlinedIcon from "@material-ui/icons/FlagOutlined";
@@ -38,6 +38,10 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+let priorityIndex = 0;
+const numCols = 2;
+const numRows = 2;
+
 export const TaskPriority = ({
   anchorEl,
   setPriority,
@@ -46,27 +50,29 @@ export const TaskPriority = ({
   priority
 }) => {
   const classes = useStyles();
-  const numCols = 2;
-  const numRows = 2;
   const [flagGrid, setFlagGrid] = useState(() => {
     let indx = 0;
     let rows = [];
     for (let i = 0; i < numRows; i++) {
       //   rows.push(Array.from(Array(numCols), () => 0));
-      rows.push(Array.from(Array(numCols), () => 0));
+      rows.push(Array.from(Array(numCols), () => indx++));
     }
     return rows;
   });
-  const colors = ["#f44336", "#d48a1a", "#579a52", "#707070"];
+  const colors = ["#707070", "#579a52", "#d48a1a", "#f44336"];
   const priorityTypes = [
-    "High priority",
-    "Medium priority",
+    "No priority",
     "Low priority",
-    "No priority"
+    "Medium priority",
+    "High priority"
   ];
-  let priorityIndex = 0;
 
   //TODO when i click flag get priorityNumber like 3 2 1 0???
+
+  useEffect(() => {
+    priorityIndex = 0;
+    // ComponentDidUpdate && componentDidMount here
+  });
 
   return (
     showPriority && (
@@ -92,12 +98,12 @@ export const TaskPriority = ({
                     className={classes.priorityFlagCircle}
                     style={{ backgroundColor: colors[priorityIndex] }}
                     onClick={() => {
-                      setFlagGrid(prevGrid =>
-                        prevGrid.map((rows, iIndex) =>
-                          rows.map((cols, kIndex) => {
-                            return;
-                          })
-                        )
+                      flagGrid.map((numRows, iIndex) =>
+                        numRows.map((numCols, kIndex) => {
+                          return k === kIndex
+                            ? setPriority(flagGrid[i][k])
+                            : null;
+                        })
                       );
                       setShowPriority(false);
                     }}

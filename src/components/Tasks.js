@@ -5,6 +5,12 @@ import { collatedTasks } from "../constants";
 import { getTitle, getCollatedTitle, collatedTasksExist } from "../helpers";
 import { useSelectedProjectValue, useProjectsValue } from "../context";
 import { firebase } from "../firebase";
+import {
+  YellowCheckbox,
+  GreyCheckbox,
+  RedCheckbox,
+  GreenCheckbox
+} from "./CheckboxStyles";
 //Material
 import SortByAlphaOutlinedIcon from "@material-ui/icons/SortByAlphaOutlined";
 import UpdateIcon from "@material-ui/icons/Update";
@@ -18,6 +24,8 @@ import IconButton from "@material-ui/core/IconButton";
 import { AddTask } from "./AddTask";
 import Tooltip from "@material-ui/core/Tooltip";
 import FlagOutlinedIcon from "@material-ui/icons/FlagOutlined";
+import RadioButtonUncheckedIcon from "@material-ui/icons/RadioButtonUnchecked";
+import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -163,7 +171,10 @@ export const Tasks = () => {
         >
           <ListItem key={task.id} dense button>
             <ListItemIcon>
-              <Checkbox
+              <GreenCheckbox
+                icon={<RadioButtonUncheckedIcon />}
+                checkedIcon={<CheckCircleIcon />}
+                color="primary"
                 edge="start"
                 disableRipple
                 onClick={() => archiveTask(task.id)}

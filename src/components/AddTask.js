@@ -145,12 +145,14 @@ export const AddTask = ({
           projectId,
           task,
           date: collatedDate || taskDate,
-          userId: userId
+          userId: userId,
+          priority: priority
         })
         .then(() => {
           setTask("");
           setProject("");
           setShowMain("");
+          setPriority(0);
           setShowProjectOverlay(false);
         })
     );
