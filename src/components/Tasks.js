@@ -171,14 +171,46 @@ export const Tasks = () => {
         >
           <ListItem key={task.id} dense button>
             <ListItemIcon>
-              <GreenCheckbox
-                icon={<RadioButtonUncheckedIcon />}
-                checkedIcon={<CheckCircleIcon />}
-                color="primary"
-                edge="start"
-                disableRipple
-                onClick={() => archiveTask(task.id)}
-              />
+              {/* we check what priority we have so we can render different checkboxes */}
+              {task.priority === 0 ? (
+                <GreyCheckbox
+                  icon={<RadioButtonUncheckedIcon />}
+                  checkedIcon={<CheckCircleIcon />}
+                  color="primary"
+                  edge="start"
+                  disableRipple
+                  onClick={() => archiveTask(task.id)}
+                />
+              ) : task.priority === 1 ? (
+                <GreenCheckbox
+                  icon={<RadioButtonUncheckedIcon />}
+                  checkedIcon={<CheckCircleIcon />}
+                  color="primary"
+                  edge="start"
+                  disableRipple
+                  onClick={() => archiveTask(task.id)}
+                />
+              ) : task.priority === 2 ? (
+                <YellowCheckbox
+                  icon={<RadioButtonUncheckedIcon />}
+                  checkedIcon={<CheckCircleIcon />}
+                  color="primary"
+                  edge="start"
+                  disableRipple
+                  onClick={() => archiveTask(task.id)}
+                />
+              ) : task.priority === 3 ? (
+                <RedCheckbox
+                  icon={<RadioButtonUncheckedIcon />}
+                  checkedIcon={<CheckCircleIcon />}
+                  color="primary"
+                  edge="start"
+                  disableRipple
+                  onClick={() => archiveTask(task.id)}
+                />
+              ) : (
+                <Checkbox onClick={() => archiveTask(task.id)} />
+              )}
             </ListItemIcon>
             <ListItemText primary={task.task} />
             {hovered[i] && <FlagOutlinedIcon color="action" />}

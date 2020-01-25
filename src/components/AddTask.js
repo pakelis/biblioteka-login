@@ -314,6 +314,11 @@ export const AddTask = ({
                       <IconButton onClick={handleClick}>
                         <DateRangeIcon color="action" />
                       </IconButton>
+                    </Typography>
+                    <Typography
+                      variant="body1"
+                      onClick={() => setShowPriority(!showPriority)}
+                    >
                       <IconButton onClick={handleClick}>
                         <FlagOutlinedIcon color="action" />
                       </IconButton>
