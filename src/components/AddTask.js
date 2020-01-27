@@ -261,12 +261,6 @@ export const AddTask = ({
                 <Typography className={classes.quickAddTask} variant="h6">
                   Quick add task
                 </Typography>
-                <TaskDate
-                  setTaskDate={setTaskDate}
-                  showTaskDate={showTaskDate}
-                  setShowTaskDate={setShowTaskDate}
-                  anchorEl={anchorEl}
-                />
                 <TextField
                   placeholder="Enter task name"
                   className={classes.textField}
@@ -330,6 +324,19 @@ export const AddTask = ({
                   showProjectOverlay={showProjectOverlay}
                   setShowProjectOverlay={setShowProjectOverlay}
                   anchorEl={anchorEl}
+                />
+                <TaskDate
+                  setTaskDate={setTaskDate}
+                  showTaskDate={showTaskDate}
+                  setShowTaskDate={setShowTaskDate}
+                  anchorEl={anchorEl}
+                />
+                <TaskPriority
+                  setPriority={setPriority}
+                  showPriority={showPriority}
+                  setShowPriority={setShowPriority}
+                  anchorEl={anchorEl}
+                  priority={priority}
                 />
               </div>
             </Fade>

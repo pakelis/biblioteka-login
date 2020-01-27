@@ -67,8 +67,6 @@ export const TaskPriority = ({
     "High priority"
   ];
 
-  //TODO when i click flag get priorityNumber like 3 2 1 0???
-
   useEffect(() => {
     priorityIndex = 0;
     // ComponentDidUpdate && componentDidMount here

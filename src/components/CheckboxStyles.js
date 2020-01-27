@@ -1,5 +1,6 @@
 import React from "react";
 import Checkbox from "@material-ui/core/Checkbox";
+import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import { withStyles } from "@material-ui/core/styles";
 
 export const GreenCheckbox = withStyles({

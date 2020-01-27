@@ -5,6 +5,7 @@ import { collatedTasks } from "../constants";
 import { getTitle, getCollatedTitle, collatedTasksExist } from "../helpers";
 import { useSelectedProjectValue, useProjectsValue } from "../context";
 import { firebase } from "../firebase";
+import { TaskPriority } from "./TaskPriority";
 import {
   YellowCheckbox,
   GreyCheckbox,
@@ -26,6 +27,7 @@ import Tooltip from "@material-ui/core/Tooltip";
 import FlagOutlinedIcon from "@material-ui/icons/FlagOutlined";
 import RadioButtonUncheckedIcon from "@material-ui/icons/RadioButtonUnchecked";
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
+import EmojiFlagsIcon from "@material-ui/icons/EmojiFlags";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -57,9 +59,12 @@ export const Tasks = () => {
   const { tasks } = useTasks(selectedProject); // gets all the tasks from our useTasks hook in /hooks
   const [sortedTasks, setSortedTasks] = useState([]);
   const [sortOrder, setSortOrder] = useState(true);
-  const itemsRef = useRef([]);
   const [hovered, setHovered] = useState({}); // we make empty hovered object, and we insert index property into object, to know which item is hovered
-  // you can access the elements with itemsRef.current[n]
+  const [hoveredCheckbox, setHoveredCheckbox] = useState({});
+  //For priority overlay
+  const [showPriority, setShowPriority] = useState(false);
+  const [priority, setPriority] = useState(0);
+  const [anchorEl, setAnchorEl] = useState();
 
   const sortByAlpha = tasks => {
     if (sortOrder === true) {
@@ -88,6 +93,19 @@ export const Tasks = () => {
       tasks = sortedTasks;
     }
   };
+  const sortByPriority = tasks => {
+    if (sortOrder === true) {
+      let sorted = tasks.sort((a, b) => a.priority - b.priority);
+      setSortedTasks(sorted);
+      setSortOrder(!sortOrder);
+      tasks = sortedTasks;
+    } else if (sortOrder === false) {
+      let sorted = tasks.sort((a, b) => b.priority - a.priority);
+      setSortedTasks(sorted);
+      setSortOrder(!sortOrder);
+      tasks = sortedTasks;
+    }
+  };
 
   const archiveTask = id => {
     firebase
@@ -111,6 +129,22 @@ export const Tasks = () => {
     });
   };
 
+  const handleCheckboxEnter = index => {
+    setHoveredCheckbox(prevState => {
+      return { ...prevState, [index]: true };
+    });
+  };
+
+  const handleCheckboxLeave = index => {
+    setHoveredCheckbox(prevState => {
+      return { ...prevState, [index]: false };
+    });
+  };
+
+  const handleClick = event => {
+    setAnchorEl(event.currentTarget);
+  };
+
   let projectName = "";
   let projectColor = selectedProjectColor;
 
@@ -128,9 +162,6 @@ export const Tasks = () => {
 
   useEffect(() => {
     document.title = `${projectName}: Todoist`;
-
-    //making ref array for each div we render?? what next?
-    itemsRef.current = itemsRef.current.slice(0, tasks.length);
   }, [tasks]);
 
   return (
@@ -160,12 +191,16 @@ export const Tasks = () => {
               <UpdateIcon />
             </IconButton>
           </Tooltip>
+          <Tooltip title="Sort by priority">
+            <IconButton onClick={() => sortByPriority(tasks)}>
+              <EmojiFlagsIcon />
+            </IconButton>
+          </Tooltip>
         </div>
       </div>
       {tasks.map((task, i) => (
         <div
           key={task.id}
-          ref={el => (itemsRef.current[i] = el)}
           onMouseEnter={() => handleMouseEnter(i)}
           onMouseLeave={() => handleMouseLeave(i)}
         >
@@ -176,44 +211,69 @@ export const Tasks = () => {
                 <GreyCheckbox
                   icon={<RadioButtonUncheckedIcon />}
                   checkedIcon={<CheckCircleIcon />}
+                  checked={hoveredCheckbox[i] ? true : false} // we check if checkbox is hovered we make it checked so we get checkedIcon
                   color="primary"
                   edge="start"
                   disableRipple
                   onClick={() => archiveTask(task.id)}
+                  onMouseEnter={() => handleCheckboxEnter(i)} // we check if element is hovered
+                  onMouseLeave={() => handleCheckboxLeave(i)}
                 />
               ) : task.priority === 1 ? (
                 <GreenCheckbox
                   icon={<RadioButtonUncheckedIcon />}
                   checkedIcon={<CheckCircleIcon />}
+                  checked={hoveredCheckbox[i] ? true : false}
                   color="primary"
                   edge="start"
                   disableRipple
                   onClick={() => archiveTask(task.id)}
+                  onMouseEnter={() => handleCheckboxEnter(i)}
+                  onMouseLeave={() => handleCheckboxLeave(i)}
                 />
               ) : task.priority === 2 ? (
                 <YellowCheckbox
                   icon={<RadioButtonUncheckedIcon />}
                   checkedIcon={<CheckCircleIcon />}
+                  checked={hoveredCheckbox[i] ? true : false}
                   color="primary"
                   edge="start"
                   disableRipple
                   onClick={() => archiveTask(task.id)}
+                  onMouseEnter={() => handleCheckboxEnter(i)}
+                  onMouseLeave={() => handleCheckboxLeave(i)}
                 />
               ) : task.priority === 3 ? (
                 <RedCheckbox
                   icon={<RadioButtonUncheckedIcon />}
                   checkedIcon={<CheckCircleIcon />}
+                  checked={hoveredCheckbox[i] ? true : false}
                   color="primary"
                   edge="start"
                   disableRipple
                   onClick={() => archiveTask(task.id)}
+                  onMouseEnter={() => handleCheckboxEnter(i)}
+                  onMouseLeave={() => handleCheckboxLeave(i)}
                 />
               ) : (
                 <Checkbox onClick={() => archiveTask(task.id)} />
               )}
             </ListItemIcon>
             <ListItemText primary={task.task} />
-            {hovered[i] && <FlagOutlinedIcon color="action" />}
+            {hovered[i] && (
+              <div>
+                <Typography onClick={() => setShowPriority(!priority)}>
+                  <FlagOutlinedIcon color="action" onClick={handleClick} />
+                </Typography>
+                <TaskPriority
+                  setPriority={setPriority}
+                  showPriority={showPriority}
+                  setShowPriority={setShowPriority}
+                  anchorEl={anchorEl}
+                  priority={priority}
+                />
+              </div>
+            )}
           </ListItem>
           <Divider />
         </div>
