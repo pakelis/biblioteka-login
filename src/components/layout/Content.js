@@ -153,11 +153,11 @@ const Content = props => {
         </Drawer>
         <main className={classes.appContent}>
           <Paper className={classes.paperContent}>
-            <Switch>
-              {/* <Route path="/home" component={Home} /> */}
-              <Route path="/records" component={Records} />
-              <Route path="/tasks" component={Tasks} />
-            </Switch>
+            {/* <Switch> */}
+            {/* <Route path="/home" component={Home} /> */}
+            {/* <Route path="/records" component={Records} /> */}
+            {/* <Route path="/tasks" component={Tasks} /> */}
+            {/* </Switch> */}
             <Tasks />
             <AddTask
               showAddTaskMain={false}

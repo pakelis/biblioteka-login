@@ -87,7 +87,7 @@ export const NavItems = () => {
           <ListItemIcon>
             <BookmarksIcon />
           </ListItemIcon>
-          <ListItemText primary={"Records"} />
+          <ListItemText primary={"Projects"} />
           {open ? <ExpandLess /> : <ExpandMore />}
         </MenuItem>
         <Collapse in={open} timeout="auto" unmountOnExit>

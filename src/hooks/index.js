@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { firebase } from "../firebase";
 import "@firebase/firestore";
 import moment from "moment";
@@ -57,7 +57,7 @@ export const useTasks = selectedProject => {
           ))
         : selectedProject === "INBOX" || selectedProject === 0 //Goes to inbox when you don't select date!
         ? (unsubscribe = unsubscribe) // ? (unsubscribe = unsubscribe.where("date", "==", "")) , we changed that in inbox there all tasks, not only where there's no date
-        : unsubscribe; //47:56 timestamp of video.....
+        : unsubscribe;
 
     unsubscribe = unsubscribe.onSnapshot(snapshot => {
       const newTasks = snapshot.docs.map(task => ({
@@ -119,4 +119,23 @@ export const useProjects = () => {
   }, [projects, currentUser]);
 
   return { projects, setProjects };
+};
+
+export const useHover = () => {
+  const ref = useRef();
+  const [hovered, setHovered] = useState(false);
+
+  const enter = () => setHovered(true);
+  const leave = () => setHovered(false);
+
+  useEffect(() => {
+    ref.current.addEventListener("mouseenter", enter);
+    ref.current.addEventListener("mouseleave", leave);
+    return () => {
+      ref.current.removeEventListener("mouseenter", enter);
+      ref.current.removeEventListener("mouseleave", leave);
+    };
+  }, [ref]);
+
+  return [ref, hovered];
 };
