@@ -1,6 +1,7 @@
 import React from 'react'
 import Login from './components/layout/LoginSignup/Login'
 import Signup from './components/layout/LoginSignup/Signup'
+import ForgotPassword from './components/layout/LoginSignup/ForgotPassword'
 import LoginSignup from './components/layout/LoginSignup/index'
 import Content from './components/layout/Content'
 import {AuthProvider} from './Auth'
@@ -26,6 +27,7 @@ function App() {
               <PrivateRoute path="/" component={Content} />
               <Route exact path="/login" component={LoginSignup} />
               <Route exact path="/signup" component={Signup} />
+              <Route exact path="/recovery" component={ForgotPassword} />
             </Router>
           </AuthProvider>
         </MuiThemeProvider>

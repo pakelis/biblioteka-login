@@ -1,14 +1,9 @@
 import React, {useCallback, useContext, useState} from 'react'
-import {ForgotPassword} from './ForgotPassword'
 import {withRouter, Redirect} from 'react-router'
 import {firebase} from '../../../firebase'
-import {AuthContext} from '../../../Auth'
-import {Link as RouterLink} from 'react-router-dom'
-import {useUserValue} from '../../../Auth'
 
 //MATERIAL
 import InputAdornment from '@material-ui/core/InputAdornment'
-import LockIcon from '@material-ui/icons/Lock'
 import EmailIcon from '@material-ui/icons/Email'
 import AccountCircleIcon from '@material-ui/icons/AccountCircle'
 import {
@@ -22,10 +17,21 @@ import {
   Checkbox,
   Grid,
   Link,
+  Paper,
 } from '@material-ui/core'
 
 const useStyles = makeStyles(theme => ({
+  '@global': {
+    boxSizing: 'border-box',
+    padding: '0',
+    margin: '0',
+    body: {
+      backgroundColor: theme.palette.lightShade.main,
+    },
+  },
   mainContainer: {
+    margin: '2rem auto',
+    width: '80%',
     display: 'flex',
     justifyContent: 'center',
     flexDirection: 'column',
@@ -64,55 +70,36 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-const signupLink = React.forwardRef((props, ref) => (
-  <RouterLink innerRef={ref} to="/signup" {...props} />
-))
+const ForgotPassword = ({history}) => {
+  //Using styles hook from material
+  const classes = useStyles()
 
-const forgotPasswordLink = React.forwardRef((props, ref) => (
-  <RouterLink innerRef={ref} to="/recovery" {...props} />
-))
-
-const Login = ({history}) => {
-  const [checkBox, setCheckBox] = useState(false)
-  //Using currentUser from context hook
-  const {currentUser} = useUserValue()
-
-  //history prop we get using withRouter
-  const handleLogin = useCallback(
+  const handleRecovery = useCallback(
     async event => {
       event.preventDefault()
-      const {email, password} = event.target.elements
+      const {email} = event.target.elements
       try {
-        await firebase
-          .auth()
-          .signInWithEmailAndPassword(email.value, password.value)
-        //we get history from props so we can redirect to different route
-        history.push('/')
-      } catch (error) {
-        alert(error)
+        await firebase.auth().sendPasswordResetEmail(email.value)
+
+        history.push('/login')
+      } catch (err) {
+        alert(err)
       }
     },
     [history],
   )
 
-  //Using styles hook from material
-  const classes = useStyles()
-
-  if (currentUser) {
-    return <Redirect to="/" />
-  }
-
   return (
-    <div className={classes.mainContainer}>
+    <Paper className={classes.mainContainer}>
       <Container component="div" maxWidth="sm" className={classes.container}>
         <CssBaseline />
         <div className={classes.paper}>
           <AccountCircleIcon className={classes.avatar} />
           <div className={classes.paperContent}>
             <Typography variant="h4" className={classes.mainText}>
-              Sign in
+              Please enter your password
             </Typography>
-            <form onSubmit={handleLogin} className={classes.form}>
+            <form onSubmit={handleRecovery} className={classes.form}>
               <TextField
                 variant="outlined"
                 margin="normal"
@@ -131,24 +118,6 @@ const Login = ({history}) => {
                   ),
                 }}
               />
-              <TextField
-                variant="outlined"
-                margin="normal"
-                required
-                fullWidth
-                name="password"
-                label="Password"
-                type="password"
-                id="login-password"
-                autoComplete="current-password"
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <LockIcon className={classes.icon} />
-                    </InputAdornment>
-                  ),
-                }}
-              />
               <Button
                 type="submit"
                 fullWidth
@@ -157,34 +126,14 @@ const Login = ({history}) => {
                 className={classes.submit}
                 size="large"
               >
-                Sign In
+                Reset Password
               </Button>
-              <Grid container>
-                <Grid item xs>
-                  <Link
-                    component={forgotPasswordLink}
-                    variant="body2"
-                    className={classes.smallText}
-                  >
-                    Forgot password?
-                  </Link>
-                </Grid>
-                <Grid item>
-                  <Link
-                    variant="body2"
-                    component={signupLink}
-                    className={classes.smallText}
-                  >
-                    {"Don't have an account? Sign Up"}
-                  </Link>
-                </Grid>
-              </Grid>
             </form>
           </div>
         </div>
       </Container>
-    </div>
+    </Paper>
   )
 }
 
-export default withRouter(Login)
+export default withRouter(ForgotPassword)
