@@ -1,6 +1,6 @@
-## Todoist app
+## Task manager app
 
-Todoist app created for my CS internship </br>
+Task manager app created for my CS internship </br>
 
 App used to create, delete, edit tasks, projects, has login and signup functionality. </br>
 * Added priority flags </br>
